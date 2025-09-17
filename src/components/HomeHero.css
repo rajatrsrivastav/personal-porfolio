@@ -1,0 +1,136 @@
+.home-hero {
+  position: relative;
+  min-height: 80svh;
+  padding: 24px 24px 80px;
+  color: #0b0d12;
+  background: #ffffff;
+  overflow: hidden;
+}
+.home-hero:before {
+  display: none;
+}
+.home-brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.home-navPill a {
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 14px;
+}
+.home-navPill a.active {
+  color: #111827;
+  font-weight: 600;
+}
+.home-navPill a.book {
+  background: #111827;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+.home-kbd {
+  opacity: 0.8;
+}
+.home-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.home-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+  display: inline-block;
+}
+.home-badge .new {
+  color: #0b0d12;
+  background: #bfdbfe;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.home-badge .caret {
+  opacity: 0.6;
+}
+.home-heading {
+  margin: 70px auto 16px;
+  line-height: 1.2;
+  font-weight: 500;
+  max-width: 980px;
+  font-size: clamp(40px, 6vw, 72px);
+  text-align: center;
+  color: #0b0d12;
+}
+.home-heading em {
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+}
+.home-sub {
+  color: #4b5563;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0 26px;
+}
+.home-ctas {
+  margin: 50px 0 26px;
+
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+.home-btn {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.home-btn.primary {
+  color: #0b0b0e;
+  background: linear-gradient(180deg, #ffffff, #e5e7eb);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 8px 20px rgba(15, 23, 42, 0.06);
+}
+.home-btn.primary .arrowCircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: black;
+  border-radius: 999px;
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
+}
+.home-btn.secondary {
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+.home-horizon {
+  display: none;
+}
+@media (max-width: 768px) {
+  .home-nav {
+    display: none;
+  }
+  .home-heading {
+    font-size: clamp(32px, 8vw, 56px);
+  }
+  .home-ctas {
+    flex-direction: column;
+  }
+}

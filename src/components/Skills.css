@@ -1,0 +1,74 @@
+.sk-section {
+  max-width: 1200px;
+  margin: 120px auto 40px;
+  padding: 0 24px;
+  position: relative;
+  color: #0b0d12; /* default dark text like homepage */
+}
+.sk-centerpiece {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.sk-kicker {
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+.sk-title {
+  font-size: 48px;
+  margin: 0;
+}
+.sk-title span {
+  color: #ff62b7;
+  font-style: italic;
+}
+.sk-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px auto 40px;
+}
+.sk-chip {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #1f2937;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+.sk-ribbonTop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 84px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, rgba(78, 47, 255, 0.15));
+  filter: blur(8px);
+}
+.sk-ribbonBottom {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  transform: skewY(-2deg);
+  background: linear-gradient(180deg, #3159ff, #6aa0ff);
+  box-shadow: 0 10px 30px rgba(60, 90, 255, 0.25);
+}
+.sk-ticker {
+  white-space: nowrap;
+  color: #f8fbff; /* slightly lighter for contrast on blue */
+  font-family: ui-serif, Georgia, Times, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 14px 0;
+  animation: sk-scroll 30s linear infinite;
+}
+@keyframes sk-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

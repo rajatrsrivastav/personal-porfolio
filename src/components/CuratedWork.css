@@ -1,0 +1,117 @@
+.cw-section {
+  max-width: 1200px;
+  margin: 120px auto 40px; /* match section spacing used elsewhere */
+  padding: 0 24px;
+  color: #0b0d12; /* Light theme: default text color similar to homepage */
+}
+.cw-kicker {
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  color: #4b5563; /* muted gray like homepage subtext */
+  text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.cw-title {
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.2;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 40px;
+}
+.cw-title span {
+  background: linear-gradient(90deg, #ff62b7, #ffd277);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic; /* match About section accent */
+}
+.cw-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 32px;
+  align-items: start;
+}
+/* Add space between multiple project rows */
+.cw-grid + .cw-grid {
+  margin-top: 48px;
+}
+.cw-card {
+  background: linear-gradient(180deg, #ffffff, #f9fafb); /* Light card to match homepage */
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.cw-card:hover { box-shadow: 0 14px 32px rgba(15,23,42,0.10); transform: translateY(-2px); }
+.cw-cardHeader {
+  padding: 28px;
+  color: #111827; /* subtle light header */
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  font-size: 24px;
+  line-height: 1.2;
+  background: #f3f4f6; /* subtle light header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cw-arrow {
+  opacity: 0.7;
+}
+.cw-screenshotWrap {
+  padding: 22px;
+}
+.cw-screenshotFrame {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+.cw-screenshotFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cw-details {
+  padding-top: 12px;
+}
+.cw-project {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.cw-desc {
+  color: #4b5563; /* muted paragraph color */
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+.cw-points {
+  color: #4b5563;
+  display: grid;
+  gap: 8px;
+  padding-left: 18px;
+}
+.cw-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.cw-badge {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #1f2937; /* dark text for badges */
+  font-weight: 500;
+}
+@media (max-width: 980px) {
+  .cw-grid {
+    grid-template-columns: 1fr;
+  }
+}
