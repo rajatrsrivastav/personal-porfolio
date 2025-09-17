@@ -37,7 +37,7 @@ export default function HomeHero() {
 
         <a className="home-btn secondary" href="mailto:hello@aayushbharti.in">
           <Mail size={18} aria-hidden />
-          hello@aayushbharti.in
+          rajatrsrivastav810@gmail.com
         </a>
       </div>
 

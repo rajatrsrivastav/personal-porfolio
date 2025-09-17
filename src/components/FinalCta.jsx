@@ -25,7 +25,7 @@ export default function FinalCta() {
         <div className="fc-footerLeft">
           <div className="fc-footerLogo">AB</div>
           <p>
-            I'm Aayush - a full-stack developer, freelancer & problem solver.
+            I'm Rajat - a full-stack developer, freelancer & problem solver.
             Thanks for checking out my site!
           </p>
         </div>

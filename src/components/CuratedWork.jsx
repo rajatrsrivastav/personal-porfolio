@@ -24,8 +24,8 @@ export default function CuratedWork() {
       ],
     },
     {
-      title: "TaskFlow",
-      image: "lenmate.png", // swap with your real screenshot when ready
+      title: "ChatBot-Ai",
+      image: "chatBot.png",
       desc:
         "A team productivity app to plan, track, and automate workflows with real-time collaboration and granular permissions.",
       points: [
@@ -48,7 +48,6 @@ export default function CuratedWork() {
         <div key={p.title} className="cw-grid">
           {idx % 2 === 1 ? (
             <>
-              {/* Details first for alternating layout */}
               <aside className="cw-details">
                 <h3 className="cw-project">{p.title}</h3>
                 <p className="cw-desc">{p.desc}</p>
