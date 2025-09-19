@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowRight, Mail } from "lucide-react";
 import "./HomeHero.css";
 
-export default function HomeHero() {
+export default function HomeHero({ onOpenContact }) {
   return (
     <section className="home-hero" id="home">
       {/* <div className="home-badge">
@@ -22,12 +22,16 @@ export default function HomeHero() {
       </p>
 
       <div className="home-ctas">
-        <a className="home-btn primary" href="#contact">
+        <button
+          type="button"
+          className="home-btn primary"
+          onClick={onOpenContact}
+        >
           <span>Let's Connect</span>
           <span className="arrowCircle" aria-hidden>
             <ArrowRight size={18} />
           </span>
-        </a>
+        </button>
 
         <a className="home-btn secondary" href="mailto:rajatrsrivastav810@gmail.com">
           <Mail size={18} aria-hidden />
