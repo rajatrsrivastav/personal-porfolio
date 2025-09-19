@@ -1,13 +1,13 @@
 .cw-section {
   max-width: 1200px;
-  margin: 120px auto 40px; /* match section spacing used elsewhere */
+  margin: 120px auto 40px;
   padding: 0 24px;
-  color: #0b0d12; /* Light theme: default text color similar to homepage */
+  color: #0b0d12;
 }
 .cw-kicker {
   letter-spacing: 0.2em;
   font-size: 12px;
-  color: #4b5563; /* muted gray like homepage subtext */
+  color: #4b5563; 
   text-align: center;
   margin-bottom: 12px;
   text-transform: uppercase;
@@ -24,7 +24,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-style: italic; /* match About section accent */
+  font-style: italic; 
 }
 .cw-grid {
   display: grid;
@@ -32,12 +32,11 @@
   gap: 32px;
   align-items: start;
 }
-/* Add space between multiple project rows */
 .cw-grid + .cw-grid {
   margin-top: 48px;
 }
 .cw-card {
-  background: linear-gradient(180deg, #ffffff, #f9fafb); /* Light card to match homepage */
+  background: linear-gradient(180deg, #ffffff, #f9fafb);
   border: 1px solid #e5e7eb;
   border-radius: 18px;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
@@ -47,11 +46,11 @@
 .cw-card:hover { box-shadow: 0 14px 32px rgba(15,23,42,0.10); transform: translateY(-2px); }
 .cw-cardHeader {
   padding: 28px;
-  color: #111827; /* subtle light header */
+  color: #111827;
   font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
   font-size: 24px;
   line-height: 1.2;
-  background: #f3f4f6; /* subtle light header */
+  background: #f3f4f6;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,7 +84,7 @@
   margin: 0 0 12px;
 }
 .cw-desc {
-  color: #4b5563; /* muted paragraph color */
+  color: #4b5563; 
   line-height: 1.6;
   margin: 0 0 16px;
 }
@@ -107,7 +106,7 @@
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 12px;
-  color: #1f2937; /* dark text for badges */
+  color: #1f2937; 
   font-weight: 500;
 }
 @media (max-width: 980px) {

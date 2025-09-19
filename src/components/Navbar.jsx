@@ -12,11 +12,8 @@ export default function Navbar() {
           </a>
           <a href="#about">About</a>
           <a href="#work">Work</a>
-          <a href="#blog">Blog</a>
-          <a href="#more">More</a>
-          <a className="book" href="#call">
-            Book a Call
-          </a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
         </div>
         <div className="nb-kbd">⌘</div>
       </nav>

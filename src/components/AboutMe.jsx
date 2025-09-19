@@ -1,10 +1,10 @@
 import React from "react";
-import { Blocks } from "lucide-react";
+// Removed Blocks icon; using avatar illustration instead
 import "./AboutMe.css";
 
 export default function AboutMe() {
   return (
-    <section className="ab-section">
+    <section className="ab-section" id="about">
       <div className="ab-text">
         <div className="ab-kicker">KNOW ABOUT ME</div>
         <h2 className="ab-title">
@@ -24,7 +24,7 @@ export default function AboutMe() {
       </div>
       <div className="ab-art">
         <div className="ab-card">
-          <Blocks size={160} color="#eaeaf1" strokeWidth={1.2} />
+          <img src="/avatar.svg" alt="Avatar" width={400} height={400} style={{opacity:0.9}} />
         </div>
       </div>
     </section>

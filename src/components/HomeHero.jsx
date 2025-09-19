@@ -4,7 +4,7 @@ import "./HomeHero.css";
 
 export default function HomeHero() {
   return (
-    <section className="home-hero">
+    <section className="home-hero" id="home">
       {/* <div className="home-badge">
       </div> */}
 

@@ -6,7 +6,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: center;
-  color: #0b0d12; /* default dark text */
+  color: #0b0d12;
 }
 .ab-kicker {
   letter-spacing: 0.18em;

@@ -38,7 +38,7 @@ export default function CuratedWork() {
   ];
 
   return (
-    <section className="cw-section">
+    <section className="cw-section" id="work">
       <div className="cw-kicker">A selection of my work from concept to code.</div>
       <div className="cw-title">
         From Challenge to<span> Solution</span>

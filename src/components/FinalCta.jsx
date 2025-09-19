@@ -1,61 +1,61 @@
 import React from "react";
+import { Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 import "./FinalCta.css";
 
 export default function FinalCta() {
   return (
-    <section className="fc-wrap">
-      <div className="fc-top">
-        <h2 className="fc-title">
-          FROM CONCEPT TO <span>CREATION</span>
-          <br />
-          LET'S MAKE IT <span>HAPPEN!</span>
-        </h2>
-        <a className="fc-button" href="#contact">
-          Get In Touch <span>→</span>
-        </a>
-        <p className="fc-sub">
-          I'm available for full-time roles & freelance projects.
-        </p>
-        <p className="fc-sub2">
-          I thrive on crafting dynamic web applications, and delivering seamless
-          user experiences.
-        </p>
-      </div>
-      <div className="fc-footerCard">
-        <div className="fc-footerLeft">
-          <div className="fc-footerLogo">AB</div>
-          <p>
-            I'm Rajat - a full-stack developer, freelancer & problem solver.
-            Thanks for checking out my site!
+    <footer className="fc-footer" role="contentinfo" id="contact">
+      <div className="fc-inner">
+        <div className="fc-brandBlock">
+          <div className="fc-mark">RS</div>
+          <p className="fc-tagline">
+            Building performant, accessible web products with a focus on clean
+            engineering & thoughtful UX.
           </p>
+          <a href="mailto:rajatrsrivastav810@gmail.com" className="fc-email">
+            <Mail size={16} /> rajatrsrivastav810@gmail.com
+          </a>
         </div>
-        <div className="fc-cols">
-          <div>
-            <h4>General</h4>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Projects</a>
-            <a href="#">Blog</a>
+        <nav className="fc-navGroups" aria-label="Footer">
+          <div className="fc-group">
+            <h4>Site</h4>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#work">Projects</a>
+            <a href="#blog">Blog</a>
           </div>
-          <div>
-            <h4>Specifics</h4>
-            <a href="#">Guest Book</a>
-            <a href="#">Bucket List</a>
-            <a href="#">Uses</a>
+            <div className="fc-group">
+            <h4>Resources</h4>
+            <a href="#">Articles</a>
+            <a href="#">Snippets</a>
+            <a href="#">Changelog</a>
+            <a href="#">Newsletter</a>
+          </div>
+          <div className="fc-group">
+            <h4>More</h4>
+            <a href="#">Book a Call</a>
+            <a href="#">Open Source</a>
+            <a href="#">Stack</a>
             <a href="#">Attribution</a>
           </div>
-          <div>
-            <h4>More</h4>
-            <a href="#">Book a call</a>
-            <a href="#">Links</a>
-            <a href="#">RSS</a>
+          <div className="fc-group">
+            <h4>Social</h4>
+            <a href="https://github.com/" target="_blank" rel="noreferrer"><Github size={14}/> GitHub</a>
+            <a href="https://linkedin.com/" target="_blank" rel="noreferrer"><Linkedin size={14}/> LinkedIn</a>
+            <a href="#"><ExternalLink size={14}/> Resume</a>
           </div>
+        </nav>
+      </div>
+      <div className="fc-bottom">
+        <p>© {new Date().getFullYear()} Rajat Srivastav. All rights reserved.</p>
+        <div className="fc-bottomLinks">
+          <a href="#">Privacy</a>
+          <span aria-hidden>•</span>
+          <a href="#">Terms</a>
+          <span aria-hidden>•</span>
+          <a href="#">Sitemap</a>
         </div>
       </div>
-      <div className="fc-legal">
-        © 2025 Aayush Bharti. All rights reserved • Privacy Policy • Terms &
-        Conditions
-      </div>
-    </section>
+    </footer>
   );
 }
