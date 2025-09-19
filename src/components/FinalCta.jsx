@@ -7,7 +7,9 @@ export default function FinalCta() {
     <footer className="fc-footer" role="contentinfo" id="contact">
       <div className="fc-inner">
         <div className="fc-brandBlock">
-          <div className="fc-mark">RS</div>
+          <div className="fc-mark fc-mark--image">
+            <img src="/logo.png" alt="Logo" />
+          </div>
           <p className="fc-tagline">
             Building performant, accessible web products with a focus on clean
             engineering & thoughtful UX.

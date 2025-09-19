@@ -5,7 +5,9 @@ export default function Navbar() {
   return (
     <header className="nb-wrap">
       <nav className="nb-nav">
-        <div className="nb-brand">RS</div>
+        <a className="nb-brand" href="#home" aria-label="Rajat Srivastav home">
+          <img src="/logo.png" alt="Logo" className="nb-logo" />
+        </a>
         <div className="nb-pill">
           <a className="active" href="#home">
             Home

@@ -73,6 +73,11 @@
 .home-heading em {
   font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
   font-style: italic;
+  background: linear-gradient(90deg, #ff62b7, #ffd277);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
 }
 .home-sub {
   color: #4b5563;

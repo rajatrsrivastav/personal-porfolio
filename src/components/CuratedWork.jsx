@@ -45,7 +45,8 @@ export default function CuratedWork() {
       </div>
 
       {projects.map((p, idx) => (
-        <div key={p.title} className="cw-grid">
+        <div key={p.title} className="cw-fullRow">
+          <div className="cw-grid">
           {idx % 2 === 1 ? (
             <>
               <aside className="cw-details">
@@ -105,6 +106,7 @@ export default function CuratedWork() {
               </aside>
             </>
           )}
+          </div>
         </div>
       ))}
     </section>
