@@ -20,13 +20,13 @@ export default function ContactModal({ open, onClose }) {
       <div className="contact-shell">
         <button className="contact-close" onClick={onClose} aria-label="Close contact panel"><X size={18} /></button>
         <div className="contact-socials">
-          <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noreferrer"><Linkedin size={18} /></a>
-          <a href="https://github.com" aria-label="GitHub" target="_blank" rel="noreferrer"><Github size={18} /></a>
-          <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noreferrer"><Twitter size={18} /></a>
+          <a href="https://www.linkedin.com/in/rajatrsrivastav/" aria-label="LinkedIn" target="_blank" rel="noreferrer"><Linkedin size={18} /></a>
+          <a href="https://github.com/rajatrsrivastav" aria-label="GitHub" target="_blank" rel="noreferrer"><Github size={18} /></a>
+          <a href="https://x.com/rajatrsrivastav" aria-label="Twitter" target="_blank" rel="noreferrer"><Twitter size={18} /></a>
         </div>
         <div className="contact-grid single">
           <a className="contact-card email" href="mailto:rajatrsrivastav810@gmail.com">
-            <div className="card-head"><Mail size={22}/> <h3>Email</h3></div>
+            <div className="card-head"><Mail size={22}/> <h3 className="emailText">Email</h3></div>
             <div className="card-body">
               <p className="primary">rajatrsrivastav810@gmail.com</p>
               <p className="secondary">Send me an email directly</p>
@@ -42,7 +42,7 @@ export default function ContactModal({ open, onClose }) {
             <button className="submit">Send</button>
           </form>
         </div>
-        <div className="contact-availability"><span className="dot"/> Currently offline · Available for opportunities · Mumbai, India</div>
+        {/* <div className="contact-availability"><span className="dot"/> Currently offline · Available for opportunities · Mumbai, India</div> */}
       </div>
     </div>
   );

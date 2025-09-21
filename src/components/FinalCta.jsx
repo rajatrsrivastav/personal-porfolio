@@ -27,9 +27,9 @@ export default function FinalCta() {
             </div>
             <div className="fc-col">
               <h4>Social</h4>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
-              <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer">Twitter</a>
+              <a href="https://www.linkedin.com/in/rajatrsrivastav/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href="https://github.com/rajatrsrivastav" target="_blank" rel="noreferrer">GitHub</a>
+              <a href="https://x.com/rajatrsrivastav" target="_blank" rel="noreferrer">Twitter</a>
             </div>
           </div>
         </div>
