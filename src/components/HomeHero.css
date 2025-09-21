@@ -129,6 +129,30 @@
   border: 1px solid #e5e7eb;
   background: #ffffff;
 }
+/* Single email copy button variants */
+.email-copy-btn { position:relative; }
+.email-copy-btn .email-text { white-space:nowrap; }
+.email-copy-btn .copy-status { position:absolute; right:10px; top:-10px; font-size:11px; font-weight:600; color:#059669; }
+.email-copy-btn.is-copied { border-color:#10b981; box-shadow:0 0 0 1px rgba(16,185,129,0.4); }
+[data-theme='dark'] .email-copy-btn.is-copied { border-color:#059669; box-shadow:0 0 0 1px rgba(5,150,105,0.55); }
+.home-btn.learn-more { position:relative; overflow:hidden; padding:0; width:13rem; height:3.2rem; background:transparent; box-shadow:none; border-radius:1.75rem; border:1px solid #e5e7eb; transition:border-color .35s, box-shadow .35s; }
+.home-btn.learn-more .circle { transition: all 0.45s cubic-bezier(0.65,0,0.076,1); position:relative; display:block; margin:0; width:3.2rem; height:3.2rem; background:#282936; border-radius:1.75rem; box-shadow:0 6px 18px rgba(0,0,0,0.18); }
+.home-btn.learn-more .circle .icon { transition: all 0.45s cubic-bezier(0.65,0,0.076,1); position:absolute; top:0; bottom:0; margin:auto; background:#fff; }
+.home-btn.learn-more .circle .icon.arrow { left:0.75rem; width:1.15rem; height:0.14rem; background:none; }
+.home-btn.learn-more .circle .icon.arrow:before { content:""; position:absolute; top:-0.3rem; right:0.05rem; width:0.65rem; height:0.65rem; border-top:0.14rem solid #fff; border-right:0.14rem solid #fff; transform:rotate(45deg); }
+.home-btn.learn-more .button-text { transition: all 0.45s cubic-bezier(0.65,0,0.076,1); position:absolute; inset:0; padding:0.85rem 0; margin:0 0 0 2.05rem; font-weight:600; line-height:1.6; text-transform:none; letter-spacing:0.3px; color:#0b0d12; display:flex; align-items:center; justify-content:center; font-size:15px; }
+.home-btn.learn-more:hover .circle { width:100%; }
+.home-btn.learn-more:hover { border-color:#d1d5db; box-shadow:0 4px 18px rgba(15,23,42,0.08); }
+.home-btn.learn-more:hover .circle .icon.arrow { background:#fff; transform:translate(1rem,0); }
+.home-btn.learn-more:hover .button-text { color:#fff; }
+
+/* Integrate with theme tokens */
+[data-theme='dark'] .home-btn.learn-more { border-color:#2a323c; }
+[data-theme='dark'] .home-btn.learn-more .circle { background:#1d242b; }
+[data-theme='dark'] .home-btn.learn-more:hover { border-color:#3a4550; box-shadow:0 4px 20px rgba(0,0,0,0.55); }
+[data-theme='dark'] .home-btn.learn-more .button-text { color:var(--text); }
+[data-theme='dark'] .home-btn.learn-more:hover .button-text { color:#fff; }
+[data-theme='dark'] .home-btn.learn-more .circle .icon.arrow:before { border-color:#fff; }
 .home-horizon {
   display: none;
 }

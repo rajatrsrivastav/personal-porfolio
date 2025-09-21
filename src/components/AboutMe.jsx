@@ -1,5 +1,4 @@
 import React from "react";
-// Removed Blocks icon; using avatar illustration instead
 import "./AboutMe.css";
 
 export default function AboutMe() {
