@@ -64,11 +64,9 @@
   border-radius: 18px;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
   overflow: hidden;
-  transition: box-shadow 200ms ease, transform 200ms ease;
 }
 .cw-card:hover {
   box-shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
-  transform: translateY(-2px);
 }
 .cw-cardHeader {
   padding: 28px;
@@ -100,6 +98,44 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* macOS Window Controls */
+.cw-windowControls {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+.cw-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.cw-dot-red {
+  background: #ff5f56;
+  background: linear-gradient(135deg, #ff6058 0%, #ff4a47 100%);
+}
+.cw-dot-yellow {
+  background: #ffbd2e;
+  background: linear-gradient(135deg, #ffca3a 0%, #ffb700 100%);
+}
+.cw-dot-green {
+  background: #27ca3f;
+  background: linear-gradient(135deg, #32d74b 0%, #28ca42 100%);
+}
+
+/* Hover effects for window controls */
+.cw-card:hover .cw-dot {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark theme window controls */
+[data-theme='dark'] .cw-dot {
+  border-color: rgba(255, 255, 255, 0.1);
 }
 .cw-details {
   padding-top: 12px;
