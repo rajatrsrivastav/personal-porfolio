@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Mail } from "lucide-react";
+import { Mail,Copy } from "lucide-react";
 import "./HomeHero.css";
 
 export default function HomeHero({ onOpenContact }) {
@@ -60,6 +60,7 @@ export default function HomeHero({ onOpenContact }) {
         >
           <Mail size={18} aria-hidden />
           <span className="email-text">{email}</span>
+          <Copy />
           <span className="copy-status" aria-live="polite">{copied ? 'Copied!' : ''}</span>
         </button>
       </div>
