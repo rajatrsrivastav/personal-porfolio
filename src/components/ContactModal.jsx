@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { Mail, X, Linkedin, Github, Twitter } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { X, Linkedin, Github, Twitter } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
 import './ContactModal.css';
 
 export default function ContactModal({ open, onClose }) {
@@ -13,6 +14,16 @@ export default function ContactModal({ open, onClose }) {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
+  const [state, handleSubmit] = useForm("xvgdzbdg");
+  const formRef = useRef(null);
+
+  // Reset form when submission succeeds
+  useEffect(() => {
+    if (state.succeeded && formRef.current) {
+      formRef.current.reset();
+    }
+  }, [state.succeeded]);
+
   if (!open) return null;
 
   return (
@@ -25,24 +36,21 @@ export default function ContactModal({ open, onClose }) {
           <a href="https://x.com/rajatrsrivastav" aria-label="Twitter" target="_blank" rel="noreferrer"><Twitter size={18} /></a>
         </div>
         <div className="contact-grid single">
-          <a className="contact-card email" href="mailto:rajatrsrivastav810@gmail.com">
-            <div className="card-head"><Mail size={22}/> <h3 className="emailText">Email</h3></div>
-            <div className="card-body">
-              <p className="primary">rajatrsrivastav810@gmail.com</p>
-              <p className="secondary">Send me an email directly</p>
-            </div>
-          </a>
-          <form className="contact-form in-grid" onSubmit={e=>e.preventDefault()}>
+          <form className="contact-form full" onSubmit={handleSubmit} method="POST">
             <div className="form-row">
-              <label>Name<input required/></label>
-              <label>Email<input type="email" required/></label>
+              <label>Name<input name="name" required/></label>
+              <label>Email<input type="email" name="email" required/></label>
             </div>
-            <label>Subject<input required/></label>
-            <label>Message<textarea rows={4} required/></label>
-            <button className="submit">Send</button>
+            <label>Subject<input name="subject" required/></label>
+            <label>Message<textarea rows={4} name="message" required/></label>
+            <button className="submit" type="submit" disabled={state.submitting}>
+              {state.submitting ? 'Sending...' : 'Send'}
+            </button>
+            <ValidationError errors={state.errors} />
           </form>
         </div>
-        {/* <div className="contact-availability"><span className="dot"/> Currently offline · Available for opportunities · Mumbai, India</div> */}
+        <p className="form-note">Submitting this form will send me an email.</p>
+        <div className="contact-availability"><span className="dot"/> Currently offline · Available for opportunities · Mumbai, India</div>
       </div>
     </div>
   );
