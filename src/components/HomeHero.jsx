@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Mail,Copy } from "lucide-react";
+import { Mail } from "lucide-react";
 import "./HomeHero.css";
 
 export default function HomeHero({ onOpenContact }) {
@@ -27,7 +27,7 @@ export default function HomeHero({ onOpenContact }) {
       {/* <div className="home-badge">
       </div> */}
 
-      <h1 className="home-heading">
+      <h1 className="home-heading" data-lenis-speed="0.8">
         I build seamless <em>digital experiences</em> 
         <br />
         from real-world challenges.
@@ -35,7 +35,7 @@ export default function HomeHero({ onOpenContact }) {
         <em>experiences & solutions</em> */}
       </h1>
 
-      <p className="home-sub">
+      <p className="home-sub" data-lenis-speed="0.6">
         Hello, I'm Rajat Srivastav
         a Full Stack Developer
       </p>
@@ -60,7 +60,6 @@ export default function HomeHero({ onOpenContact }) {
         >
           <Mail size={18} aria-hidden />
           <span className="email-text">{email}</span>
-          <Copy />
           <span className="copy-status" aria-live="polite">{copied ? 'Copied!' : ''}</span>
         </button>
       </div>
