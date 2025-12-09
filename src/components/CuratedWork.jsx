@@ -25,24 +25,21 @@ export default function CuratedWork() {
   ],
 },
     {
-  title: "LendMate",
-  image: "lendmate.png",
+  title: "EduNerve AI",
+  image: "edunerve.png",
   desc:
-    "A peer-to-peer lending platform that connects underbanked individuals and MSMEs with lenders, providing a secure, transparent, and accessible financial ecosystem built on a modern tech stack.",
-    hosted_link:"https://lend-mate.vercel.app/",
+    "AI-powered learning and interview-preparation platform featuring interactive quizzes, real-time mock interviews, and guided learning paths",
+    hosted_link:"https://edu-nerve-ai-frontend-liard.vercel.app",
   points: [
-    "Developed a borrower credibility system with dynamic trust scores",
-    "Designed secure REST APIs to manage the complete lifecycle of financial transactions",
-    "Built a responsive, scalable interface for loan and investment management",
+    "Developed  customizable mock interview engine using Vapi, Express, Prisma, and PostgreSQL with role-specific,behavior-based, and topic-focused simulations",
+    "Implemented dynamic quiz generation using LLM prompting, offering scoring, explanations, and progress tracking tailored to each user’s performance",
   ],
   tags: [
-    "React",
-    "Express.js",
-    "Node.js",
-    "PostgreSQL",
-    "Prisma",
-    "JWT",
-    "CSS",
+   " Next.js",
+   "Node.js",
+   "PostgreSQL",
+   "Prisma",
+   "Vapi"
   ],
 },
   ];

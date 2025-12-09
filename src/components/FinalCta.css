@@ -1,34 +1,137 @@
 /* Simplified flat footer */
-.fc-footer { margin-top:120px; padding:60px 24px 28px; background:#f9fafb; color:#374151; }
-.fc-grid { max-width:1100px; margin:0 auto; display:grid; gap:48px; grid-template-columns: minmax(220px,340px) 1fr; }
-.fc-brandCol { display:flex; flex-direction:column; gap:14px; }
-.fc-logo { width:56px; height:56px; object-fit:contain; border-radius:12px; background:#fff; border:1px solid #e5e7eb; padding:6px; }
-.fc-intro { font-size:.9rem; line-height:1.5; color:#4b5563; max-width:300px; }
-.fc-socialRow { display:flex; gap:12px; }
-.fc-socialRow a { color:#6b7280; display:inline-flex; padding:6px; border-radius:8px; transition:background .25s,color .25s; }
-.fc-socialRow a:hover { background:#eef2f7; color:#111827; }
-.fc-linksCol { display:grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap:2rem; }
-.fc-col { display:flex; flex-direction:column; gap:6px; }
-.fc-col h4 { margin:0 0 4px; font-size:.75rem; text-transform:uppercase; letter-spacing:.5px; font-weight:600; color:#6b7280; }
-.fc-col a { text-decoration:none; font-size:.85rem; color:#374151; position:relative; padding:2px 0; }
-.fc-col a:hover { color:#111827; }
-.fc-bottomBar { max-width:1100px; margin:30px auto 0; padding-top:18px; border-top:1px solid #e5e7eb; font-size:.72rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; color:#6b7280; }
+.fc-footer {
+  margin-top: 120px;
+  padding: 60px 24px 28px;
+  background: #f9fafb;
+  color: #374151;
+}
+.fc-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 48px;
+  grid-template-columns: minmax(220px, 340px) 1fr;
+}
+.fc-brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.fc-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 6px;
+}
+.fc-intro {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #4b5563;
+  max-width: 300px;
+}
+.fc-socialRow {
+  display: flex;
+  gap: 12px;
+}
+.fc-socialRow a {
+  color: #6b7280;
+  display: inline-flex;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.25s, color 0.25s;
+}
+.fc-socialRow a:hover {
+  background: #eef2f7;
+  color: #111827;
+}
+.fc-linksCol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2rem;
+}
+.fc-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fc-col h4 {
+  margin: 0 0 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: #6b7280;
+}
+.fc-col a {
+  text-decoration: none;
+  font-size: 0.85rem;
+  color: #374151;
+  position: relative;
+  padding: 2px 0;
+}
+.fc-col a:hover {
+  color: #111827;
+}
+.fc-bottomBar {
+  max-width: 1100px;
+  margin: 30px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.72rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #6b7280;
+}
 
 /* Dark theme */
-[data-theme='dark'] .fc-footer { background:#0f1418; color:var(--text); }
-[data-theme='dark'] .fc-intro { color:#9ca3af; }
-[data-theme='dark'] .fc-bottomBar { border-color:#1f262c; color:#6b7a86; }
-[data-theme='dark'] .fc-col a { color:#9ca3af; }
-[data-theme='dark'] .fc-col a:hover { color:#fff; }
-[data-theme='dark'] .fc-socialRow a { color:#8b98a5; }
-[data-theme='dark'] .fc-socialRow a:hover { background:#1f262c; color:#fff; }
-[data-theme='dark'] .fc-logo { background:#1a2229; border-color:#273038; }
-
-@media (max-width:900px){
-  .fc-grid { grid-template-columns:1fr; }
+[data-theme="dark"] .fc-footer {
+  background: #0f1418;
+  color: var(--text);
 }
-@media (max-width:560px){
-  .fc-footer { padding:50px 18px 24px; }
-  .fc-grid { gap:36px; }
-  .fc-bottomBar { justify-content:center; text-align:center; }
+[data-theme="dark"] .fc-intro {
+  color: #9ca3af;
+}
+[data-theme="dark"] .fc-bottomBar {
+  border-color: #1f262c;
+  color: #6b7a86;
+}
+[data-theme="dark"] .fc-col a {
+  color: #9ca3af;
+}
+[data-theme="dark"] .fc-col a:hover {
+  color: #fff;
+}
+[data-theme="dark"] .fc-socialRow a {
+  color: #8b98a5;
+}
+[data-theme="dark"] .fc-socialRow a:hover {
+  background: #1f262c;
+  color: #fff;
+}
+[data-theme="dark"] .fc-logo {
+  background: #1a2229;
+  border-color: #273038;
+}
+
+@media (max-width: 900px) {
+  .fc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .fc-footer {
+    padding: 50px 18px 24px;
+  }
+  .fc-grid {
+    gap: 36px;
+  }
+  .fc-bottomBar {
+    justify-content: center;
+    text-align: center;
+  }
 }

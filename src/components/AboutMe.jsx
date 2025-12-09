@@ -26,7 +26,7 @@ export default function AboutMe() {
         <p>I believe in waking up each day eager to make a difference!</p>
         <button
           className="ab-cta"
-          onClick={() => window.open("/resume.pdf", "_blank")}
+          onClick={() => window.open("https://drive.google.com/file/d/1roOv_PUeWRXVCp8YRL5wlUpXvB294kmA/view?usp=sharing", "_blank")}
         >
           Download Resume →
         </button>
