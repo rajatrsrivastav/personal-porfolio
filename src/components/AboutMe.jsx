@@ -17,18 +17,17 @@ export default function AboutMe() {
           solving complex problems through clean, efficient, and modern code.
         </p>
         <p>
-          My expertise spans JavaScript, TypeScript, React.js, Next.js, Node.js,
-          Express.js, PostgreSQL, MongoDB, MySQL, and Prisma ORM, along with
-          experience in REST APIs, WebSockets, and real-time systems. I also
-          explore AI/ML and Web3 to stay at the forefront of modern
-          technologies.
+          My expertise spans JavaScript, TypeScript, React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, MySQL, and Prisma ORM, supported by hands-on experience building scalable architectures using REST APIs, WebSockets, and real-time systems.
+        </p>
+        <p>
+          I also work actively with Python, focusing on Generative AI, including LangChain, LangGraph, and LLM-powered applications. Beyond this, I consistently explore emerging fields like AI/ML and Web3 to stay at the forefront of modern technologies and deliver innovative, high-impact solutions.
         </p>
         <p>I believe in waking up each day eager to make a difference!</p>
         <button
           className="ab-cta"
           onClick={() => window.open("https://drive.google.com/file/d/1roOv_PUeWRXVCp8YRL5wlUpXvB294kmA/view?usp=sharing", "_blank")}
         >
-          Download Resume →
+          Download Resume <span className="arrow">→</span>
         </button>
       </div>
       <div className="ab-art">
