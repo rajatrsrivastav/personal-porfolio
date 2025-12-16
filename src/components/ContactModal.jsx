@@ -1,9 +1,34 @@
-import React, { useEffect, useRef } from 'react';
-import { X, Linkedin, Github, Twitter } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { X, Linkedin, Github, Twitter, Check, Send, MapPin, ArrowUpRight } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
 import './ContactModal.css';
 
+// Toast component
+function Toast({ message, show, onClose }) {
+  useEffect(() => {
+    if (show) {
+      const timer = setTimeout(onClose, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [show, onClose]);
+
+  if (!show) return null;
+
+  return (
+    <div className="toast">
+      <div className="toast-icon-wrap">
+        <Check size={14} />
+      </div>
+      <span className="toast-text">{message}</span>
+    </div>
+  );
+}
+
 export default function ContactModal({ open, onClose }) {
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [state, handleSubmit] = useForm("xvgdzbdg");
+  const formRef = useRef(null);
 
   useEffect(() => {
     if (open) {
@@ -14,44 +39,150 @@ export default function ContactModal({ open, onClose }) {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  const [state, handleSubmit] = useForm("xvgdzbdg");
-  const formRef = useRef(null);
-
-  // Reset form when submission succeeds
   useEffect(() => {
     if (state.succeeded && formRef.current) {
       formRef.current.reset();
+      setToastMessage("Message sent successfully!");
+      setShowToast(true);
     }
   }, [state.succeeded]);
 
   if (!open) return null;
 
   return (
-    <div className="contact-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-heading">
-      <div className="contact-shell">
-        <button className="contact-close" onClick={onClose} aria-label="Close contact panel"><X size={18} /></button>
-        <div className="contact-socials">
-          <a href="https://www.linkedin.com/in/rajatrsrivastav/" aria-label="LinkedIn" target="_blank" rel="noreferrer"><Linkedin size={18} /></a>
-          <a href="https://github.com/rajatrsrivastav" aria-label="GitHub" target="_blank" rel="noreferrer"><Github size={18} /></a>
-          <a href="https://x.com/rajatrsrivastav" aria-label="Twitter" target="_blank" rel="noreferrer"><Twitter size={18} /></a>
+    <>
+      <Toast 
+        message={toastMessage} 
+        show={showToast} 
+        onClose={() => setShowToast(false)} 
+      />
+      
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
+          
+          {/* Close button */}
+          <button className="modal-close" onClick={onClose} aria-label="Close">
+            <X size={16} />
+          </button>
+
+          {/* Header */}
+          <div className="modal-header">
+            <h2 className="modal-title">Let's <em>connect</em></h2>
+            <p className="modal-subtitle">Have a project in mind? I'd love to hear from you.</p>
+          </div>
+
+          {/* Content grid */}
+          <div className="modal-content">
+            
+            {/* Form */}
+            <form className="modal-form" onSubmit={handleSubmit} ref={formRef}>
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input 
+                  id="name"
+                  name="name" 
+                  type="text"
+                  placeholder="Your name"
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input 
+                  id="email"
+                  name="email" 
+                  type="email"
+                  placeholder="you@example.com"
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="subject">Subject</label>
+                <input 
+                  id="subject"
+                  name="subject" 
+                  type="text"
+                  placeholder="What's this about?"
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea 
+                  id="message"
+                  name="message" 
+                  rows={4}
+                  placeholder="Tell me about your project..."
+                  required 
+                />
+              </div>
+              
+              <button className="form-submit" type="submit" disabled={state.submitting}>
+                <span>{state.submitting ? 'Sending...' : 'Send Message'}</span>
+                <Send size={14} />
+              </button>
+              
+              <ValidationError errors={state.errors} />
+            </form>
+
+            {/* Sidebar */}
+            <aside className="modal-sidebar">
+              <div className="sidebar-section">
+                <h4>Connect with me</h4>
+                <div className="social-links">
+                  <a 
+                    href="https://www.linkedin.com/in/rajatrsrivastav/" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="social-btn"
+                  >
+                    <Linkedin size={16} />
+                    <span>LinkedIn</span>
+                    <ArrowUpRight size={12} className="social-arrow" />
+                  </a>
+                  <a 
+                    href="https://github.com/rajatrsrivastav" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="social-btn"
+                  >
+                    <Github size={16} />
+                    <span>GitHub</span>
+                    <ArrowUpRight size={12} className="social-arrow" />
+                  </a>
+                  <a 
+                    href="https://x.com/rajatrsrivastav" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="social-btn"
+                  >
+                    <Twitter size={16} />
+                    <span>Twitter/X</span>
+                    <ArrowUpRight size={12} className="social-arrow" />
+                  </a>
+                </div>
+              </div>
+
+              <div className="sidebar-section">
+                <h4>Location</h4>
+                <div className="location-info">
+                  <MapPin size={14} />
+                  <span>Mumbai, India</span>
+                </div>
+              </div>
+
+              <div className="availability-badge">
+                <span className="status-dot" />
+                <span>Available for opportunities</span>
+              </div>
+            </aside>
+          </div>
+
         </div>
-        <div className="contact-grid single">
-          <form className="contact-form full" onSubmit={handleSubmit} method="POST">
-            <div className="form-row">
-              <label>Name<input name="name" required/></label>
-              <label>Email<input type="email" name="email" required/></label>
-            </div>
-            <label>Subject<input name="subject" required/></label>
-            <label>Message<textarea rows={4} name="message" required/></label>
-            <button className="submit" type="submit" disabled={state.submitting}>
-              {state.submitting ? 'Sending...' : 'Send'}
-            </button>
-            <ValidationError errors={state.errors} />
-          </form>
-        </div>
-        <p className="form-note">Submitting this form will send me an email.</p>
-        <div className="contact-availability"><span className="dot"/> Currently offline · Available for opportunities · Mumbai, India</div>
       </div>
-    </div>
+    </>
   );
 }

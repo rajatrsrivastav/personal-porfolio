@@ -1,49 +1,86 @@
 import React from "react";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import "./FinalCta.css";
 
 export default function FinalCta() {
+  const currentYear = new Date().getFullYear();
+  
   return (
-    <footer className="fc-footer" role="contentinfo" id="contact">
-      <div className="fc-grid">
-        <div className="fc-brandCol">
-          <img className="fc-logo" src="/logo.png" alt="Logo" />
-          <p className="fc-intro">I'm Rajat – a full‑stack developer & problem solver. Thanks for visiting!</p>
-          <div className="fc-socialRow">
-            <a href="https://www.linkedin.com/in/rajatrsrivastav/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+    <footer className="footer" role="contentinfo" id="contact">
+      <div className="footer-container">
+        {/* Main content */}
+        <div className="footer-main">
+          <div className="footer-brand">
+            <img className="footer-logo" src="/logo.png" alt="Rajat Srivastav" />
+            <div className="footer-info">
+              <h3 className="footer-name">Rajat Srivastav</h3>
+              <p className="footer-role">Full-Stack Developer</p>
+            </div>
+          </div>
+          
+          <p className="footer-tagline">
+            Building seamless digital experiences from real-world challenges.
+          </p>
+          
+          <div className="footer-location">
+            <MapPin size={14} />
+            <span>Mumbai, India</span>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="footer-nav" aria-label="Footer navigation">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#work">Projects</a>
+          <a href="#skills">Skills</a>
+        </nav>
+
+        {/* Social & Contact */}
+        <div className="footer-connect">
+          <div className="footer-socials">
+            <a 
+              href="https://www.linkedin.com/in/rajatrsrivastav/" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="LinkedIn"
+              className="social-link"
+            >
               <Linkedin size={18} />
             </a>
-            <a href="https://github.com/rajatrsrivastav" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <a 
+              href="https://github.com/rajatrsrivastav" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="GitHub"
+              className="social-link"
+            >
               <Github size={18} />
             </a>
-            <a href="https://x.com/rajatrsrivastav" target="_blank" rel="noreferrer" aria-label="Twitter/X">
+            <a 
+              href="https://x.com/rajatrsrivastav" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="Twitter/X"
+              className="social-link"
+            >
               <Twitter size={18} />
             </a>
           </div>
-        </div>
-        <div className="fc-linksCol">
-          <div className="fc-col">
-            <h4>General</h4>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#work">Projects</a>
-            <a href="#skills">Skills</a>
-          </div>
-          <div className="fc-col">
-            <h4>More</h4>
-            <a href="#">Open Source</a>
-            <a href="#">Stack</a>
-            <a href="#">Attribution</a>
-          </div>
-          <div className="fc-col">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms</a>
-          </div>
+          
+          <a href="mailto:rajatrsrivastav810@gmail.com" className="footer-email">
+            <Mail size={14} />
+            <span>rajatrsrivastav810@gmail.com</span>
+            <ArrowUpRight size={12} className="email-arrow" />
+          </a>
         </div>
       </div>
-      <div className="fc-bottomBar">
-        <div className="fc-bottomLeft">© {new Date().getFullYear()} Rajat Srivastav. All rights reserved.</div>
+
+      {/* Bottom bar */}
+      <div className="footer-bottom">
+        <span>© {currentYear} Rajat Srivastav</span>
+        <span className="footer-divider">·</span>
+        <span>All rights reserved</span>
       </div>
     </footer>
   );
