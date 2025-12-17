@@ -89,7 +89,7 @@ export default function CuratedWork() {
                         <span className="cw-dot cw-dot-yellow"></span>
                         <span className="cw-dot cw-dot-green"></span>
                       </div>
-                     <a href={p.hosted_link}><img src={p.image} alt={`${p.title} screenshot`} /></a>
+                     <a href={p.hosted_link} target="_blank" rel="noopener noreferrer"><img src={p.image} alt={`${p.title} screenshot`} /></a>
                     </div>
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export default function CuratedWork() {
                         <span className="cw-dot cw-dot-yellow"></span>
                         <span className="cw-dot cw-dot-green"></span>
                       </div>
-                      <a href={p.hosted_link}><img src={p.image} alt={`${p.title} screenshot`} /></a>
+                      <a href={p.hosted_link} target="_blank" rel="noopener noreferrer"><img src={p.image} alt={`${p.title} screenshot`} /></a>
                     </div>
                   </div>
                 </div>
