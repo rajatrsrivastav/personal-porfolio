@@ -11,16 +11,14 @@ export default function AboutMe() {
           <span>everything</span>
         </h2>
         <p>
-          I'm Rajat Srivastav, a second-year student and full-stack developer
-          passionate about building scalable and impactful web applications.
-          From crafting seamless frontends to designing robust backends, I enjoy
-          solving complex problems through clean, efficient, and modern code.
+          I’m Rajat Srivastav, a second-year B.Tech CSE (AI & DS) student and a full-stack developer passionate about building scalable, reliable, and impactful web applications.
+          I enjoy solving complex problems through clean, efficient, and modern code.
         </p>
         <p>
-          My expertise spans JavaScript, TypeScript, React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, MySQL, and Prisma ORM, supported by hands-on experience building scalable architectures using REST APIs, WebSockets, and real-time systems.
+          My technical skill set includes JavaScript, TypeScript, React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, MySQL, and Prisma ORM, with hands-on experience building scalable architectures using REST APIs, AI workflows using LangChain and LangGraph.
         </p>
         <p>
-          I also work actively with Python, focusing on Generative AI, including LangChain, LangGraph, and LLM-powered applications. Beyond this, I consistently explore emerging fields like AI/ML and Web3 to stay at the forefront of modern technologies and deliver innovative, high-impact solutions.
+          Alongside web technologies, I’m passionate about problem solving and AI/ML, applying data structures, algorithms, and structured AI workflows to design efficient, reliable, and maintainable solutions for real-world use cases.
         </p>
         <p>I believe in waking up each day eager to make a difference!</p>
         <button

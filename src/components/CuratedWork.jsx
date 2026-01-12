@@ -19,29 +19,51 @@ export default function CuratedWork() {
     "MongoDB",
     "langchain",
     "langraph",
-    "pythhon",
+    "python",
     "Google Auth",
     "Tailwind CSS",
   ],
 },
-    {
-  title: "EduNerve AI",
-  image: "edunerve.png",
+//     {
+//   title: "EduNerve AI",
+//   image: "edunerve.png",
+//   desc:
+//     "AI-powered learning and interview-preparation platform featuring interactive quizzes, real-time mock interviews, and guided learning paths",
+//     hosted_link:"https://edu-nerve-ai-frontend-liard.vercel.app",
+//   points: [
+//     "Developed  customizable mock interview engine using Vapi, Express, Prisma, and PostgreSQL with role-specific,behavior-based, and topic-focused simulations",
+//     "Implemented dynamic quiz generation using LLM prompting, offering scoring, explanations, and progress tracking tailored to each user’s performance",
+//   ],
+//   tags: [
+//    " Next.js",
+//    "Node.js",
+//    "PostgreSQL",
+//    "Prisma",
+//    "Vapi"
+//   ],
+// },
+{
+  title: "Smart Parking System",
+  image: "/smartParking.png",
   desc:
-    "AI-powered learning and interview-preparation platform featuring interactive quizzes, real-time mock interviews, and guided learning paths",
-    hosted_link:"https://edu-nerve-ai-frontend-liard.vercel.app",
+    "A modern, mobile-first Smart Parking System web application that streamlines valet parking operations with role-based dashboards for users, drivers, managers, and super admins.",
+  hosted_link: "https://smart-parking-system-sigma.vercel.app/",
   points: [
-    "Developed  customizable mock interview engine using Vapi, Express, Prisma, and PostgreSQL with role-specific,behavior-based, and topic-focused simulations",
-    "Implemented dynamic quiz generation using LLM prompting, offering scoring, explanations, and progress tracking tailored to each user’s performance",
+    "Built a full-stack smart parking system with role-based dashboards enabling users to park and retrieve vehicles, while allowing drivers and managers to monitor and manage operations.",
+    "Designed and integrated a PostgreSQL database using Supabase to manage parking slots, sessions, payments, and operational data with consistency and scalability.",
   ],
   tags: [
-   " Next.js",
-   "Node.js",
-   "PostgreSQL",
-   "Prisma",
-   "Vapi"
+    "Next.js",
+    "TanStack Query",
+    "Express.js",
+    "PostgreSQL",
+    "Supabase",
+    "REST API",
+    "Tailwind CSS",
+    "TypeScript"
   ],
-},
+}
+
   ];
 
   return (
