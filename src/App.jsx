@@ -3,6 +3,7 @@ import Lenis from 'lenis'
 import CuratedWork from './components/CuratedWork'
 import Skills from './components/Skills'
 import AboutMe from './components/AboutMe'
+import Experience from './components/Experience'
 import FinalCta from './components/FinalCta'
 import HomeHero from './components/HomeHero'
 import Navbar from './components/Navbar'
@@ -40,6 +41,7 @@ function App() {
       <Navbar onOpenContact={() => setContactOpen(true)} />
       <HomeHero onOpenContact={() => setContactOpen(true)} />
       <AboutMe />
+      <Experience />
       <CuratedWork />
       <Skills/>
       <FinalCta />

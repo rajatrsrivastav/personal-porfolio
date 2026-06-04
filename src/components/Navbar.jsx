@@ -5,7 +5,7 @@ export default function Navbar({ onOpenContact }) {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const sectionIds = ["home", "about", "work", "skills"];
+    const sectionIds = ["home", "about", "experience", "work", "skills"];
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean);
@@ -49,6 +49,13 @@ export default function Navbar({ onOpenContact }) {
             aria-current={active === "about" ? "page" : undefined}
           >
             About
+          </a>
+          <a
+            href="#experience"
+            className={active === "experience" ? "active" : ""}
+            aria-current={active === "experience" ? "page" : undefined}
+          >
+            Experience
           </a>
           <a
             href="#work"

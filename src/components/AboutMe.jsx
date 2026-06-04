@@ -11,14 +11,14 @@ export default function AboutMe() {
           <span>everything</span>
         </h2>
         <p>
-          I’m Rajat Srivastav, a second-year B.Tech CSE (AI & DS) student and a full-stack developer passionate about building scalable, reliable, and impactful web applications.
+          I'm Rajat Srivastav, a B.Tech CSE (AI & DS) student and a full-stack engineer currently working at Safcurl Technologies, where I build scalable cloud-native systems end-to-end.
           I enjoy solving complex problems through clean, efficient, and modern code.
         </p>
         <p>
-          My technical skill set includes JavaScript, TypeScript, React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, MySQL, and Prisma ORM, with hands-on experience building scalable architectures using REST APIs, AI workflows using LangChain and LangGraph.
+          My technical toolkit spans Go, TypeScript, and JavaScript across the full stack — from React and Next.js on the frontend to Node.js, Express, and Gin (Go) on the backend — with production experience in Kubernetes, Docker, Terraform, and AWS for cloud infrastructure.
         </p>
         <p>
-          Alongside web technologies, I’m passionate about problem solving and AI/ML, applying data structures, algorithms, and structured AI workflows to design efficient, reliable, and maintainable solutions for real-world use cases.
+          Alongside building systems, I'm passionate about problem solving and AI/ML, applying data structures, algorithms, and structured AI workflows using LangChain and LangGraph to design efficient, reliable solutions for real-world use cases.
         </p>
         <p>I believe in waking up each day eager to make a difference!</p>
         <button

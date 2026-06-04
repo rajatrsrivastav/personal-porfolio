@@ -28,7 +28,7 @@
   line-height: 1.12;
 }
 .sk-title span {
-  background: linear-gradient(90deg, #ff62b7, #ffd277);
+  background: linear-gradient(90deg, #ff3fa4, #f97316);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -40,14 +40,23 @@
   font-size: 16px;
   margin: 0;
 }
-.sk-badges {
+
+/* ── Pyramid Layout ────────────────────────────────── */
+.sk-pyramid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.sk-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 14px;
   justify-content: center;
-  max-width: 900px;
-  margin: 0 auto;
+  gap: 10px 12px;
 }
+
+/* ── Badges ────────────────────────────────────────── */
 .sk-badge {
   display: inline-flex;
   align-items: center;
@@ -62,6 +71,7 @@
   color: #1f2937;
   transition: background 0.22s, transform 0.22s, box-shadow 0.22s,
     border-color 0.22s;
+  white-space: nowrap;
 }
 .sk-badge:hover {
   background: #ffffff;
@@ -72,12 +82,15 @@
   font-size: 17px;
   line-height: 1;
   display: flex;
+  flex-shrink: 0;
 }
 .sk-badge span {
   line-height: 1.2;
 }
 
-.sk-badge .devicon-express-original {
+/* icon color fixes */
+.sk-badge .devicon-express-original,
+.sk-badge .devicon-nextjs-original {
   filter: invert(0.2);
 }
 .sk-badge .devicon-github-original {
@@ -97,12 +110,15 @@
     font-size: 12px;
     padding: 7px 14px 7px 11px;
   }
+  .sk-row {
+    gap: 8px 10px;
+  }
 }
 @media (max-width: 430px) {
-  .sk-badges {
-    gap: 10px 10px;
-  }
   .sk-title {
     font-size: clamp(28px, 9vw, 42px);
+  }
+  .sk-badge {
+    font-size: 11px;
   }
 }
