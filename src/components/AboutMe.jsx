@@ -31,7 +31,7 @@ export default function AboutMe() {
       <div className="ab-art">
         <div className="ab-card">
           <img
-            src="/avatar.svg"
+            src="/avatar.PNG"
             alt="Avatar"
             width={400}
             height={400}
