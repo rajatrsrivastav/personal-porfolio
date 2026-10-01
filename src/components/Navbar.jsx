@@ -101,9 +101,6 @@ export default function Navbar({ onOpenContact }) {
                 : "Skills"}
             </a>
           ))}
-          <button type="button" className="nb-linkBtn" onClick={onOpenContact}>
-            Contact
-          </button>
         </div>
         <div className="nb-kbd"></div>
       </nav>
