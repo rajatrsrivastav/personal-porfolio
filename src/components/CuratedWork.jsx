@@ -12,7 +12,7 @@ const projects = [
     title: "Apna Hostel",
     category: "Hostel Management Platform",
     image: "/apna-hostel.png",
-    url: "https://apna-hostel.vercel.app/",
+    url: "apna-hostel-zeta.vercel.app",
     githubUrl: "https://github.com/rajatrsrivastav/apna-hostel",
     description:
       "A hostel lifecycle and accommodation management platform built to bring student onboarding, room allocation, and resident support into one place.",
