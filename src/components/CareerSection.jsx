@@ -92,7 +92,7 @@ function CareerRow({ entry }) {
         type="button"
         onClick={() => setIsOpen((value) => !value)}
         className={cn(
-          "flex w-full items-start justify-between gap-4 py-6 text-left",
+          "flex w-full items-start justify-between gap-4 py-6 text-left group",
           "cursor-pointer bg-transparent transition-colors"
         )}
         aria-expanded={isOpen}
@@ -130,7 +130,7 @@ function CareerRow({ entry }) {
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2 pt-0.5">
+        <div className="flex shrink-0 items-center gap-3 pt-0.5">
           <div className="hidden sm:flex flex-col items-end gap-1">
             <time
               dateTime={entry.dateStart}
@@ -143,13 +143,25 @@ function CareerRow({ entry }) {
               {entry.location}
             </span>
           </div>
-          <motion.span
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="flex h-6 w-6 items-center justify-center text-neutral-400 transition-transform duration-300"
+          <div
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-mono transition-all duration-200 select-none",
+              isOpen
+                ? "border-neutral-300 bg-neutral-100 text-neutral-900 shadow-xs"
+                : "border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-100 hover:text-neutral-900 group-hover:border-neutral-300 group-hover:bg-neutral-100 group-hover:text-neutral-900"
+            )}
           >
-            <ChevronDown className="h-4 w-4" />
-          </motion.span>
+            <span className="text-[11px] font-medium">
+              {isOpen ? "Hide impact" : "View impact"}
+            </span>
+            <motion.span
+              animate={{ rotate: isOpen ? 180 : 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="flex h-3.5 w-3.5 items-center justify-center text-neutral-400 group-hover:text-neutral-700 transition-colors"
+            >
+              <ChevronDown className="h-3.5 w-3.5" />
+            </motion.span>
+          </div>
         </div>
       </button>
 

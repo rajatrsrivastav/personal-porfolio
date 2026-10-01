@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useMemo, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ActivityCalendar } from "react-activity-calendar";
 import {
@@ -140,8 +141,29 @@ function formatRelativeTime(value) {
 
 /* ── Warm sunset calendar theme (amber → orange → rose) ── */
 const calendarTheme = {
-  light: ["#f1f3f5", "#fed7aa", "#fb923c", "#f97316", "#e11d48"],
+  light: [
+    "#f1f3f5", // Level 0: 0 contributions (clean, subtle light gray)
+    "#fed7aa", // Level 1: 1-3 contributions (soft amber)
+    "#fb923c", // Level 2: 4-6 contributions (warm orange)
+    "#f97316", // Level 3: 7-9 contributions (vibrant orange)
+    "#e11d48", // Level 4: 10+ contributions (deep rose accent)
+  ],
+  dark: [
+    "#1e1e20", // Level 0 dark
+    "#7c2d12", // Level 1
+    "#c2410c", // Level 2
+    "#ea580c", // Level 3
+    "#f43f5e", // Level 4
+  ],
 };
+
+function getContributionLevel(count) {
+  if (count <= 0) return 0;
+  if (count <= 3) return 1;
+  if (count <= 6) return 2;
+  if (count <= 9) return 3;
+  return 4;
+}
 
 /* ── Status config ───────────────────────────────────── */
 const STATUS_CONFIG = {
@@ -266,6 +288,31 @@ export default function GithubSection({ fullPage = false }) {
     loading: true,
     error: false,
   });
+  const calendarContainerRef = useRef(null);
+
+  // Ensure latest month (e.g. Sep) is visible by default without needing manual scroll
+  useEffect(() => {
+    if (!fullPage && !calendar.loading && !calendar.error && calendar.data.length > 0) {
+      const scrollToEnd = () => {
+        const container = calendarContainerRef.current;
+        if (!container) return;
+        const innerScroll = container.querySelector(
+          ".react-activity-calendar__scroll-container"
+        );
+        if (innerScroll) {
+          innerScroll.scrollLeft = innerScroll.scrollWidth;
+        }
+        container.scrollLeft = container.scrollWidth;
+      };
+      scrollToEnd();
+      const t1 = setTimeout(scrollToEnd, 50);
+      const t2 = setTimeout(scrollToEnd, 200);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    }
+  }, [fullPage, calendar.loading, calendar.error, calendar.data]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -273,12 +320,20 @@ export default function GithubSection({ fullPage = false }) {
     if (!fullPage) {
       fetchJson(CONTRIBUTION_API, controller.signal)
         .then((result) => {
-          const data = Array.isArray(result.contributions)
+          const raw = Array.isArray(result.contributions)
             ? result.contributions
             : [];
+          const data = raw.map((day) => {
+            const count = Number(day.count) || 0;
+            return {
+              ...day,
+              count,
+              level: getContributionLevel(count),
+            };
+          });
           setCalendar({
             data,
-            total: data.reduce((sum, day) => sum + (Number(day.count) || 0), 0),
+            total: data.reduce((sum, day) => sum + day.count, 0),
             loading: false,
             error: data.length === 0,
           });
@@ -342,25 +397,20 @@ export default function GithubSection({ fullPage = false }) {
         {!fullPage && (
           <>
             {/* ── Activity summary ──────────────────── */}
-            <div className="flex flex-wrap justify-end gap-2 mb-4">
-              <span className="text-xs font-mono text-neutral-500 bg-neutral-100/80 border border-neutral-200/60 px-3 py-1 rounded-full">
-                {calendar.loading
-                  ? "Loading GitHub activity"
-                  : calendar.error
-                    ? "Contribution data unavailable"
-                    : `${calendar.total.toLocaleString()} contributions in the last year`}
-              </span>
-            </div>
 
             {/* ── Contribution Graph (on canvas, no card) ── */}
-            <div className="overflow-x-auto pb-2 [&_.react-activity-calendar]:mx-auto">
+            <div
+              ref={calendarContainerRef}
+              className="overflow-x-auto pb-2 [&_.react-activity-calendar]:mx-auto"
+            >
               {!calendar.loading && !calendar.error && (
                 <ActivityCalendar
                   data={calendar.data}
                   theme={calendarTheme}
-                  blockSize={13}
-                  blockMargin={3}
-                  blockRadius={3}
+                  colorScheme="light"
+                  blockSize={11.5}
+                  blockMargin={2.5}
+                  blockRadius={2.5}
                   fontSize={11}
                   hideColorLegend={false}
                   hideMonthLabels={false}

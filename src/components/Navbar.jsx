@@ -9,31 +9,42 @@ export default function Navbar({ onOpenContact }) {
   const [active, setActive] = useState("home");
   const isClickScrolling = useRef(false);
   const lockTimer = useRef(null);
-  const rafId = useRef(null);
 
-  // Detect which section is at the focal point (30% from top)
+  // Detect which section is at the focal point (35% from top)
   const detectActiveSection = useCallback(() => {
     if (isClickScrolling.current) return;
 
-    if (rafId.current !== null) return;
-    rafId.current = window.requestAnimationFrame(() => {
-      rafId.current = null;
-      const focalLine = window.innerHeight * 0.3;
+    // At bottom of page: highlight last section ("skills")
+    const isAtBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 60;
 
-      // Walk sections top-to-bottom, pick the LAST one whose top is above the focal line.
-      // This ensures the section currently occupying the viewport wins,
-      // even for tall scroll-driven sections like #work (250vh).
-      let matched = null;
-      for (const id of NAV_SECTIONS) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= focalLine) {
-          matched = id;
-        }
+    if (isAtBottom) {
+      setActive(NAV_SECTIONS[NAV_SECTIONS.length - 1]);
+      return;
+    }
+
+    // Near top of page: highlight first section ("home")
+    if (window.scrollY < 80) {
+      setActive(NAV_SECTIONS[0]);
+      return;
+    }
+
+    const focalLine = window.innerHeight * 0.35;
+
+    // Walk sections top-to-bottom, pick the LAST one whose top is above the focal line.
+    let matched = null;
+    for (const id of NAV_SECTIONS) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= focalLine) {
+        matched = id;
       }
-      if (matched) setActive(matched);
-    });
+    }
+    if (matched) {
+      setActive(matched);
+    }
   }, []);
 
   // Click handler: lock scrollspy, set active immediately, smooth-scroll
@@ -73,7 +84,6 @@ export default function Navbar({ onOpenContact }) {
     return () => {
       window.removeEventListener("scroll", detectActiveSection);
       window.removeEventListener("resize", detectActiveSection);
-      if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
       if (lockTimer.current) clearTimeout(lockTimer.current);
     };
   }, [detectActiveSection]);
