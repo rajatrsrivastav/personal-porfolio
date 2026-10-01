@@ -9,7 +9,7 @@ const experiences = [
     startDate: "Apr 2026",
     endDate: null, // null means "Present"
     points: [
-      "Led end-to-end development across the entire SDLC — planning, implementation, testing, and deployment.",
+      "Led end-to-end development across the entire SDLC planning, implementation, testing, and deployment.",
       "Architected critical system components, including complex Support and Printing modules.",
       "Championed cloud-native DevOps practices using AWS, Terraform, and Docker.",
     ],
@@ -28,11 +28,16 @@ export default function Experience() {
   return (
     <section className="ex-section" id="experience">
       <div className="ex-header">
-        <div className="ex-kicker">Professional</div>
-        <h2 className="ex-title">
-          Career <span>Evolution</span>
+        <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
+          PROFESSIONAL
+        </p>
+        <h2 className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center">
+          Career{" "}
+          <em className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+            Evolution
+          </em>
         </h2>
-        <p className="ex-sub">
+        <p className="text-sm text-neutral-500 text-center max-w-xl mx-auto mt-3 mb-10">
           A timeline of my progressive roles, where I've built production
           systems and developed key technical contributions.
         </p>

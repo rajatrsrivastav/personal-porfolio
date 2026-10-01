@@ -1,43 +1,55 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Mail } from "lucide-react";
 import "./HomeHero.css";
 
 export default function HomeHero({ onOpenContact }) {
   const email = "rajatrsrivastav810@gmail.com";
   const [copied, setCopied] = useState(false);
-  const handleCopy = useCallback(() => {
+  const [copyError, setCopyError] = useState(false);
+  const [scrollHidden, setScrollHidden] = useState(false);
+  const copyTimer = useRef(null);
+  useEffect(() => () => clearTimeout(copyTimer.current), []);
+  const handleCopy = useCallback(async () => {
     try {
-      if (navigator?.clipboard?.writeText) {
-        navigator.clipboard.writeText(email).then(() => {
-          setCopied(true); setTimeout(()=>setCopied(false),1500);
-        }).catch(() => {
-          const temp = document.createElement('textarea');
-          temp.value = email; document.body.appendChild(temp); temp.select(); document.execCommand('copy'); document.body.removeChild(temp);
-          setCopied(true); setTimeout(()=>setCopied(false),1500);
-        });
-      } else {
-        const temp = document.createElement('textarea');
-        temp.value = email; document.body.appendChild(temp); temp.select(); document.execCommand('copy'); document.body.removeChild(temp);
-        setCopied(true); setTimeout(()=>setCopied(false),1500);
-      }
-    } catch(err) { console.error('Copy failed', err); }
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setCopyError(false);
+      clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopyError(true);
+    }
   }, [email]);
+
+  // Hide scroll indicator once user scrolls past hero
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollHidden(window.scrollY > 80);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollClick = () => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="home-hero" id="home">
-      {/* <div className="home-badge">
-      </div> */}
 
-      <h1 className="home-heading" data-lenis-speed="0.8">
-        I build seamless <em>digital experiences</em> 
-        <br />
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-medium tracking-tight text-neutral-900 text-center max-w-4xl mx-auto leading-tight mb-4">
+        I build seamless{" "}
+        <span className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+          digital experiences
+        </span>{" "}
         from real-world challenges.
-        {/* <br />
-        <em>experiences & solutions</em> */}
       </h1>
 
-      <p className="home-sub" data-lenis-speed="0.6">
-        Hello, I'm Rajat Srivastav
-        a Full Stack Developer
+      <p className="text-sm text-neutral-500 font-mono text-center mt-6">
+        Hello, I'm Rajat Srivastav a Full-Stack Engineer
       </p>
 
       <div className="home-ctas">
@@ -64,7 +76,21 @@ export default function HomeHero({ onOpenContact }) {
         </button>
       </div>
 
-      <div className="home-horizon" />
+      {copyError && <p className="home-copy-error" role="status">Couldn't copy automatically. <a href={`mailto:${email}`}>Send me an email</a> or select the address above.</p>}
+
+      <button
+        type="button"
+        className={`scroll-indicator ${scrollHidden ? 'is-hidden' : ''}`}
+        onClick={handleScrollClick}
+        aria-label="Scroll to know more"
+      >
+        <span className="scroll-indicator-text">Scroll to know more</span>
+        <span className="scroll-indicator-arrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10l5 5 5-5" />
+          </svg>
+        </span>
+      </button>
     </section>
   );
 }

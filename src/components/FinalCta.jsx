@@ -1,5 +1,13 @@
 import React from "react";
-import { Github, Linkedin, Twitter, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
+
+function XLogo({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 import "./FinalCta.css";
 
 export default function FinalCta() {
@@ -14,7 +22,7 @@ export default function FinalCta() {
             <img className="footer-logo" src="/logo.png" alt="Rajat Srivastav" />
             <div className="footer-info">
               <h3 className="footer-name">Rajat Srivastav</h3>
-              <p className="footer-role">Full-Stack Developer</p>
+              <p className="footer-role">Full-Stack Engineer</p>
             </div>
           </div>
           
@@ -32,7 +40,9 @@ export default function FinalCta() {
         <nav className="footer-nav" aria-label="Footer navigation">
           <a href="#home">Home</a>
           <a href="#about">About</a>
+          <a href="#experience">Experience</a>
           <a href="#work">Projects</a>
+          <a href="#activity">Activity</a>
           <a href="#skills">Skills</a>
         </nav>
 
@@ -61,10 +71,10 @@ export default function FinalCta() {
               href="https://x.com/rajatrsrivastav" 
               target="_blank" 
               rel="noreferrer" 
-              aria-label="Twitter/X"
+              aria-label="X (Twitter)"
               className="social-link"
             >
-              <Twitter size={18} />
+              <XLogo size={18} />
             </a>
           </div>
           

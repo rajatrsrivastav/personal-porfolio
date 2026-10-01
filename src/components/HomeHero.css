@@ -1,10 +1,14 @@
 .home-hero {
   position: relative;
-  min-height: 80svh;
-  padding: 24px 24px 32px;
+  min-height: calc(100svh - 64px);
+  padding: 24px 24px 80px;
   color: #0b0d12;
   background: #ffffff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .home-hero:before {
   display: none;
@@ -62,7 +66,7 @@
   opacity: 0.6;
 }
 .home-heading {
-  margin: 70px auto 16px;
+  margin: 0 auto 16px;
   line-height: 1.2;
   font-weight: 500;
   max-width: 980px;
@@ -166,4 +170,77 @@
   .home-ctas {
     flex-direction: column;
   }
+}
+/* Preserve the original desktop composition; keep controls within small viewports. */
+.home-ctas { align-items: center; flex-wrap: wrap; }
+.home-sub { display: block; text-align: center; line-height: 1.6; }
+.email-copy-btn { max-width: 100%; min-height: 3.2rem; }
+.email-copy-btn svg { flex-shrink: 0; }
+.email-copy-btn .email-text { white-space: normal; overflow-wrap: anywhere; }
+.home-copy-error { text-align: center; color: #4b5563; font-size: 14px; }
+.home-copy-error a { color: inherit; }
+@media (max-width: 768px) {
+  .home-hero { min-height: calc(100svh - 56px); padding: 24px 20px 80px; }
+  .home-heading { margin-top: 0; }
+  .home-sub { margin: 28px auto 24px; max-width: 38ch; }
+  .home-ctas { margin: 24px 0 0; gap: 14px; }
+}
+@media (min-width: 769px) and (max-height: 760px) {
+  .home-hero { min-height: calc(100svh - 64px); padding-bottom: 80px; }
+  .home-heading { margin-top: 0; }
+  .home-sub, .home-ctas { margin-top: 32px; }
+}
+
+/* Scroll-to-know-more indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  color: #6b7280;
+  transition: opacity 0.5s ease, transform 0.3s ease;
+  z-index: 5;
+}
+.scroll-indicator:hover {
+  color: #374151;
+}
+.scroll-indicator.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(10px);
+}
+.scroll-indicator-text {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.scroll-indicator-arrow {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+.scroll-indicator-arrow svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }

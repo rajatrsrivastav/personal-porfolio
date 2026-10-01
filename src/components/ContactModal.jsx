@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, Linkedin, Github, Twitter, Check, Send, MapPin, ArrowUpRight } from 'lucide-react';
+import { X, Linkedin, Github, Check, Send, MapPin, ArrowUpRight } from 'lucide-react';
+
+function XLogo({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 import { useForm, ValidationError } from '@formspree/react';
 import './ContactModal.css';
 
@@ -15,7 +23,7 @@ function Toast({ message, show, onClose }) {
   if (!show) return null;
 
   return (
-    <div className="toast">
+    <div className="toast" role="status">
       <div className="toast-icon-wrap">
         <Check size={14} />
       </div>
@@ -29,15 +37,33 @@ export default function ContactModal({ open, onClose }) {
   const [toastMessage, setToastMessage] = useState('');
   const [state, handleSubmit] = useForm("xvgdzbdg");
   const formRef = useRef(null);
+  const dialogRef = useRef(null);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+    if (!open) return;
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialogRef.current?.focus();
+    function handleKey(event) {
+      if (event.key === 'Escape') onClose();
+      if (event.key !== 'Tab') return;
+      const items = Array.from(dialogRef.current.querySelectorAll('button:not(:disabled), a[href], input, textarea'));
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialogRef.current)) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first.focus();
+      }
     }
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKey);
+      requestAnimationFrame(() => previousFocus?.focus());
+    };
+  }, [open, onClose]);
 
   useEffect(() => {
     if (state.succeeded && formRef.current) {
@@ -58,7 +84,7 @@ export default function ContactModal({ open, onClose }) {
       />
       
       <div className="modal-overlay" onClick={onClose}>
-        <div className="modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
+        <div className="modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="contact-title" ref={dialogRef} tabIndex={-1}>
           
           {/* Close button */}
           <button className="modal-close" onClick={onClose} aria-label="Close">
@@ -67,8 +93,15 @@ export default function ContactModal({ open, onClose }) {
 
           {/* Header */}
           <div className="modal-header">
-            <h2 className="modal-title">Let's <em>connect</em></h2>
-            <p className="modal-subtitle">Have a project in mind? I'd love to hear from you.</p>
+            <h2 id="contact-title" className="modal-title font-serif !font-medium">
+              Let's{" "}
+              <span className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+                connect
+              </span>
+            </h2>
+            <p className="mt-0 mb-0 text-sm text-neutral-500">
+              Have a project in mind? I'd love to hear from you.
+            </p>
           </div>
 
           {/* Content grid */}
@@ -159,8 +192,8 @@ export default function ContactModal({ open, onClose }) {
                     rel="noreferrer"
                     className="social-btn"
                   >
-                    <Twitter size={16} />
-                    <span>Twitter/X</span>
+                    <XLogo size={16} />
+                    <span>X (Twitter)</span>
                     <ArrowUpRight size={12} className="social-arrow" />
                   </a>
                 </div>
