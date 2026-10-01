@@ -9,6 +9,28 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 const projects = [
   {
+    title: "Apna Hostel",
+    category: "Hostel Management Platform",
+    image: "/apna-hostel.png",
+    url: "https://apna-hostel.vercel.app/",
+    githubUrl: "https://github.com/rajatrsrivastav/apna-hostel",
+    description:
+      "A hostel lifecycle and accommodation management platform built to bring student onboarding, room allocation, and resident support into one place.",
+    highlights: [
+      "Supports hostel room allocation and resident onboarding workflows.",
+      "Brings hostel administration and resident services together in a single platform.",
+      "Designed to make accommodation operations easier to manage for students and hostel teams.",
+    ],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Tailwind CSS",
+      "Node.js",
+    ],
+  },
+  {
     title: "Smart Parking System",
     category: "Full-Stack Application",
     date: "December 2025",
@@ -53,6 +75,27 @@ const projects = [
       "Tailwind CSS",
     ],
   },
+  {
+    title: "OSSGrid",
+    category: "Open-Source Mentorship Explorer",
+    image: "/ossgrid.png",
+    url: "https://ossgrid.tech/",
+    githubUrl: "https://github.com/rajatrsrivastav/ossgrid",
+    description:
+      "A fast, public dashboard for exploring organizations, projects, and technology stacks across open-source mentorship programs such as LFX Mentorship and Google Summer of Code.",
+    highlights: [
+      "Searches across organizations, projects, technologies, and mentor names with multi-facet filters.",
+      "Uses shareable URL filters and a responsive interface to make project discovery easier.",
+      "Serves prebuilt project data client-side and refreshes datasets daily through GitHub Actions.",
+    ],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Fuse.js",
+      "GitHub Actions",
+    ],
+  },
 ];
 
 const slideVariants = {
@@ -79,7 +122,8 @@ export default function CuratedWork() {
     if (!container) return;
 
     const scrollableDistance = container.offsetHeight - window.innerHeight;
-    const progress = index === 0 ? 0.2 : 0.75;
+    const boundedIndex = Math.max(0, Math.min(index, projects.length - 1));
+    const progress = (boundedIndex + 0.5) / projects.length;
     const top =
       container.getBoundingClientRect().top +
       window.scrollY +
@@ -115,7 +159,7 @@ export default function CuratedWork() {
             role="tablist"
             aria-label="Project navigation"
           >
-            <div className="flex items-center gap-8">
+            <div className="flex min-w-0 flex-1 items-center gap-5 overflow-x-auto pr-4 sm:gap-8">
               {projects.map((project, index) => (
                 <button
                   key={project.title}
@@ -146,7 +190,7 @@ export default function CuratedWork() {
             </div>
 
             {/* Discrete controls + counter */}
-            <div className="flex items-center gap-3 pb-3">
+            <div className="flex shrink-0 items-center gap-3 pb-3">
               <span className="text-xs font-mono text-neutral-400">
                 {String(activeIndex + 1).padStart(2, "0")}
                 {" / "}
@@ -224,15 +268,31 @@ export default function CuratedWork() {
                     <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight mb-2">
                       {activeProject.title}
                     </h3>
-                    <a
-                      href={activeProject.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-400 transition-colors hover:text-neutral-900 no-underline"
-                    >
-                      <span>Visit Project</span>
-                      <ExternalLink className="h-3 w-3 transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                    </a>
+                    <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                      {activeProject.category}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                      <a
+                        href={activeProject.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-400 transition-colors hover:text-neutral-900 no-underline"
+                      >
+                        <span>Visit Project</span>
+                        <ExternalLink className="h-3 w-3 transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                      </a>
+                      {activeProject.githubUrl && (
+                        <a
+                          href={activeProject.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-400 transition-colors hover:text-neutral-900 no-underline"
+                        >
+                          <span>View Source</span>
+                          <ExternalLink className="h-3 w-3 transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
 
                   {/* Description */}
