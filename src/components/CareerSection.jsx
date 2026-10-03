@@ -237,9 +237,6 @@ export default function CareerSection() {
       aria-labelledby="career-title"
     >
       <div className="text-center mb-12">
-        <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
-          PROFESSIONAL
-        </p>
         <h2
           id="career-title"
           className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"

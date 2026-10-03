@@ -112,7 +112,7 @@ export default function Navbar({ onOpenContact }) {
             </a>
           ))}
         </div>
-        <div className="nb-kbd"></div>
+        {/* <div className="nb-kbd"></div> */}
       </nav>
     </header>
   );

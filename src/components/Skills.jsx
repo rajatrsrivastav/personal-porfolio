@@ -97,9 +97,6 @@ export default function Skills() {
     <section className="sk-section sk-dark" id="skills">
       <div className="sk-center">
         <div className="text-center mb-10">
-          <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2">
-            CAPABILITIES
-          </p>
           <h2 className="text-4xl sm:text-5xl font-serif font-medium tracking-tight text-neutral-900">
             Skills &{" "}
             <span className="italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">

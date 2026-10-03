@@ -92,4 +92,5 @@
   .ab-section { grid-template-columns: 1fr; padding-top: 48px; margin-block: 0 72px; padding-inline: 20px; }
   .ab-title { font-size: clamp(30px, 7.5vw, 40px); }
   .ab-card { max-width: 320px; }
+  .ab-art { display: none; }
 }

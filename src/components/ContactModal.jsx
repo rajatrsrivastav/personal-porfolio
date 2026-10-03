@@ -42,8 +42,10 @@ export default function ContactModal({ open, onClose }) {
   useEffect(() => {
     if (!open) return;
     const previousFocus = document.activeElement;
-    const previousOverflow = document.body.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     dialogRef.current?.focus();
     function handleKey(event) {
       if (event.key === 'Escape') onClose();
@@ -59,7 +61,8 @@ export default function ContactModal({ open, onClose }) {
     }
     document.addEventListener('keydown', handleKey);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
       document.removeEventListener('keydown', handleKey);
       requestAnimationFrame(() => previousFocus?.focus());
     };
@@ -83,8 +86,8 @@ export default function ContactModal({ open, onClose }) {
         onClose={() => setShowToast(false)} 
       />
       
-      <div className="modal-overlay" onClick={onClose}>
-        <div className="modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="contact-title" ref={dialogRef} tabIndex={-1}>
+      <div className="modal-overlay" onClick={onClose} data-lenis-prevent>
+        <div className="modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="contact-title" ref={dialogRef} tabIndex={-1} data-lenis-prevent>
           
           {/* Close button */}
           <button className="modal-close" onClick={onClose} aria-label="Close">
@@ -105,7 +108,7 @@ export default function ContactModal({ open, onClose }) {
           </div>
 
           {/* Content grid */}
-          <div className="modal-content">
+          <div className="modal-content" data-lenis-prevent>
             
             {/* Form */}
             <form className="modal-form" onSubmit={handleSubmit} ref={formRef}>

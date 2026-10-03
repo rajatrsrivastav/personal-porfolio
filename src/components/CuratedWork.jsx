@@ -139,9 +139,6 @@ export default function CuratedWork() {
       <div ref={containerRef} className="relative h-[250vh]">
         <div className="sticky top-0 min-h-screen flex flex-col justify-center py-12 max-w-5xl mx-auto px-4">
           <header className="mb-8 text-center">
-            <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
-              A SELECTION OF MY WORK FROM CONCEPT TO CODE.
-            </p>
             <h2
               id="work-title"
               className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
@@ -155,11 +152,11 @@ export default function CuratedWork() {
 
           {/* Minimalist tab switcher */}
           <div
-            className="flex items-center justify-between border-b border-neutral-200/80 mb-10 pb-0"
+            className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-200/80 mb-10 pb-2 sm:pb-0 gap-4 sm:gap-0"
             role="tablist"
             aria-label="Project navigation"
           >
-            <div className="flex min-w-0 flex-1 items-center gap-5 overflow-x-auto pr-4 sm:gap-8">
+            <div className="hidden sm:flex min-w-0 w-full sm:w-auto flex-1 items-center gap-5 overflow-x-auto hide-scrollbar pr-4 sm:gap-8">
               {projects.map((project, index) => (
                 <button
                   key={project.title}
@@ -190,7 +187,7 @@ export default function CuratedWork() {
             </div>
 
             {/* Discrete controls + counter */}
-            <div className="flex shrink-0 items-center gap-3 pb-3">
+            <div className="flex shrink-0 items-center justify-between w-full sm:w-auto sm:justify-end gap-3 pb-3 sm:pb-3">
               <span className="text-xs font-mono text-neutral-400">
                 {String(activeIndex + 1).padStart(2, "0")}
                 {" / "}

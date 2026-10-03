@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Lenis from 'lenis'
 import CuratedWork from './components/CuratedWork'
 import Skills from './components/Skills'
@@ -13,6 +13,7 @@ import ContributionsPage from './pages/ContributionsPage'
 
 function App() {
   const [contactOpen, setContactOpen] = useState(false)
+  const lenisRef = useRef(null)
   const isContributionsPage = window.location.pathname.replace(/\/+$/, '') === '/contributions'
 
   useEffect(() => {
@@ -28,18 +29,31 @@ function App() {
       smoothTouch: false,
       touchMultiplier: 2,
     })
+    lenisRef.current = lenis
 
+    let rafId
     function raf(time) {
       lenis.raf(time)
-      requestAnimationFrame(raf)
+      rafId = requestAnimationFrame(raf)
     }
 
-    requestAnimationFrame(raf)
+    rafId = requestAnimationFrame(raf)
 
     return () => {
+      cancelAnimationFrame(rafId)
       lenis.destroy()
+      lenisRef.current = null
     }
   }, [isContributionsPage])
+
+  useEffect(() => {
+    if (!lenisRef.current) return
+    if (contactOpen) {
+      lenisRef.current.stop()
+    } else {
+      lenisRef.current.start()
+    }
+  }, [contactOpen])
 
   if (isContributionsPage) return <ContributionsPage />
 

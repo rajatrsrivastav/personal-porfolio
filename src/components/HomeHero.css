@@ -139,6 +139,12 @@
 .email-copy-btn .copy-status { position:absolute; right:10px; top:-10px; font-size:11px; font-weight:600; color:#059669; }
 .email-copy-btn.is-copied { border-color:#10b981; box-shadow:0 0 0 1px rgba(16,185,129,0.4); }
 [data-theme='dark'] .email-copy-btn.is-copied { border-color:#059669; box-shadow:0 0 0 1px rgba(5,150,105,0.55); }
+
+@media (max-width: 1023px) {
+  .email-copy-btn {
+    display: none !important;
+  }
+}
 .home-btn.learn-more { position:relative; overflow:hidden; padding:0; width:13rem; height:3.2rem; background:transparent; box-shadow:none; border-radius:1.75rem; border:1px solid #e5e7eb; transition:border-color .35s, box-shadow .35s; }
 .home-btn.learn-more .circle { transition: all 0.45s cubic-bezier(0.65,0,0.076,1); position:relative; display:block; margin:0; width:3.2rem; height:3.2rem; background:#282936; border-radius:1.75rem; box-shadow:0 6px 18px rgba(0,0,0,0.18); }
 .home-btn.learn-more .circle .icon { transition: all 0.45s cubic-bezier(0.65,0,0.076,1); position:absolute; top:0; bottom:0; margin:auto; background:#fff; }

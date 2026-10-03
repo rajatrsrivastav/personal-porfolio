@@ -190,7 +190,7 @@ function FilterTabs({ active, onChange, items }) {
   };
 
   return (
-    <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-neutral-100/70 border border-neutral-200/70 select-none">
+    <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-neutral-100/70 border border-neutral-200/70 select-none">
       {FILTER_TABS.map((tab) => {
         const isActive = active === tab.key;
         const count = getCount(tab.key);
@@ -379,9 +379,6 @@ export default function GithubSection({ fullPage = false }) {
     >
       {/* ── Unified Section Header ─────────────────── */}
       <header className="mb-10 text-center sm:mb-14">
-        <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
-          OPEN SOURCE & CODE ACTIVITY
-        </p>
         <h2
           id={fullPage ? "contributions-title" : "activity-title"}
           className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
