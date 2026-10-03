@@ -1,24 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, MapPin } from "lucide-react";
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs) {
-  return twMerge(clsx(inputs));
-}
 
 const experiences = [
   {
     id: "safcurl",
+    company: "Safcurl Technologies",
     role: "Full Stack Engineer",
-    company: "Safcurl Technologies Private Limited",
     type: "Internship",
     location: "Remote",
     dateRange: "Apr 2026 – Aug 2026",
     dateStart: "2026-04",
     logo: "/safcurl-logo.png",
     logoAlt: "Safcurl Technologies",
+    description:
+      "Engineered cloud-native infrastructure and backend microservices end-to-end. Provisioned secure AWS EC2 environments using Terraform (IaC) with OIDC session access, designed an Nginx API Gateway to enforce strict multi-tenancy across microservices, and built dynamic Razorpay webhook listeners for billing loops with automated Resend notifications.",
     techStack: [
       "AWS",
       "Terraform",
@@ -27,204 +23,97 @@ const experiences = [
       "Node.js",
       "React",
       "Nginx",
-    ],
-    highlights: [
-      {
-        num: "01",
-        title: "Infrastructure with access built in.",
-        description:
-          "Provisioned secure AWS EC2 environments using Terraform (IaC) and configured OIDC for session-based remote access.",
-        tags: ["AWS EC2", "Terraform", "OIDC"],
-      },
-      {
-        num: "02",
-        title: "Clear boundaries between tenants.",
-        description:
-          "Engineered a polymorphic authentication layer and integrated an Nginx API Gateway to enforce strict multi-tenancy and route trusted identity contexts across microservices.",
-        tags: ["Authentication", "API architecture", "Nginx"],
-      },
-      {
-        num: "03",
-        title: "Billing that follows the workflow.",
-        description:
-          "Built dynamic Razorpay webhook listeners for \"auth-first, charge-later\" billing loops and integrated the Resend API for automated system updates.",
-        tags: ["Razorpay", "Webhooks", "Resend"],
-      },
+      "Razorpay",
     ],
   },
 ];
 
-function CompanyLogo({ src, alt, fallbackInitial }) {
-  const [imgError, setImgError] = useState(false);
-
-  return (
-    <div
-      className={cn(
-        "relative w-11 h-11 rounded-xl overflow-hidden",
-        "border border-neutral-200/80 bg-white p-1 flex-shrink-0",
-        "flex items-center justify-center"
-      )}
-    >
-      {src && !imgError ? (
-        <img
-          src={src}
-          alt={alt}
-          width={36}
-          height={36}
-          className="object-contain rounded-lg"
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <span className="text-base font-bold text-neutral-700 select-none">
-          {fallbackInitial}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function CareerRow({ entry }) {
+function ExperienceItem({ exp, isFirst }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-neutral-200/70">
-      <button
-        type="button"
-        onClick={() => setIsOpen((value) => !value)}
-        className={cn(
-          "flex w-full items-start justify-between gap-4 py-6 text-left group",
-          "cursor-pointer bg-transparent transition-colors"
-        )}
-        aria-expanded={isOpen}
-      >
-        <div className="flex items-start gap-3.5">
-          <CompanyLogo
-            src={entry.logo}
-            alt={entry.logoAlt}
-            fallbackInitial={entry.company.charAt(0)}
-          />
-          <div className="min-w-0">
-            <h3 className="text-base font-semibold text-neutral-900 leading-snug">
-              {entry.role}
-            </h3>
-            <p className="mt-0.5 text-sm text-neutral-600 flex items-center gap-2 flex-wrap">
-              <span>{entry.company}</span>
-              <span
-                className={cn(
-                  "inline-flex items-center rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1",
-                  "font-mono text-[10px] font-medium uppercase tracking-wider text-neutral-500"
-                )}
-              >
-                {entry.type}
-              </span>
-            </p>
-            <div className="sm:hidden mt-1 flex items-center gap-3 text-xs text-neutral-400">
-              <time dateTime={entry.dateStart} className="font-mono">
-                {entry.dateRange}
-              </time>
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                {entry.location}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-3 pt-0.5">
-          <div className="hidden sm:flex flex-col items-end gap-1">
-            <time
-              dateTime={entry.dateStart}
-              className="text-sm text-neutral-400 font-mono"
-            >
-              {entry.dateRange}
-            </time>
-            <span className="inline-flex items-center gap-1 text-xs text-neutral-400">
-              <MapPin className="h-3 w-3" />
-              {entry.location}
-            </span>
-          </div>
-          <div
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-mono transition-all duration-200 select-none",
-              isOpen
-                ? "border-neutral-300 bg-neutral-100 text-neutral-900 shadow-xs"
-                : "border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-100 hover:text-neutral-900 group-hover:border-neutral-300 group-hover:bg-neutral-100 group-hover:text-neutral-900"
+    <div>
+      {!isFirst && <div className="my-8 border-t border-neutral-200/70" />}
+      <article className="group">
+        {/* Top row: Company name & Date range */}
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+          <div className="flex items-center gap-3">
+            {exp.logo && (
+              <img
+                src={exp.logo}
+                alt={exp.logoAlt}
+                className="w-7 h-7 rounded-lg object-contain border border-neutral-200/80 p-0.5 bg-white shrink-0"
+              />
             )}
-          >
-            <span className="text-[11px] font-medium">
-              {isOpen ? "Hide impact" : "View impact"}
-            </span>
-            <motion.span
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="flex h-3.5 w-3.5 items-center justify-center text-neutral-400 group-hover:text-neutral-700 transition-colors"
-            >
-              <ChevronDown className="h-3.5 w-3.5" />
-            </motion.span>
+            <h3 className="text-lg sm:text-xl font-semibold text-neutral-900 tracking-tight">
+              {exp.company}
+            </h3>
           </div>
-        </div>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="detail"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-neutral-200 pt-5 mt-4"
+          <time
+            dateTime={exp.dateStart}
+            className="text-xs sm:text-sm font-mono text-neutral-500 shrink-0"
           >
-            <div className="space-y-5 pb-6 pl-[58px]">
-              <div className="space-y-5">
-                {entry.highlights.map((highlight) => (
-                  <div key={highlight.num}>
-                    <div className="flex items-baseline gap-3">
-                      <span className="shrink-0 font-mono text-xs tabular-nums text-neutral-400">
-                        {highlight.num}
-                      </span>
-                      <h4 className="text-sm font-semibold text-neutral-900">
-                        {highlight.title}
-                      </h4>
-                    </div>
-                    <p className="mt-2 pl-7 text-sm leading-relaxed text-neutral-600">
-                      {highlight.description}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-1.5 pl-7">
-                      {highlight.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="inline-block rounded-full border border-neutral-200/80 bg-neutral-50 px-2.5 py-0.5 text-xs text-neutral-500"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            {exp.dateRange}
+          </time>
+        </div>
 
-              <div className="my-5 border-t border-neutral-100" />
+        {/* Sub-row: Role · Work Mode (Location) + Dropdown toggle beside it */}
+        <div className="mt-1.5 flex items-center flex-wrap gap-x-2.5 gap-y-1.5 text-xs sm:text-sm text-neutral-500 font-medium">
+          <span>{exp.role}</span>
+          <span className="text-neutral-300">·</span>
+          <span>{exp.type}</span>
+          {exp.location && (
+            <span className="text-neutral-400">({exp.location})</span>
+          )}
 
-              <div>
-                <p className="mb-2 text-xs font-mono text-neutral-400">
-                  Working stack
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.techStack.map((technology) => (
+          {/* Dropdown toggle button directly beside the role info */}
+          <button
+            type="button"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-0.5 text-[11px] font-mono font-medium text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-900 transition-all cursor-pointer ml-1 select-none"
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Hide impact details" : "View impact details"}
+          >
+            <span>{isOpen ? "Hide impact" : "View impact"}</span>
+            <ChevronDown
+              size={12}
+              className={`transition-transform duration-200 ${isOpen ? "rotate-180 text-neutral-900" : "text-neutral-400"}`}
+            />
+          </button>
+        </div>
+
+        {/* Expandable below content only: Description & Tech Stack */}
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              {/* Description */}
+              <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-neutral-600">
+                {exp.description}
+              </p>
+
+              {/* Tech Stack Pills */}
+              {exp.techStack && exp.techStack.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {exp.techStack.map((tech) => (
                     <span
-                      key={technology}
-                      className="inline-block rounded-full border border-neutral-200/80 bg-neutral-50 px-2.5 py-0.5 text-xs text-neutral-600 transition-colors hover:border-neutral-300"
+                      key={tech}
+                      className="inline-block rounded-md border border-neutral-200/80 bg-neutral-50/80 px-2.5 py-0.5 text-xs font-mono text-neutral-600"
                     >
-                      {technology}
+                      {tech}
                     </span>
                   ))}
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </article>
     </div>
   );
 }
@@ -236,7 +125,10 @@ export default function CareerSection() {
       className="mx-auto max-w-[1200px] px-6 py-16 sm:py-20 lg:py-24"
       aria-labelledby="career-title"
     >
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 sm:mb-14">
+        <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
+          EXPERIENCE
+        </p>
         <h2
           id="career-title"
           className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
@@ -249,9 +141,8 @@ export default function CareerSection() {
       </div>
 
       <div className="max-w-3xl mx-auto">
-        <div className="border-t border-neutral-200/70" />
-        {experiences.map((entry) => (
-          <CareerRow key={entry.id} entry={entry} />
+        {experiences.map((exp, index) => (
+          <ExperienceItem key={exp.id} exp={exp} isFirst={index === 0} />
         ))}
       </div>
     </section>

@@ -7,6 +7,7 @@ import {
   GitPullRequest,
   GitPullRequestClosed,
   ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -25,8 +26,8 @@ const PR_STATUS = /** @type {const} */ ({
 
 const FILTER_TABS = [
   { key: "all", label: "All" },
-  { key: PR_STATUS.MERGED, label: "Merged" },
   { key: PR_STATUS.OPEN, label: "Open" },
+  { key: PR_STATUS.MERGED, label: "Merged" },
   { key: PR_STATUS.CLOSED, label: "Closed" },
 ];
 
@@ -190,47 +191,70 @@ function FilterTabs({ active, onChange, items }) {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-neutral-100/70 border border-neutral-200/70 select-none">
-      {FILTER_TABS.map((tab) => {
-        const isActive = active === tab.key;
-        const count = getCount(tab.key);
+    <>
+      {/* Mobile: Clean dropdown selector */}
+      <div className="relative sm:hidden w-full xs:w-auto min-w-[160px]">
+        <select
+          value={active}
+          onChange={(e) => onChange(e.target.value)}
+          aria-label="Filter pull requests by status"
+          className="w-full appearance-none rounded-lg border border-neutral-200/90 bg-white py-1.5 pl-3 pr-8 text-xs font-mono font-medium text-neutral-800 shadow-2xs outline-none focus:border-neutral-400 cursor-pointer"
+        >
+          {FILTER_TABS.map((tab) => (
+            <option key={tab.key} value={tab.key}>
+              {tab.label} ({getCount(tab.key)})
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          size={14}
+          className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400"
+        />
+      </div>
 
-        return (
-          <button
-            key={tab.key}
-            type="button"
-            onClick={() => onChange(tab.key)}
-            className={cn(
-              "relative px-3 py-1 text-xs font-medium capitalize rounded-lg transition-all duration-200 flex items-center gap-1.5 cursor-pointer bg-transparent border-0",
-              isActive
-                ? "text-neutral-900 font-semibold"
-                : "text-neutral-500 hover:text-neutral-800 hover:bg-neutral-200/40"
-            )}
-          >
-            {isActive && (
-              <motion.div
-                layoutId="activeContributionTab"
-                className="absolute inset-0 bg-white rounded-lg border border-neutral-200/80 shadow-sm"
-                transition={{ type: "spring", stiffness: 450, damping: 35 }}
-              />
-            )}
-            <span className="relative z-10">{tab.label}</span>
-            {count > 0 && (
-              <span
-                className={cn(
-                  "relative z-10 text-[10px] font-mono px-1.5 rounded-full",
-                  isActive
-                    ? "bg-neutral-100 text-neutral-700"
-                    : "text-neutral-400"
-                )}
-              >
-                {count}
-              </span>
-            )}
-          </button>
-        );
-      })}
-    </div>
+      {/* Desktop / Larger screens: Thin horizontal segmented bar with all options beside each other */}
+      <div className="hidden sm:inline-flex flex-nowrap items-center gap-1 p-1 rounded-full bg-neutral-100/70 border border-neutral-200/70 select-none shrink-0 whitespace-nowrap shadow-2xs">
+        {FILTER_TABS.map((tab) => {
+          const isActive = active === tab.key;
+          const count = getCount(tab.key);
+
+          return (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => onChange(tab.key)}
+              className={cn(
+                "relative px-3 py-1 text-xs font-medium capitalize rounded-full transition-all duration-200 flex items-center gap-1.5 cursor-pointer bg-transparent border-0 shrink-0 whitespace-nowrap",
+                isActive
+                  ? "text-neutral-900 font-semibold"
+                  : "text-neutral-500 hover:text-neutral-800 hover:bg-neutral-200/40"
+              )}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="activeContributionTab"
+                  className="absolute inset-0 bg-white rounded-full border border-neutral-200/80 shadow-2xs"
+                  transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                />
+              )}
+              <span className="relative z-10">{tab.label}</span>
+              {count > 0 && (
+                <span
+                  className={cn(
+                    "relative z-10 text-[10px] font-mono px-1.5 rounded-full",
+                    isActive
+                      ? "bg-neutral-100 text-neutral-700 font-semibold"
+                      : "text-neutral-400"
+                  )}
+                >
+                  {count}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
@@ -450,7 +474,7 @@ export default function GithubSection({ fullPage = false }) {
               Verified upstream pull requests across public ecosystems
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
             {fullPage && (
               <input
                 type="search"
