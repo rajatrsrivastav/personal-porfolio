@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
+    "@liqui-design/glass": "^0.4.0",
     "@tailwindcss/vite": "^4.1.17",
     "clsx": "^2.1.1",
     "framer-motion": "^13.5.0",

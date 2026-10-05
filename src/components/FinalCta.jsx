@@ -1,5 +1,6 @@
-import React from "react";
-import { Github, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import React, { useState } from "react";
+import { Github, Linkedin, Mail, MapPin, ArrowUpRight, ArrowUp, Check } from "lucide-react";
+import "./FinalCta.css";
 
 function XLogo({ size = 18 }) {
   return (
@@ -8,89 +9,156 @@ function XLogo({ size = 18 }) {
     </svg>
   );
 }
-import "./FinalCta.css";
+
+const NAV_LINKS = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#work" },
+  { label: "Activity", href: "#activity" },
+  { label: "Skills", href: "#skills" },
+];
 
 export default function FinalCta() {
   const currentYear = new Date().getFullYear();
-  
+  const email = "rajatrsrivastav810@gmail.com";
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const id = href.replace("#", "");
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer className="footer" role="contentinfo" id="contact">
       <div className="footer-container">
-        {/* Main content */}
+        {/* Left Column: Brand & Bio */}
         <div className="footer-main">
           <div className="footer-brand">
-            <img className="footer-logo" src="/logo.png" alt="Rajat Srivastav" />
+            <div className="footer-logo-wrap">
+              <img className="footer-logo" src="/logo.png" alt="Rajat Srivastav" />
+            </div>
             <div className="footer-info">
               <h3 className="footer-name">Rajat Srivastav</h3>
               <p className="footer-role">Full-Stack Engineer</p>
             </div>
           </div>
-          
+
           <p className="footer-tagline">
-            Building seamless digital experiences from real-world challenges.
+            Building seamless digital experiences from{" "}
+            <span className="whitespace-nowrap">real&#8209;world</span> challenges.
           </p>
-          
+
           <div className="footer-location">
-            <MapPin size={14} />
+            <MapPin size={14} className="location-pin" />
             <span>Mumbai, India</span>
+            {/* <span className="footer-status-pill">
+              <span className="footer-status-dot" />
+              <span>Available</span>
+            </span> */}
           </div>
         </div>
 
-        {/* Navigation */}
+        {/* Center Column: Navigation */}
         <nav className="footer-nav" aria-label="Footer navigation">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#work">Projects</a>
-          <a href="#activity">Activity</a>
-          <a href="#skills">Skills</a>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="footer-nav-link"
+            >
+              <span>{link.label}</span>
+            </a>
+          ))}
         </nav>
 
-        {/* Social & Contact */}
+        {/* Right Column: Social & Contact */}
         <div className="footer-connect">
           <div className="footer-socials">
-            <a 
-              href="https://www.linkedin.com/in/rajatrsrivastav/" 
-              target="_blank" 
-              rel="noreferrer" 
-              aria-label="LinkedIn"
+            <a
+              href="https://www.linkedin.com/in/rajatrsrivastav/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn profile"
               className="social-link"
+              title="LinkedIn"
             >
               <Linkedin size={18} />
             </a>
-            <a 
-              href="https://github.com/rajatrsrivastav" 
-              target="_blank" 
-              rel="noreferrer" 
-              aria-label="GitHub"
+            <a
+              href="https://github.com/rajatrsrivastav"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub profile"
               className="social-link"
+              title="GitHub"
             >
               <Github size={18} />
             </a>
-            <a 
-              href="https://x.com/rajatrsrivastav" 
-              target="_blank" 
-              rel="noreferrer" 
-              aria-label="X (Twitter)"
+            <a
+              href="https://x.com/rajatrsrivastav"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="X (Twitter) profile"
               className="social-link"
+              title="X"
             >
-              <XLogo size={18} />
+              <XLogo size={17} />
             </a>
           </div>
-          
-          <a href="mailto:rajatrsrivastav810@gmail.com" className="footer-email">
-            <Mail size={14} />
-            <span>rajatrsrivastav810@gmail.com</span>
-            <ArrowUpRight size={12} className="email-arrow" />
+
+          {/* Email button with copy & mailto */}
+          <a
+            href={`mailto:${email}`}
+            onClick={handleCopyEmail}
+            className={`footer-email ${copied ? "is-copied" : ""}`}
+            title="Click to copy email address"
+          >
+            {copied ? (
+              <Check size={14} className="email-icon text-emerald-600" />
+            ) : (
+              <Mail size={14} className="email-icon" />
+            )}
+            <span className="email-address">
+              {copied ? "Email copied!" : email}
+            </span>
+            <ArrowUpRight size={13} className="email-arrow" />
           </a>
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom Bar */}
       <div className="footer-bottom">
-        <span>© {currentYear} Rajat Srivastav</span>
-        <span className="footer-divider">·</span>
-        <span>All rights reserved</span>
+        <div className="footer-bottom-inner">
+          <p className="footer-copyright">
+            © {currentYear} Rajat Srivastav <span className="footer-divider">·</span> All rights reserved
+          </p>
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="footer-back-to-top"
+            aria-label="Back to top of page"
+          >
+            <span>Back to top</span>
+            <ArrowUp size={13} />
+          </button>
+        </div>
       </div>
     </footer>
   );

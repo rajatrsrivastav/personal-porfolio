@@ -1,32 +1,58 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { LiquiGlass } from "@liqui-design/glass";
+import "@liqui-design/glass/tokens.css";
+import { Home, User, Briefcase, Layers, Activity, Cpu } from "lucide-react";
 import "./Navbar.css";
 
-const NAV_SECTIONS = ["home", "about", "experience", "work", "activity", "skills"];
-const NAVBAR_HEIGHT = 80;
-const SCROLL_LOCK_MS = 900;
+const NAV_ITEMS = [
+  { id: "home", label: "Home", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "work", label: "Work", icon: Layers },
+  { id: "activity", label: "Activity", icon: Activity },
+  { id: "skills", label: "Skills", icon: Cpu },
+];
 
-export default function Navbar({ onOpenContact }) {
+const SCROLL_LOCK_MS = 850;
+
+export default function Navbar() {
   const [active, setActive] = useState("home");
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState(null);
   const isClickScrolling = useRef(false);
   const lockTimer = useRef(null);
 
-  // Detect which section is at the focal point (35% from top)
+  // Detect which section is active + determine whether navbar should collapse into compact dock
   const detectActiveSection = useCallback(() => {
+    const scrollY = window.scrollY;
+
+    // Determine collapse state based on Hero viewport threshold
+    const heroEl = document.getElementById("home");
+    const heroHeight = heroEl ? heroEl.offsetHeight : 640;
+    // Collapse once user scrolls 40% past hero into content sections
+    const collapseThreshold = Math.min(heroHeight * 0.42, 380);
+
+    if (scrollY > collapseThreshold) {
+      setIsCollapsed(true);
+    } else {
+      setIsCollapsed(false);
+    }
+
     if (isClickScrolling.current) return;
 
     // At bottom of page: highlight last section ("skills")
     const isAtBottom =
-      window.innerHeight + window.scrollY >=
+      window.innerHeight + scrollY >=
       document.documentElement.scrollHeight - 60;
 
     if (isAtBottom) {
-      setActive(NAV_SECTIONS[NAV_SECTIONS.length - 1]);
+      setActive(NAV_ITEMS[NAV_ITEMS.length - 1].id);
       return;
     }
 
     // Near top of page: highlight first section ("home")
-    if (window.scrollY < 80) {
-      setActive(NAV_SECTIONS[0]);
+    if (scrollY < 80) {
+      setActive("home");
       return;
     }
 
@@ -34,12 +60,12 @@ export default function Navbar({ onOpenContact }) {
 
     // Walk sections top-to-bottom, pick the LAST one whose top is above the focal line.
     let matched = null;
-    for (const id of NAV_SECTIONS) {
-      const el = document.getElementById(id);
+    for (const item of NAV_ITEMS) {
+      const el = document.getElementById(item.id);
       if (!el) continue;
       const rect = el.getBoundingClientRect();
       if (rect.top <= focalLine) {
-        matched = id;
+        matched = item.id;
       }
     }
     if (matched) {
@@ -47,34 +73,39 @@ export default function Navbar({ onOpenContact }) {
     }
   }, []);
 
-  // Click handler: lock scrollspy, set active immediately, smooth-scroll
-  const handleNavClick = useCallback((event, sectionId) => {
-    event.preventDefault();
+  // Click handler: lock scrollspy, set active immediately, smooth-scroll with dynamic offset
+  const handleNavClick = useCallback(
+    (event, sectionId) => {
+      event.preventDefault();
 
-    // Immediately set active to prevent flicker
-    setActive(sectionId);
-    isClickScrolling.current = true;
+      // Immediately set active to prevent flicker
+      setActive(sectionId);
+      isClickScrolling.current = true;
 
-    // Clear any existing lock timer
-    if (lockTimer.current) clearTimeout(lockTimer.current);
+      // Clear any existing lock timer
+      if (lockTimer.current) clearTimeout(lockTimer.current);
 
-    const targetEl = document.getElementById(sectionId);
-    if (targetEl) {
-      const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementTop - NAVBAR_HEIGHT;
+      const targetEl = document.getElementById(sectionId);
+      if (targetEl) {
+        const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
+        // Dynamically account for collapsed vs expanded navbar height
+        const targetNavHeight = isCollapsed || sectionId !== "home" ? 64 : 80;
+        const offsetPosition = Math.max(0, elementTop - targetNavHeight);
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
 
-    // Unlock scrollspy after animation settles
-    lockTimer.current = setTimeout(() => {
-      isClickScrolling.current = false;
-      detectActiveSection();
-    }, SCROLL_LOCK_MS);
-  }, [detectActiveSection]);
+      // Unlock scrollspy after animation settles
+      lockTimer.current = setTimeout(() => {
+        isClickScrolling.current = false;
+        detectActiveSection();
+      }, SCROLL_LOCK_MS);
+    },
+    [detectActiveSection, isCollapsed]
+  );
 
   useEffect(() => {
     window.addEventListener("scroll", detectActiveSection, { passive: true });
@@ -89,30 +120,53 @@ export default function Navbar({ onOpenContact }) {
   }, [detectActiveSection]);
 
   return (
-    <header className="nb-wrap">
-      <nav className="nb-nav">
-        <a className="nb-brand" href="#home" aria-label="Rajat Srivastav home">
-          <img src="/logo.png" alt="Logo" className="nb-logo" />
-        </a>
-        <div className="nb-pill">
-          {NAV_SECTIONS.map((id) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              className={active === id ? "active" : ""}
-              aria-current={active === id ? "page" : undefined}
-              onClick={(e) => handleNavClick(e, id)}
-            >
-              {id === "home" ? "Home"
-                : id === "about" ? "About"
-                : id === "experience" ? "Experience"
-                : id === "work" ? "Work"
-                : id === "activity" ? "Activity"
-                : "Skills"}
-            </a>
-          ))}
-        </div>
-        {/* <div className="nb-kbd"></div> */}
+    <header className={`nb-wrap hidden md:block ${isCollapsed ? "is-collapsed" : "is-expanded"}`}>
+      <nav
+        className="nb-nav"
+        aria-label="Main navigation"
+        onMouseLeave={() => setHoveredItem(null)}
+      >
+        {/* Floating Apple Liquid Glass dock */}
+        <LiquiGlass
+          radius={9999}
+          frost={0.03}
+          refraction={60}
+          bezel={10}
+          blur={1.2}
+          specular={0.7}
+          elevated={false}
+          className={`nb-pill ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
+          contentClassName={`nb-pill-inner ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
+        >
+          {NAV_ITEMS.map((item) => {
+            const Icon = item.icon;
+            const isActive = active === item.id;
+            const isHovered = hoveredItem === item.id;
+            // In collapsed dock mode, show label if item is active or hovered
+            const showLabel = !isCollapsed || isActive || isHovered;
+
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`nb-link ${isActive ? "active" : ""} ${isCollapsed ? "dock-mode" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+                onClick={(e) => handleNavClick(e, item.id)}
+                onMouseEnter={() => setHoveredItem(item.id)}
+                title={item.label}
+              >
+                <span className="nb-icon-wrap" aria-hidden="true">
+                  <Icon size={isCollapsed ? 15 : 14} className="nb-icon" />
+                </span>
+                <span
+                  className={`nb-label ${showLabel ? "is-visible" : "is-hidden"}`}
+                >
+                  {item.label}
+                </span>
+              </a>
+            );
+          })}
+        </LiquiGlass>
       </nav>
     </header>
   );

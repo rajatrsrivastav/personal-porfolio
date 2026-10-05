@@ -4,17 +4,6 @@ import "./AboutMe.css";
 export default function AboutMe() {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const handleFlip = () => {
-    setIsFlipped((prev) => !prev);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleFlip();
-    }
-  };
-
   return (
     <section className="ab-section" id="about">
       <div className="ab-text">
@@ -23,7 +12,7 @@ export default function AboutMe() {
         </p>
         <h2 className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 leading-tight mb-4 text-center sm:text-left">
           Full-Stack Developer and <br /> a little bit of{" "}
-          <em className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+          <em className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
             everything
           </em>
         </h2>
@@ -47,80 +36,98 @@ export default function AboutMe() {
       </div>
 
       <div className="ab-art">
-        <div className="ab-flip-card-wrapper">
-          {/* Hand-drawn style hint & curved arrow pointing to the avatar */}
-          <div
-            className="ab-flip-hint"
-            onClick={handleFlip}
-            role="button"
-            tabIndex={-1}
-            aria-hidden="true"
-            title="Click to flip photo"
-          >
-            <span className="ab-flip-hint-text">
-              {isFlipped ? "flip back to avatar ↺" : "flip to see the real me!"}
-            </span>
-            <svg
-              className="ab-flip-hint-arrow"
-              viewBox="0 0 60 44"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M 52 4 C 44 18, 28 28, 8 36"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M 18 26 L 7 37 L 20 40"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-              />
-            </svg>
-          </div>
-
-          {/* Interactive 3D Flip Card */}
-          <div
-            className={`ab-flip-card ${isFlipped ? "is-flipped" : ""}`}
-            onClick={handleFlip}
-            onKeyDown={handleKeyDown}
+        {/* Right Column: Interactive 3D Flip Card */}
+        <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto select-none">
+          {/* Perspective Wrapper */}
+          <div 
+            onClick={() => setIsFlipped(!isFlipped)}
+            className="group relative w-72 sm:w-80 h-[390px] sm:h-[430px] cursor-pointer ab-flip-wrapper [perspective:1000px]"
             role="button"
             tabIndex={0}
-            aria-label={
-              isFlipped
-                ? "Real photo of Rajat Srivastav. Click to flip back to animated avatar."
-                : "Illustrated avatar of Rajat Srivastav. Click to flip to real photo."
-            }
-            aria-pressed={isFlipped}
+            aria-label={isFlipped ? "Flip back to Deadpool flyer" : "Flip to see real photo"}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setIsFlipped(!isFlipped);
+              }
+            }}
           >
-            <div className="ab-flip-inner">
-              {/* Front Face: Animated Avatar (shown first) */}
-              <div className="ab-flip-face ab-flip-front">
-                <img
-                  src="/avatar-animated.png"
-                  alt="Illustrated avatar of Rajat Srivastav"
-                  width={400}
-                  height={400}
-                  className="ab-avatar-img"
-                  loading="eager"
-                />
+            <div
+              className={`relative w-full h-full transition-transform duration-500 ab-flip-card-3d [transform-style:preserve-3d] ${
+                isFlipped ? "flipped [transform:rotateY(180deg)]" : ""
+              }`}
+            >
+              {/* 1. FRONT FACE (DEFAULT): Deadpool Flyer + Animated Avatar */}
+              <div className="absolute inset-0 w-full h-full ab-face-3d [backface-visibility:hidden] rounded-2xl sm:rounded-3xl border border-neutral-200/80 bg-white p-4 shadow-md flex flex-col items-center justify-between overflow-hidden transition-shadow duration-300 group-hover:shadow-lg">
+                {/* Poster Header */}
+                <div className="text-center pt-1">
+                  <p className="text-xs sm:text-sm font-mono font-bold tracking-[0.18em] text-neutral-800 uppercase">
+                    HAVE YOU SEEN THIS MAN?
+                  </p>
+                </div>
+
+                {/* Deadpool & Fitted Animated Avatar */}
+                <div className="relative w-full flex-1 flex items-center justify-center my-auto min-h-0">
+                  <div className="relative h-full max-h-[300px] sm:max-h-[340px] aspect-[394/436] flex items-center justify-center">
+                    <img
+                      src="/deadpool-cutout.png"
+                      alt="Deadpool holding flyer"
+                      className="w-full h-full object-contain pointer-events-none"
+                    />
+
+                    {/* Animated Avatar Aligned on Paper Sheet */}
+                    <div
+                      className="absolute overflow-hidden rounded-xs border border-neutral-300/80 shadow-2xs z-10"
+                      style={{
+                        width: "45%",
+                        height: "51%",
+                        top: "38%",
+                        right: "8%",
+                        transform: "rotate(-6deg)",
+                      }}
+                    >
+                      <img
+                        src="/rajat-animated.png"
+                        alt="Avatar"
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+
+                    {/* Deadpool Glove Overlay to naturally grip the avatar edge */}
+                    <img
+                      src="/deadpool-glove-overlay.png"
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-contain pointer-events-none z-20"
+                    />
+                  </div>
+                </div>
+
+                {/* In-Frame Clean Action Hint */}
+                <div className="w-full text-center pb-1">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100/90 border border-neutral-200/80 text-[11px] font-mono font-medium text-neutral-600 transition-colors group-hover:bg-neutral-200/80 group-hover:text-neutral-900 shadow-2xs">
+                    <span>Flip to see real person</span>
+                    <span className="text-xs transition-transform duration-300 group-hover:-rotate-180">↺</span>
+                  </span>
+                </div>
               </div>
 
-              {/* Back Face: Real Photo (shown on flip) */}
-              <div className="ab-flip-face ab-flip-back">
-                <img
-                  src="/avatar.PNG"
-                  alt="Real photo of Rajat Srivastav"
-                  width={400}
-                  height={400}
-                  className="ab-avatar-img"
-                  loading="eager"
-                />
+              {/* 2. BACK FACE (FLIPPED): Real Photo Full Frame */}
+              <div className="absolute inset-0 w-full h-full ab-face-3d ab-face-back [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl sm:rounded-3xl border border-neutral-200/80 bg-white p-3 shadow-md flex flex-col justify-between items-center overflow-hidden transition-shadow duration-300 group-hover:shadow-lg">
+                <div className="w-full h-full overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-100 relative">
+                  <img
+                    src="/rajat-photo.jpg"
+                    alt="Rajat Srivastav (Real)"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  {/* In-Frame Clean Action Hint */}
+                  <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/70 text-white/95 text-[11px] font-mono font-medium backdrop-blur-sm border border-white/20 shadow-xs">
+                      {/* <span>Flip back to avatar</span> */}
+                      <span className="text-xs">↺</span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

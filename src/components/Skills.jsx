@@ -99,7 +99,7 @@ export default function Skills() {
         <div className="text-center mb-10">
           <h2 className="text-4xl sm:text-5xl font-serif font-medium tracking-tight text-neutral-900">
             Skills &{" "}
-            <span className="italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+            <span className="italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
               Technologies
             </span>
           </h2>

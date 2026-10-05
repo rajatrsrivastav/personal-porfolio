@@ -24,6 +24,27 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body { margin: 0; background: #fff; color: #0b0d12; }
+
+/* Custom Deadpool Text Selection Highlight (Replaces default blue) */
+::selection {
+  background-color: #e11d48;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: #e11d48;
+  color: #ffffff;
+}
+
+*::selection {
+  background-color: #e11d48;
+  color: #ffffff;
+}
+
+*::-moz-selection {
+  background-color: #e11d48;
+  color: #ffffff;
+}
 button, input, textarea { font: inherit; }
 button, summary { cursor: pointer; }
 img { max-width: 100%; }
@@ -46,4 +67,10 @@ section[id], main[id] { scroll-margin-top: 90px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Katana Cursor Mode: Hides native cursor on desktop */
+body.katana-cursor-active,
+body.katana-cursor-active * {
+  cursor: none !important;
 }

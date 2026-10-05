@@ -33,7 +33,7 @@ export default function Experience() {
         </p>
         <h2 className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center">
           Career{" "}
-          <em className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+          <em className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
             Evolution
           </em>
         </h2>

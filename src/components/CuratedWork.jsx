@@ -144,7 +144,7 @@ export default function CuratedWork() {
               className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
             >
               From Challenge to{" "}
-              <span className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+              <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
                 Solution
               </span>
             </h2>
@@ -179,7 +179,7 @@ export default function CuratedWork() {
                   {index === activeIndex && (
                     <motion.div
                       layoutId="activeWorkUnderline"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-red-600 to-rose-600"
                     />
                   )}
                 </button>
@@ -273,7 +273,7 @@ export default function CuratedWork() {
                         href={activeProject.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-400 transition-colors hover:text-neutral-900 no-underline"
+                        className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3 py-1 rounded-full bg-red-500/10 text-red-700 border border-red-500/20 hover:bg-red-500/20 transition-colors no-underline"
                       >
                         <span>Visit Project</span>
                         <ExternalLink className="h-3 w-3 transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />

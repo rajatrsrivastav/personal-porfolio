@@ -10,7 +10,8 @@ import HomeHero from './components/HomeHero'
 import Navbar from './components/Navbar'
 import ContactModal from './components/ContactModal'
 import ContributionsPage from './pages/ContributionsPage'
-import SplashCursor from './components/SplashCursor'
+import FixedHangingDeadpool from './components/FixedHangingDeadpool'
+import KatanaSliceCursor from './components/KatanaSliceCursor'
 
 function App() {
   const [contactOpen, setContactOpen] = useState(false)
@@ -56,28 +57,10 @@ function App() {
     }
   }, [contactOpen])
 
-  const cursorProps = {
-    SIM_RESOLUTION: 128,
-    DYE_RESOLUTION: 1440,
-    CAPTURE_RESOLUTION: 512,
-    DENSITY_DISSIPATION: 3.5,
-    VELOCITY_DISSIPATION: 2,
-    PRESSURE: 0.1,
-    PRESSURE_ITERATIONS: 20,
-    CURL: 3,
-    SPLAT_RADIUS: 0.2,
-    SPLAT_FORCE: 6000,
-    SHADING: true,
-    COLOR_UPDATE_SPEED: 10,
-    RAINBOW_MODE: false,
-    COLOR: ['#f97316', '#f59e0b', '#f43f5e'],
-    TRANSPARENT: true,
-  }
-
   if (isContributionsPage) {
     return (
       <>
-        <SplashCursor {...cursorProps} />
+        <KatanaSliceCursor />
         <ContributionsPage />
       </>
     )
@@ -85,7 +68,8 @@ function App() {
 
   return (
     <div>
-      <SplashCursor {...cursorProps} />
+      <KatanaSliceCursor />
+      <FixedHangingDeadpool />
       <Navbar onOpenContact={() => setContactOpen(true)} />
       <main>
         <HomeHero onOpenContact={() => setContactOpen(true)} />

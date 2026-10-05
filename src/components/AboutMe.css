@@ -75,13 +75,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 56px; /* Room for the doodle hint & arrow above */
+  padding-top: 0;
 }
 
-.ab-flip-card-wrapper {
-  position: relative;
-  width: min(100%, 390px);
-  aspect-ratio: 1;
+.ab-flip-wrapper {
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+.ab-flip-card-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ab-flip-card-3d.flipped {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+.ab-face-3d {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.ab-face-back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 /* Playful Doodle Hint & Curved Arrow (inspired by Jayant's portfolio) */

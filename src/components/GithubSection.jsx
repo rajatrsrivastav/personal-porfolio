@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useMemo, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ActivityCalendar } from "react-activity-calendar";
@@ -140,21 +139,21 @@ function formatRelativeTime(value) {
   return formatter.format(Math.round(seconds / match[1]), match[0]);
 }
 
-/* ── Warm sunset calendar theme (amber → orange → rose) ── */
+/* ── Deadpool calendar theme ── */
 const calendarTheme = {
   light: [
-    "#f1f3f5", // Level 0: 0 contributions (clean, subtle light gray)
-    "#fed7aa", // Level 1: 1-3 contributions (soft amber)
-    "#fb923c", // Level 2: 4-6 contributions (warm orange)
-    "#f97316", // Level 3: 7-9 contributions (vibrant orange)
-    "#e11d48", // Level 4: 10+ contributions (deep rose accent)
+    "#f1f3f5", // Level 0: 0 commits (subtle light gray)
+    "#fecdd3", // Level 1: 1-3 commits (soft rose-200)
+    "#fb7185", // Level 2: 4-6 commits (vibrant rose-400)
+    "#e11d48", // Level 3: 7-9 commits (crimson ruby rose-600)
+    "#9f1239", // Level 4: 10+ commits (deep oxblood rose-800)
   ],
   dark: [
     "#1e1e20", // Level 0 dark
-    "#7c2d12", // Level 1
-    "#c2410c", // Level 2
-    "#ea580c", // Level 3
-    "#f43f5e", // Level 4
+    "#4c0519", // Level 1
+    "#881337", // Level 2
+    "#be123c", // Level 3
+    "#e11d48", // Level 4
   ],
 };
 
@@ -170,11 +169,11 @@ function getContributionLevel(count) {
 const STATUS_CONFIG = {
   [PR_STATUS.MERGED]: {
     Icon: GitMerge,
-    color: "text-rose-500",
+    color: "text-rose-600",
   },
   [PR_STATUS.OPEN]: {
     Icon: GitPullRequest,
-    color: "text-amber-500",
+    color: "text-red-600",
   },
   [PR_STATUS.CLOSED]: {
     Icon: GitPullRequestClosed,
@@ -408,7 +407,7 @@ export default function GithubSection({ fullPage = false }) {
           className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
         >
           {fullPage ? "All Public " : "GitHub "}
-          <span className="font-serif italic font-normal bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+          <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
             {fullPage ? "Contributions" : "Activity"}
           </span>
         </h2>
@@ -418,6 +417,18 @@ export default function GithubSection({ fullPage = false }) {
         {!fullPage && (
           <>
             {/* ── Activity summary ──────────────────── */}
+            {/* <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20">
+                10+ merged PRs across CNCF ecosystem
+              </span>
+              <span className="text-xs font-mono text-neutral-500 bg-neutral-100/80 border border-neutral-200/60 px-3 py-1 rounded-full">
+                {calendar.loading
+                  ? "Loading GitHub activity"
+                  : calendar.error
+                    ? "Contribution data unavailable"
+                    : `${calendar.total.toLocaleString()} contributions in the last year`}
+              </span>
+            </div> */}
 
             {/* ── Contribution Graph (on canvas, no card) ── */}
             <div
