@@ -13,7 +13,7 @@ const DEADPOOL_QUOTES = [
 ];
 
 export default function FixedHangingDeadpool() {
-  const [_quoteIndex, setQuoteIndex] = useState(0);
+  const [quoteIndex, setQuoteIndex] = useState(0);
   const [isSpeechOpen, setIsSpeechOpen] = useState(false);
   const [isWinking, setIsWinking] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
@@ -83,8 +83,8 @@ export default function FixedHangingDeadpool() {
         }
       }}
     >
-      {/* Popover Editorial Wisecrack Card (Commented out for now) */}
-      {/* {isSpeechOpen && (
+      {/* Popover Editorial Wisecrack Card */}
+      {isSpeechOpen && (
         <div
           className="deadpool-speech-bubble"
           onClick={(e) => e.stopPropagation()}
@@ -124,7 +124,7 @@ export default function FixedHangingDeadpool() {
           </div>
           <div className="speech-tail" aria-hidden="true" />
         </div>
-      )} */}
+      )}
 
       {/* Hanging Rope & Deadpool Character Vector Art */}
       <div className="deadpool-swing-arm">
@@ -301,20 +301,18 @@ export default function FixedHangingDeadpool() {
               <circle cx="111" cy="205" r="2.5" fill="#374151" />
             </g>
 
-            {/* Deadpool Head (Hanging at bottom, y = 196 to 264) */}
+            {/* Deadpool Head (Hanging at bottom, y = 196 to 260) */}
             <g className="deadpool-head">
               {/* Neck */}
               <rect x="74" y="196" width="12" height="8" fill="#991b1b" stroke="#111827" strokeWidth="1.5" />
 
-              {/* Head Silhouette (Mask with little downward cowl fold/point) */}
+              {/* Head Silhouette (Smoothly rounded cowl dome with no horn) */}
               <path
-                d="M 80 262 C 60 258 56 235 58 214 C 60 198 70 198 80 198 C 90 198 100 198 102 214 C 104 235 100 258 80 262 Z"
+                d="M 58 214 C 56 238 64 258 80 258 C 96 258 104 238 102 214 C 100 198 90 198 80 198 C 70 198 60 198 58 214 Z"
                 fill="#c81e2b"
                 stroke="#111827"
                 strokeWidth="2.5"
               />
-              {/* Cowl tail point hanging downward */}
-              <path d="M 78 261 L 80 267 L 82 261 Z" fill="#991b1b" stroke="#111827" strokeWidth="1" />
 
               {/* Left Eye Black Patch (Upside down viewer perspective) */}
               <path
