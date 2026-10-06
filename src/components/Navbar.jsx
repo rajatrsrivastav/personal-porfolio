@@ -141,11 +141,12 @@ export default function Navbar() {
         {/* Floating Apple Liquid Glass dock */}
         <LiquiGlass
           radius={9999}
-          frost={0.28}
-          refraction={78}
-          bezel={14}
-          blur={1.2}
-          specular={0.7}
+          frost={0.18}
+          refraction={110}
+          bezel={16}
+          blur={3}
+          specular={0.85}
+          saturation={1.6}
           elevated={false}
           className={`nb-pill ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
           contentClassName={`nb-pill-inner ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
@@ -162,7 +163,8 @@ export default function Navbar() {
                 key={item.id}
                 href={`#${item.id}`}
                 className={`nb-link ${isActive ? "active" : ""} ${isCollapsed ? "dock-mode" : ""}`}
-                aria-current={isActive ? "page" : undefined}
+                aria-current={isActive ? "location" : undefined}
+                aria-label={item.label}
                 onClick={(e) => handleNavClick(e, item.id)}
                 onMouseEnter={() => setHoveredItem(item.id)}
                 title={item.label}
