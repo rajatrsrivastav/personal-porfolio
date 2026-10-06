@@ -1,9 +1,12 @@
 import { ArrowLeft } from "lucide-react";
-import { getDispatch } from "../data/dispatches";
+import usePosts from "../hooks/usePosts";
+import Markdown from "../components/Markdown";
 import "./BlogPages.css";
 
 export default function BlogPostPage({ slug }) {
-  const dispatch = getDispatch(slug);
+  const {posts, loading, error} = usePosts();
+  const dispatch = posts.find(post => post.slug === slug);
+  if (loading || error) return <main className="blog-page"><p role="status">{error || "Loading article…"}</p></main>;
 
   if (!dispatch) {
     return (
@@ -30,14 +33,7 @@ export default function BlogPostPage({ slug }) {
             {dispatch.tags.map((tag) => <span className="dispatch-tag font-mono" key={tag}>{tag}</span>)}
           </div>
         </header>
-        <div className="blog-prose">
-          {dispatch.sections.map((section) => (
-            <section key={section.heading}>
-              <h2 className="font-serif">{section.heading}</h2>
-              {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </section>
-          ))}
-        </div>
+        <Markdown content={dispatch.content} />
         <footer className="blog-article-footer">
           <p className="font-serif">More from the blog.</p>
           <a className="blog-pill-link" href="/blog">View all posts <span aria-hidden="true">→</span></a>

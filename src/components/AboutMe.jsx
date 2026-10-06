@@ -5,7 +5,7 @@ export default function AboutMe() {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <section className="ab-viewport w-full relative min-h-screen flex flex-col justify-center scroll-mt-24" id="about">
+    <section className="ab-viewport w-full relative min-h-0 py-16 sm:py-20 lg:py-24 lg:flex lg:flex-col lg:justify-center scroll-mt-20 sm:scroll-mt-24 lg:scroll-mt-28" id="about">
       <div className="ab-section">
       <div className="ab-text">
         <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center sm:text-left">
@@ -76,22 +76,31 @@ export default function AboutMe() {
                       className="w-full h-full object-contain pointer-events-none"
                     />
 
-                    {/* Animated Avatar Aligned on Paper Sheet */}
+                    {/* Photo coordinates are relative to the shared flyer artwork. */}
                     <div
-                      className="absolute overflow-hidden rounded-xs border border-neutral-300/80 shadow-2xs z-10"
+                      className="absolute z-10 pointer-events-none aspect-[3/4] rounded-xs border border-neutral-300/80 bg-white p-1.5 sm:p-2 shadow-md shadow-neutral-900/10"
                       style={{
-                        width: "45%",
-                        height: "51%",
-                        top: "38%",
-                        right: "8%",
-                        transform: "rotate(-6deg)",
+                        width: "48%",
+                        top: "34%",
+                        left: "44%",
+                        transform: "rotate(4deg)",
+                        transformOrigin: "50% 50%",
                       }}
                     >
                       <img
                         src="/rajat-animated.png"
-                        alt="Avatar"
-                        className="w-full h-full object-cover object-top"
+                        alt="Rajat's mugshot clipped to Deadpool's flyer"
+                        className="w-full h-full object-cover object-top rounded-xs"
                       />
+                      <svg
+                        className="absolute -top-[3%] right-[4%] w-[10%] h-[20%] overflow-visible"
+                        viewBox="0 0 16 40"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 28V8a5 5 0 0 0-10 0v24a7 7 0 0 0 14 0V12M6 12v18a3 3 0 0 0 6 0" stroke="#71717a" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M3 9v22" stroke="#e4e4e7" strokeWidth="1" strokeLinecap="round" />
+                      </svg>
                     </div>
 
                     {/* Deadpool Glove Overlay to naturally grip the avatar edge */}

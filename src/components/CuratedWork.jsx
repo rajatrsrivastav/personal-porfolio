@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
 } from "framer-motion";
+import "./CuratedWork.css";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 const projects = [
@@ -105,17 +106,58 @@ const slideVariants = {
 export default function CuratedWork() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)");
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const track = containerRef.current;
+      if (!desktop.matches || !track) return;
+      const distance = track.offsetHeight - window.innerHeight;
+      const progress = distance > 0
+        ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / distance))
+        : 0;
+      setActiveIndex(Math.min(projects.length - 1, Math.floor(progress * projects.length)));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    desktop.addEventListener("change", schedule);
+    update();
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      desktop.removeEventListener("change", schedule);
+    };
+  }, []);
+
   const scrollToProject = useCallback((index) => {
     const boundedIndex = Math.max(0, Math.min(index, projects.length - 1));
-    setActiveIndex(boundedIndex);
+    const track = containerRef.current;
+    if (window.matchMedia("(min-width: 768px)").matches && track) {
+      const distance = track.offsetHeight - window.innerHeight;
+      // Land within each interval so rounding cannot select the previous tab.
+      const progress = (boundedIndex + 0.1) / projects.length;
+      window.scrollTo({
+        top: window.scrollY + track.getBoundingClientRect().top + distance * progress,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      });
+    } else {
+      setActiveIndex(boundedIndex);
+    }
   }, []);
 
   const activeProject = projects[activeIndex];
   const totalProjects = projects.length;
 
   return (
-    <section id="work" aria-labelledby="work-title" className="w-full relative overflow-hidden min-h-screen flex flex-col justify-center scroll-mt-24 py-16 sm:py-20">
-      <div className="relative">
+    <section ref={containerRef} id="work" aria-labelledby="work-title" className="work-scroll-track w-full relative scroll-mt-24">
+      <div className="work-sticky-frame">
         <div className="w-full flex flex-col max-w-5xl mx-auto px-6">
           <header className="mb-8 text-center">
             <h2
@@ -135,7 +177,7 @@ export default function CuratedWork() {
             role="tablist"
             aria-label="Project navigation"
           >
-            <div className="hidden sm:flex min-w-0 w-full sm:w-auto flex-1 items-center gap-5 overflow-x-auto hide-scrollbar pr-4 sm:gap-8">
+            <div className="flex min-w-0 w-full sm:w-auto flex-1 items-center gap-4 overflow-x-auto hide-scrollbar pb-2 pr-4 sm:gap-6">
               {projects.map((project, index) => (
                 <button
                   key={project.title}
@@ -145,7 +187,7 @@ export default function CuratedWork() {
                   aria-selected={index === activeIndex}
                   aria-controls="project-panel"
                   onClick={() => scrollToProject(index)}
-                  className={`relative pb-3.5 text-sm bg-transparent border-0 transition-colors ${
+                  className={`relative shrink-0 whitespace-nowrap pb-3.5 text-sm bg-transparent border-0 transition-colors ${
                     index === activeIndex
                       ? "font-semibold text-neutral-900"
                       : "font-medium text-neutral-400 hover:text-neutral-700"
@@ -210,7 +252,7 @@ export default function CuratedWork() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.28, ease: "easeOut" }}
-                className="grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr] md:grid-cols-2"
+                className="flex flex-col items-start gap-8 md:flex-row lg:gap-12"
               >
                 {/* Browser preview */}
                 <a
@@ -218,7 +260,7 @@ export default function CuratedWork() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Open ${activeProject.title} website`}
-                  className="group block overflow-hidden rounded-xl border border-neutral-200/80 bg-neutral-50 transition-shadow hover:shadow-lg no-underline"
+                  className="group block w-full min-w-0 overflow-hidden rounded-xl border border-neutral-200/80 bg-neutral-50 transition-shadow hover:shadow-lg no-underline md:flex-[1.15]"
                 >
                   <div className="flex items-center gap-1.5 border-b border-neutral-200/60 bg-neutral-100/60 px-4 py-2.5">
                     <span className="size-[9px] rounded-full bg-[#ff5f56]" />
@@ -238,7 +280,7 @@ export default function CuratedWork() {
                 </a>
 
                 {/* Project details */}
-                <div className="py-1">
+                <div className="w-full min-w-0 py-1 md:flex-[0.85]">
                   {/* Title + visit link */}
                   <div className="mb-4">
                     <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight mb-2">

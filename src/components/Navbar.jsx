@@ -91,17 +91,8 @@ export default function Navbar() {
       if (targetEl) {
         const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
         // Dynamically account for collapsed vs expanded navbar height
-        const targetNavHeight = sectionId === "about" || sectionId === "experience" || sectionId === "work" || sectionId === "blog"
-          ? parseFloat(window.getComputedStyle(targetEl).scrollMarginTop) || 96
-          : isCollapsed || sectionId !== "home" ? 64 : 80;
-        // Center the complete content block for viewport-framed sections.
-        const centeredContent = ["experience", "blog"].includes(sectionId)
-          ? targetEl.firstElementChild
-          : null;
-        const contentRect = centeredContent?.getBoundingClientRect();
-        const offsetPosition = contentRect && contentRect.height <= window.innerHeight - targetNavHeight
-          ? Math.max(0, window.scrollY + contentRect.top + contentRect.height / 2 - window.innerHeight / 2)
-          : sectionId === "about"
+        const targetNavHeight = parseFloat(window.getComputedStyle(targetEl).scrollMarginTop) || 96;
+        const offsetPosition = sectionId === "about"
           ? getAboutScrollTop(targetEl)
           : Math.max(0, elementTop - targetNavHeight);
 
@@ -117,7 +108,7 @@ export default function Navbar() {
         detectActiveSection();
       }, SCROLL_LOCK_MS);
     },
-    [detectActiveSection, isCollapsed]
+    [detectActiveSection]
   );
 
   useEffect(() => {
@@ -133,7 +124,7 @@ export default function Navbar() {
   }, [detectActiveSection]);
 
   return (
-    <header className={`nb-wrap hidden md:block ${isCollapsed ? "is-collapsed" : "is-expanded"}`}>
+    <header className={`nb-wrap ${isCollapsed ? "is-collapsed" : "is-expanded"}`}>
       <nav
         className="nb-nav"
         aria-label="Main navigation"

@@ -1,8 +1,10 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { dispatches } from "../data/dispatches";
+import usePosts from "../hooks/usePosts";
+import ComingSoon from "../components/ComingSoon";
 import "./BlogPages.css";
 
 export default function BlogPage() {
+  const {posts: dispatches, loading, error} = usePosts();
   return (
     <main className="blog-page">
       <div className="blog-shell">
@@ -12,7 +14,7 @@ export default function BlogPage() {
           <h1 className="font-serif"><span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">Blog</span></h1>
           <p>Things I've learned building, debugging, and shipping.</p>
         </header>
-        <section className="blog-archive-grid" aria-label="All posts">
+        {loading ? <p>Loading notes…</p> : error ? <p role="status">{error}</p> : !dispatches.length ? <ComingSoon /> : <section className="blog-archive-grid" aria-label="All posts">
           {dispatches.map((dispatch) => (
             <a className="blog-archive-card" href={`/blog/${dispatch.slug}`} key={dispatch.slug}>
               <div className="blog-card-top">
@@ -26,7 +28,7 @@ export default function BlogPage() {
               </div>
             </a>
           ))}
-        </section>
+        </section>}
       </div>
     </main>
   );

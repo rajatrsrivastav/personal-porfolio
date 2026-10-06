@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Mail } from "lucide-react";
 import "./HomeHero.css";
+import KatanaNavigator from "./KatanaNavigator";
 
 export default function HomeHero({ onOpenContact }) {
   const email = "rajatrsrivastav810@gmail.com";
@@ -41,7 +42,7 @@ export default function HomeHero({ onOpenContact }) {
       {/* Hero Content Container */}
       <div className="hero-content-wrapper">
         {/* Availability Status Badge */}
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-neutral-200/80 bg-white/70 backdrop-blur-md shadow-2xs mb-6 group cursor-default">
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-neutral-200/80 bg-white/70 backdrop-blur-md shadow-2xs mb-3 sm:mb-4 group cursor-default">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -129,6 +130,7 @@ export default function HomeHero({ onOpenContact }) {
         )}
       </div>
 
+      <KatanaNavigator />
     </section>
   );
 }

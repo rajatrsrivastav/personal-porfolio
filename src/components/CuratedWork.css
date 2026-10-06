@@ -190,3 +190,24 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Native window scroll controls the desktop project sequence. */
+.work-scroll-track { min-height: 0; padding: 64px 0; }
+.work-sticky-frame { width: 100%; }
+@media (min-width: 640px) { .work-scroll-track { padding: 80px 0; } }
+@media (min-width: 768px) {
+  .work-scroll-track { height: 400vh; padding: 0; }
+  .work-sticky-frame {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 96px 24px;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 740px) { .work-sticky-frame { justify-content: flex-start; overflow-y: auto; } }

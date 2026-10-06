@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
-import Lenis from 'lenis'
+import React, { useState } from 'react'
 import CuratedWork from './components/CuratedWork'
 import Skills from './components/Skills'
 import AboutMe from './components/AboutMe'
@@ -12,56 +11,18 @@ import ContactModal from './components/ContactModal'
 import ContributionsPage from './pages/ContributionsPage'
 import FixedHangingDeadpool from './components/FixedHangingDeadpool'
 import BlogSection from './components/BlogSection.tsx'
+import AdminPage from './pages/AdminPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
-import KatanaNavigator from './components/KatanaNavigator'
 
 function App() {
   const [contactOpen, setContactOpen] = useState(false)
-  const lenisRef = useRef(null)
   const isContributionsPage = window.location.pathname.replace(/\/+$/, '') === '/contributions'
   const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/'
   const isBlogPage = normalizedPath === '/blog'
   const blogPostMatch = normalizedPath.match(/^\/blog\/([^/]+)$/)
 
-  useEffect(() => {
-    if (isContributionsPage) return
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-    })
-    lenisRef.current = lenis
-
-    let rafId
-    function raf(time) {
-      lenis.raf(time)
-      rafId = requestAnimationFrame(raf)
-    }
-
-    rafId = requestAnimationFrame(raf)
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      lenis.destroy()
-      lenisRef.current = null
-    }
-  }, [isContributionsPage])
-
-  useEffect(() => {
-    if (!lenisRef.current) return
-    if (contactOpen) {
-      lenisRef.current.stop()
-    } else {
-      lenisRef.current.start()
-    }
-  }, [contactOpen])
+  if (normalizedPath === "/admin") return <AdminPage />
 
   if (isContributionsPage) {
     return (
@@ -85,7 +46,6 @@ function App() {
       <Navbar onOpenContact={() => setContactOpen(true)} />
       <main>
         <HomeHero onOpenContact={() => setContactOpen(true)} />
-        <KatanaNavigator />
         <AboutMe />
         <CareerSection />
         <CuratedWork />

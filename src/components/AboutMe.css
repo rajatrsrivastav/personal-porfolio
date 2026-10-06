@@ -1,14 +1,17 @@
-.ab-viewport { background: var(--portfolio-canvas); padding: 64px 0; overflow-x: clip; }
+.ab-viewport { background: var(--portfolio-canvas); overflow-x: clip; }
 .ab-section {
   width: 100%;
   max-width: 1248px;
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 40px;
   align-items: center;
   color: #0b0d12;
+}
+@media (min-width: 1024px) {
+  .ab-section { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr); gap: 64px; }
 }
 
 .ab-kicker {
@@ -263,7 +266,7 @@
   }
   .ab-title { font-size: 36px; }
   .ab-art {
-    order: -1;
+    order: 0;
     padding-top: 48px;
   }
   .ab-flip-card-wrapper {
@@ -281,7 +284,7 @@
   .ab-title { font-size: clamp(28px, 7.5vw, 38px); }
   .ab-art {
     display: flex;
-    order: -1;
+    order: 0;
     padding-top: 44px;
     margin-bottom: 8px;
   }

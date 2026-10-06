@@ -31,7 +31,7 @@ function ExperienceItem({ exp, isFirst }) {
       {!isFirst && <div className="my-8 border-t border-neutral-200/70" />}
       <article className="group">
         {/* Top row: Company name & Date range */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <div className="flex items-center gap-3">
             {exp.logo && (
               <img
@@ -92,7 +92,7 @@ export default function CareerSection() {
   return (
     <section
       id="experience"
-      className="w-full relative overflow-hidden min-h-screen flex flex-col justify-center items-center scroll-mt-24 py-12"
+      className="w-full relative min-h-0 py-16 sm:py-20 lg:py-24 lg:flex lg:flex-col lg:justify-center items-center scroll-mt-20 sm:scroll-mt-24 lg:scroll-mt-28"
       aria-labelledby="career-title"
     >
       <div className="w-full max-w-5xl mx-auto px-6">

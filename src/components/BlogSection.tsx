@@ -1,6 +1,8 @@
 import { ArrowUpRight } from 'lucide-react'
-import { dispatches } from '../data/dispatches'
+import usePosts from '../hooks/usePosts'
+import ComingSoon from './ComingSoon'
 import './BlogSection.css'
+import '../pages/BlogPages.css'
 
 function DispatchCard({ dispatch, compact = false }) {
   return (
@@ -29,16 +31,14 @@ function DispatchCard({ dispatch, compact = false }) {
 }
 
 export default function BlogSection() {
+  const { posts: dispatches, loading, error } = usePosts()
   return (
-    <section id="blog" aria-labelledby="blog-title" className="dispatches-section">
+    <section id="blog" aria-labelledby="blog-title" className="dispatches-section scroll-mt-20 sm:scroll-mt-24 lg:scroll-mt-28">
       <div className="dispatches-container">
         <div className="dispatches-heading-row">
           <div className="dispatches-heading">
             <h2 id="blog-title" className="font-serif">
-              Field{" "}
-              <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
-                Notes
-              </span>
+              Blog
             </h2>
           </div>
           <a className="dispatches-archive-link" href="/blog">
@@ -46,14 +46,14 @@ export default function BlogSection() {
             <ArrowUpRight size={15} aria-hidden="true" />
           </a>
         </div>
-        <div className="dispatches-grid">
+        {loading ? <p role="status">Loading notes…</p> : error ? <p role="status">{error}</p> : !dispatches.length ? <ComingSoon /> : <div className="dispatches-grid">
           <DispatchCard dispatch={dispatches[0]} />
           <div className="dispatches-stack">
             {dispatches.slice(1).map((dispatch) => (
               <DispatchCard key={dispatch.slug} dispatch={dispatch} compact />
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   )

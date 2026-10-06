@@ -51,8 +51,8 @@ button, input, textarea { font: inherit; }
 button, summary, a[href], [role="button"] { cursor: pointer; }
 img { max-width: 100%; }
 :focus-visible { outline: 2px solid #4b5563; outline-offset: 4px; }
-section[id], main[id] { scroll-margin-top: 90px; }
-#about, #experience, #work { scroll-margin-top: 96px; }
+section[id], main[id] { scroll-margin-top: 80px; }
+#about, #experience, #work, #blog, #activity { scroll-margin-top: 96px; }
 .skip-link { position: fixed; top: 12px; left: 16px; z-index: 400; padding: 12px 16px; background: white; color: #0b0d12; border: 1px solid #e5e7eb; border-radius: 8px; transform: translateY(-160%); }
 .skip-link:focus { transform: translateY(0); }
 .modal { max-height: calc(100dvh - 48px); display: flex; flex-direction: column; overflow: hidden; overscroll-behavior: contain; }
@@ -71,3 +71,9 @@ section[id], main[id] { scroll-margin-top: 90px; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+#about, #experience, #blog, #activity { min-height: 0; padding-block: 64px; scroll-margin-top: 96px; }
+#work { scroll-margin-top: 96px; }
+@media (min-width: 640px) { #about, #experience, #blog, #activity { padding-block: 80px; } }
+@media (min-width: 1024px) { #about, #experience, #blog, #activity { padding-block: 96px; } }
+#about .ab-section, #experience > div, #activity { max-width: 1024px; }

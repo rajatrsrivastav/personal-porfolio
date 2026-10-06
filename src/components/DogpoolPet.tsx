@@ -151,8 +151,8 @@ export default function DogpoolPet() {
     let frame = 0
     let bubbleTimer = 0
     const clamp = () => {
-      engine.x = Math.max(0, Math.min(window.innerWidth - 40, engine.x))
-      engine.y = Math.max(0, Math.min(window.innerHeight - 40, engine.y))
+      engine.x = Math.max(0, Math.min(window.innerWidth - 48, engine.x))
+      engine.y = Math.max(0, Math.min(window.innerHeight - 48, engine.y))
     }
     const paint = () => {
       clamp()
@@ -166,8 +166,8 @@ export default function DogpoolPet() {
       const elapsed = Math.min(32, time - engine.lastFrame)
       const dt = elapsed / 1000
       engine.lastFrame = time
-      const dx = engine.targetX - (engine.x + 20)
-      const dy = engine.targetY - (engine.y + 20)
+      const dx = engine.targetX - (engine.x + 24)
+      const dy = engine.targetY - (engine.y + 24)
       const distance = Math.hypot(dx, dy)
       let desiredX = 0
       let desiredY = 0

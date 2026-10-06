@@ -1,5 +1,5 @@
-.katana-seam { position: relative; z-index: 20; display: flex; justify-content: center; height: 0; }
-.katana-navigator { position: absolute; top: 0; width: min(480px, calc(100vw - 40px)); height: clamp(140px, 38vw, 184px); transform: translateY(-50%); margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transition: scale 200ms ease; }
+.katana-seam { position: relative; z-index: 1; display: flex; justify-content: center; margin: 32px 0 48px; padding-top: 24px; isolation: isolate; }
+.katana-navigator { position: relative; width: min(480px, calc(100vw - 40px)); height: clamp(140px, 38vw, 184px); margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transition: scale 200ms ease; }
 .katana-navigator:hover, .katana-navigator:focus-visible { scale: 1.025; }
 .katana-navigator-art { display: block; width: 100%; height: 100%; overflow: visible; }
 .katana-navigator:hover .navigator-blade, .katana-navigator:focus-visible .navigator-blade { filter: drop-shadow(0 0 3px #dc262645); }
