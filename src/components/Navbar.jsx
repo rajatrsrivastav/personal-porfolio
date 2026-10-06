@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useLenis } from 'lenis/react';
+import GlassSurface from './GlassSurface';
 import { Home, User, Briefcase, Layers, Activity, Cpu, BookOpen } from "lucide-react";
 import { getAboutScrollTop } from '../utils/aboutScroll';
 
@@ -137,7 +138,21 @@ export default function Navbar() {
         aria-label="Main navigation"
         onMouseLeave={() => setHoveredItem(null)}
       >
-        <div className={`nb-pill ${isCollapsed ? "is-collapsed" : "is-expanded"}`}>
+        <GlassSurface
+          width="max-content"
+          height="auto"
+          borderRadius={9999}
+          displace={15}
+          distortionScale={-150}
+          redOffset={5}
+          greenOffset={15}
+          blueOffset={25}
+          brightness={60}
+          opacity={0.8}
+          backgroundOpacity={0.08}
+          mixBlendMode="screen"
+          className={`nb-pill ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
+        >
           <div className="nb-pill-inner">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
@@ -169,7 +184,7 @@ export default function Navbar() {
             );
           })}
           </div>
-        </div>
+        </GlassSurface>
       </nav>
     </header>
   );
