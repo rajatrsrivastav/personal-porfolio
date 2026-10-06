@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import './DogpoolPet.css'
-
 const wisecracks = [
   'WOOF (maximum effort)!',
   'Got chimichangas?',
@@ -143,7 +141,7 @@ export default function DogpoolPet() {
       x: window.innerWidth - 64, y: window.innerHeight - 64,
       targetX: window.innerWidth - 44, targetY: window.innerHeight - 44,
       lastMove: now, lastFrame: now, state: device.reduced ? 'sleeping' : 'idle',
-      facing: 1, clickedUntil: 0, circleStart: 0, circleX: 0, circleY: 0,
+      facing: 1, clickedUntil: 0, circleStart: 0, circleX: 0, circleY: 0, poke: () => {},
       held: false, quote: -1,
       vx: 0, vy: 0, phase: 0, yaw: 0, bank: 0,
     }

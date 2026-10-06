@@ -1,6 +1,6 @@
-import React from "react";
-import "./Skills.css";
+'use client';
 
+import React from "react";
 function GrafanaIcon() {
   return (
     <svg

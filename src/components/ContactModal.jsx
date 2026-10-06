@@ -1,8 +1,8 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { X, Linkedin, Github, Check, Send, MapPin, ArrowUpRight, Mail } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
-import './ContactModal.css';
-
 function XLogo({ size = 15 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

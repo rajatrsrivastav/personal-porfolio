@@ -1,8 +1,11 @@
+'use client';
+
 import { useEffect, useId, useRef, useState } from 'react'
-import './KatanaNavigator.css'
+import { useLenis } from 'lenis/react'
 import { getAboutScrollTop } from '../utils/aboutScroll'
 
 export default function KatanaNavigator() {
+  const lenis = useLenis()
   const steelId = useId()
   const timer = useRef(null)
   const [slashing, setSlashing] = useState(false)
@@ -15,7 +18,9 @@ export default function KatanaNavigator() {
     timer.current = window.setTimeout(() => {
       const about = document.getElementById('about')
       if (about) {
-        window.scrollTo({ top: getAboutScrollTop(about), behavior: reduced ? 'instant' : 'smooth' })
+        const top = getAboutScrollTop(about)
+        if (lenis && !reduced) lenis.scrollTo(top, { duration: 1.05, easing: t => 1 - Math.pow(1 - t, 4), lock: true })
+        else window.scrollTo({ top, behavior: reduced ? 'instant' : 'smooth' })
       }
       setSlashing(false)
     }, reduced ? 0 : 260)

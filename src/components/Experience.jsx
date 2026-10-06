@@ -1,6 +1,6 @@
-import React from "react";
-import "./Experience.css";
+'use client';
 
+import React from "react";
 const experiences = [
   {
     role: "Full Stack Engineer",

@@ -1,9 +1,12 @@
+'use client';
+
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useLenis } from 'lenis/react';
+import Image from 'next/image';
 import {
   AnimatePresence,
   motion,
 } from "framer-motion";
-import "./CuratedWork.css";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 const projects = [
@@ -105,6 +108,7 @@ const slideVariants = {
 
 export default function CuratedWork() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const lenis = useLenis();
 
   const containerRef = useRef(null);
 
@@ -143,14 +147,14 @@ export default function CuratedWork() {
       const distance = track.offsetHeight - window.innerHeight;
       // Land within each interval so rounding cannot select the previous tab.
       const progress = (boundedIndex + 0.1) / projects.length;
-      window.scrollTo({
-        top: window.scrollY + track.getBoundingClientRect().top + distance * progress,
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-      });
+      const top = window.scrollY + track.getBoundingClientRect().top + distance * progress;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (lenis && !reducedMotion) lenis.scrollTo(top, { duration: 0.8, easing: t => 1 - Math.pow(1 - t, 4), lock: true });
+      else window.scrollTo({ top, behavior: reducedMotion ? "instant" : "smooth" });
     } else {
       setActiveIndex(boundedIndex);
     }
-  }, []);
+  }, [lenis]);
 
   const activeProject = projects[activeIndex];
   const totalProjects = projects.length;
@@ -270,9 +274,9 @@ export default function CuratedWork() {
                       {activeProject.url.replace(/^https?:\/\//, "")}
                     </span>
                   </div>
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={activeProject.image}
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={activeProject.image} fill sizes="(max-width: 768px) 100vw, 600px"
                       alt={`${activeProject.title} preview`}
                       className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                     />

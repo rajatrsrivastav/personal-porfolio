@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import "./AboutMe.css";
+'use client';
 
+import React, { useState } from "react";
+import Image from 'next/image';
 export default function AboutMe() {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -70,8 +71,8 @@ export default function AboutMe() {
                 {/* Deadpool & Fitted Animated Avatar */}
                 <div className="relative w-full flex-1 flex items-center justify-center my-auto min-h-0">
                   <div className="relative h-full max-h-[300px] sm:max-h-[340px] aspect-[394/436] flex items-center justify-center">
-                    <img
-                      src="/deadpool-cutout.png"
+                    <Image
+                      src="/deadpool-cutout.png" fill unoptimized sizes="(max-width: 640px) 300px, 360px"
                       alt="Deadpool holding flyer"
                       className="w-full h-full object-contain pointer-events-none"
                     />
@@ -87,8 +88,8 @@ export default function AboutMe() {
                         transformOrigin: "50% 50%",
                       }}
                     >
-                      <img
-                        src="/rajat-animated.png"
+                      <Image
+                        src="/rajat-animated.png" fill unoptimized sizes="160px"
                         alt="Rajat's mugshot clipped to Deadpool's flyer"
                         className="w-full h-full object-cover object-top rounded-xs"
                       />
@@ -104,8 +105,8 @@ export default function AboutMe() {
                     </div>
 
                     {/* Deadpool Glove Overlay to naturally grip the avatar edge */}
-                    <img
-                      src="/deadpool-glove-overlay.png"
+                    <Image
+                      src="/deadpool-glove-overlay.png" fill unoptimized sizes="(max-width: 640px) 300px, 360px"
                       alt=""
                       aria-hidden="true"
                       className="absolute inset-0 w-full h-full object-contain pointer-events-none z-20"
@@ -125,8 +126,8 @@ export default function AboutMe() {
               {/* 2. BACK FACE (FLIPPED): Real Photo Full Frame */}
               <div className="absolute inset-0 w-full h-full ab-face-3d ab-face-back [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl sm:rounded-3xl border border-neutral-200/80 bg-white p-3 shadow-md flex flex-col justify-between items-center overflow-hidden transition-shadow duration-300 group-hover:shadow-lg">
                 <div className="w-full h-full overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-100 relative">
-                  <img
-                    src="/rajat-photo.jpg"
+                  <Image
+                    src="/rajat-photo.jpg" fill sizes="(max-width: 640px) 300px, 360px"
                     alt="Rajat Srivastav (Real)"
                     className="w-full h-full object-cover object-center"
                   />

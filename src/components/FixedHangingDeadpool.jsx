@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./FixedHangingDeadpool.css";
+'use client';
 
+import React, { useState, useEffect, useRef } from "react";
 const DEADPOOL_QUOTES = [
   "Maximum Effort! (And by effort, I mean Rajat writing pristine React code.)",
   "Hey! Stop poking me, I'm trying to look dramatic upside-down!",
@@ -17,7 +17,7 @@ export default function FixedHangingDeadpool() {
   const [isSpeechOpen, setIsSpeechOpen] = useState(false);
   const [isWinking, setIsWinking] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
-  const [_hasInteracted, setHasInteracted] = useState(false);
+  const [, setHasInteracted] = useState(false);
   const timerRef = useRef(null);
 
   // Cycle quote and trigger playful wink & bounce on click

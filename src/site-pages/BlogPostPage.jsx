@@ -1,8 +1,9 @@
+'use client';
+
 import { ArrowLeft } from "lucide-react";
+import Link from 'next/link';
 import usePosts from "../hooks/usePosts";
 import Markdown from "../components/Markdown";
-import "./BlogPages.css";
-
 export default function BlogPostPage({ slug }) {
   const {posts, loading, error} = usePosts();
   const dispatch = posts.find(post => post.slug === slug);
@@ -14,7 +15,7 @@ export default function BlogPostPage({ slug }) {
         <div className="blog-shell blog-not-found">
           <span className="blog-kicker font-mono">404</span>
           <h1 className="font-serif">Post not found.</h1>
-          <a className="blog-back" href="/blog"><ArrowLeft size={15} /> Back to all posts</a>
+          <Link className="blog-back" href="/blog"><ArrowLeft size={15} /> Back to all posts</Link>
         </div>
       </main>
     );
@@ -23,7 +24,7 @@ export default function BlogPostPage({ slug }) {
   return (
     <main className="blog-page">
       <article className="blog-article">
-        <a className="blog-back" href="/blog"><ArrowLeft size={15} /> All posts</a>
+        <Link className="blog-back" href="/blog"><ArrowLeft size={15} /> All posts</Link>
         <header className="blog-article-header">
           <span className="blog-kicker font-mono">{dispatch.topic}</span>
           <p className="dispatch-meta font-mono">{dispatch.readTime}</p>
@@ -36,7 +37,7 @@ export default function BlogPostPage({ slug }) {
         <Markdown content={dispatch.content} />
         <footer className="blog-article-footer">
           <p className="font-serif">More from the blog.</p>
-          <a className="blog-pill-link" href="/blog">View all posts <span aria-hidden="true">→</span></a>
+          <Link className="blog-pill-link" href="/blog">View all posts <span aria-hidden="true">→</span></Link>
         </footer>
       </article>
     </main>

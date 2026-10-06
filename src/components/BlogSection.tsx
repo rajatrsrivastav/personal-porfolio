@@ -1,12 +1,12 @@
+'use client';
+
 import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 import usePosts from '../hooks/usePosts'
 import ComingSoon from './ComingSoon'
-import './BlogSection.css'
-import '../pages/BlogPages.css'
-
 function DispatchCard({ dispatch, compact = false }) {
   return (
-    <a
+    <Link
       href={`/blog/${dispatch.slug}`}
       className={`dispatch-card ${compact ? 'dispatch-card-compact' : 'dispatch-card-featured'}`}
       aria-label={`Read ${dispatch.title}`}
@@ -26,7 +26,7 @@ function DispatchCard({ dispatch, compact = false }) {
           </span>
         ))}
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -41,10 +41,10 @@ export default function BlogSection() {
               Blog
             </h2>
           </div>
-          <a className="dispatches-archive-link" href="/blog">
+          <Link className="dispatches-archive-link" href="/blog">
             <span>All posts</span>
             <ArrowUpRight size={15} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
         {loading ? <p role="status">Loading notes…</p> : error ? <p role="status">{error}</p> : !dispatches.length ? <ComingSoon /> : <div className="dispatches-grid">
           <DispatchCard dispatch={dispatches[0]} />

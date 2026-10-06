@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Github, Linkedin, Mail, MapPin, ArrowUpRight, ArrowUp, Check } from "lucide-react";
-import "./FinalCta.css";
+'use client';
 
+import React, { useState } from "react";
+import Image from 'next/image';
+import { useLenis } from 'lenis/react';
+import { Github, Linkedin, Mail, MapPin, ArrowUpRight, ArrowUp, Check } from "lucide-react";
 function XLogo({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -20,6 +22,7 @@ const NAV_LINKS = [
 ];
 
 export default function FinalCta() {
+  const lenis = useLenis();
   const currentYear = new Date().getFullYear();
   const email = "rajatrsrivastav810@gmail.com";
   const [copied, setCopied] = useState(false);
@@ -36,12 +39,16 @@ export default function FinalCta() {
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (lenis && !reducedMotion) lenis.scrollTo(el, { offset: -96, duration: 1.05, easing: t => 1 - Math.pow(1 - t, 4) });
+      else el.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth", block: "start" });
     }
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (lenis && !reducedMotion) lenis.scrollTo(0, { duration: 0.9, easing: t => 1 - Math.pow(1 - t, 4) });
+    else window.scrollTo({ top: 0, behavior: reducedMotion ? "instant" : "smooth" });
   };
 
   return (
@@ -51,7 +58,7 @@ export default function FinalCta() {
         <div className="footer-main">
           <div className="footer-brand">
             <div className="footer-logo-wrap">
-              <img className="footer-logo" src="/logo.png" alt="Rajat Srivastav" />
+              <Image className="footer-logo" src="/logo.png" width={56} height={56} alt="Rajat Srivastav" />
             </div>
             <div className="footer-info">
               <h3 className="footer-name">Rajat Srivastav</h3>

@@ -1,9 +1,13 @@
+'use client';
+
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import Image from 'next/image';
 import { Mail } from "lucide-react";
-import "./HomeHero.css";
 import KatanaNavigator from "./KatanaNavigator";
 
-export default function HomeHero({ onOpenContact }) {
+type HomeHeroProps = { onOpenContact?: () => void };
+
+export default function HomeHero({ onOpenContact }: HomeHeroProps) {
   const email = "rajatrsrivastav810@gmail.com";
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
@@ -32,8 +36,8 @@ export default function HomeHero({ onOpenContact }) {
         className="absolute inset-0 -z-10 flex items-center justify-center pointer-events-none overflow-hidden select-none"
         aria-hidden="true"
       >
-        <img
-          src="/deadpool-marvel-superhero-tzhfez1w8ud2z8aw (3).jpeg"
+        <Image
+          src="/deadpool-marvel-superhero-tzhfez1w8ud2z8aw (3).jpeg" width={1180} height={900} priority unoptimized sizes="100vw"
           alt=""
           className="w-[780px] sm:w-[980px] md:w-[1180px] max-w-none opacity-[0.035] grayscale object-contain [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_72%)]"
         />

@@ -1,3 +1,7 @@
+'use client';
+
+import Image from 'next/image';
+
 
 const experiences = [
   {
@@ -34,8 +38,8 @@ function ExperienceItem({ exp, isFirst }) {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <div className="flex items-center gap-3">
             {exp.logo && (
-              <img
-                src={exp.logo}
+              <Image
+                src={exp.logo} width={28} height={28}
                 alt={exp.logoAlt}
                 className="w-7 h-7 rounded-lg object-contain border border-neutral-200/80 p-0.5 bg-white shrink-0"
               />

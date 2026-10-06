@@ -1,3 +1,5 @@
+'use client';
+
 // React text nodes escape HTML; authored markup never enters innerHTML.
 function Code({ text }) {
   return <pre><code>{text.split(/(\b(?:const|let|return|function|import|export|if|else|async|await|class|def|package|func)\b|"[^"\n]*"|'[^'\n]*'|\b\d+\b)/g).map((s,i)=><span key={i} className={/^(const|let|return|function|import|export|if|else|async|await|class|def|package|func)$/.test(s)?'syntax-keyword':/^['"]/.test(s)?'syntax-string':/^\d+$/.test(s)?'syntax-number':undefined}>{s}</span>)}</code></pre>;

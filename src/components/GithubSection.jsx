@@ -1,3 +1,7 @@
+'use client';
+
+import Link from 'next/link';
+
 import { useEffect, useMemo, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ActivityCalendar } from "react-activity-calendar";
@@ -530,7 +534,7 @@ export default function GithubSection({ fullPage = false }) {
         {/* Footer link */}
         <div className="mt-8 flex justify-center">
           {fullPage ? (
-            <a
+            <Link
               href="/"
               className={cn(
                 "inline-flex items-center gap-2 rounded-xl px-5 py-2.5",
@@ -540,7 +544,7 @@ export default function GithubSection({ fullPage = false }) {
               )}
             >
               Back to Homepage
-            </a>
+            </Link>
           ) : (
             <a
               href="/contributions"

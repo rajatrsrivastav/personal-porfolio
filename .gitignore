@@ -25,3 +25,8 @@ dist-ssr
 
 .env
 data/*.tmp
+
+# Next.js
+.next/
+out/
+*.tsbuildinfo

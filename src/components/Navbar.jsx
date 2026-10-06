@@ -1,8 +1,9 @@
+'use client';
+
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useLenis } from 'lenis/react';
 import { LiquiGlass } from "@liqui-design/glass";
-import "@liqui-design/glass/tokens.css";
 import { Home, User, Briefcase, Layers, Activity, Cpu, BookOpen } from "lucide-react";
-import "./Navbar.css";
 import { getAboutScrollTop } from '../utils/aboutScroll';
 
 const NAV_ITEMS = [
@@ -15,9 +16,10 @@ const NAV_ITEMS = [
   { id: "skills", label: "Skills", icon: Cpu },
 ];
 
-const SCROLL_LOCK_MS = 850;
+const SCROLL_LOCK_MS = 1200;
 
 export default function Navbar() {
+  const lenis = useLenis();
   const [active, setActive] = useState("home");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -96,10 +98,16 @@ export default function Navbar() {
           ? getAboutScrollTop(targetEl)
           : Math.max(0, elementTop - targetNavHeight);
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? "instant" : "smooth",
-        });
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (lenis && !reducedMotion) {
+          lenis.scrollTo(offsetPosition, {
+            duration: 1.05,
+            easing: t => 1 - Math.pow(1 - t, 4),
+            lock: true,
+          });
+        } else {
+          window.scrollTo({ top: offsetPosition, behavior: reducedMotion ? "instant" : "smooth" });
+        }
       }
 
       // Unlock scrollspy after animation settles
@@ -108,7 +116,7 @@ export default function Navbar() {
         detectActiveSection();
       }, SCROLL_LOCK_MS);
     },
-    [detectActiveSection]
+    [detectActiveSection, lenis]
   );
 
   useEffect(() => {
@@ -133,9 +141,9 @@ export default function Navbar() {
         {/* Floating Apple Liquid Glass dock */}
         <LiquiGlass
           radius={9999}
-          frost={0.03}
-          refraction={60}
-          bezel={10}
+          frost={0.28}
+          refraction={78}
+          bezel={14}
           blur={1.2}
           specular={0.7}
           elevated={false}

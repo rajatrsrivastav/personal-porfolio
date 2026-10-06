@@ -8,12 +8,12 @@ import FinalCta from './components/FinalCta'
 import HomeHero from './components/HomeHero'
 import Navbar from './components/Navbar'
 import ContactModal from './components/ContactModal'
-import ContributionsPage from './pages/ContributionsPage'
+import ContributionsPage from './site-pages/ContributionsPage'
 import FixedHangingDeadpool from './components/FixedHangingDeadpool'
 import BlogSection from './components/BlogSection.tsx'
-import AdminPage from './pages/AdminPage'
-import BlogPage from './pages/BlogPage'
-import BlogPostPage from './pages/BlogPostPage'
+import AdminPage from './site-pages/AdminPage'
+import BlogPage from './site-pages/BlogPage'
+import BlogPostPage from './site-pages/BlogPostPage'
 
 function App() {
   const [contactOpen, setContactOpen] = useState(false)
