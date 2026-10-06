@@ -50,7 +50,7 @@ export default function KatanaNavigator() {
           <g className="navigator-spark"><path d="M130 32 L130 68 M112 50 L148 50 M118 38 L142 62 M118 62 L142 38" stroke="#dc2626" strokeWidth="2" /><circle cx="130" cy="50" r="5" fill="#fff" /></g>
         </svg>
         <span className="katana-navigator-prompt" aria-hidden="true">
-          <span>Need some convincing first? Slice to explore</span>
+          <span>Or see for yourself</span>
           <svg viewBox="0 0 70 28" fill="none">
             <path d="M18 2 C16 17 39 3 44 14 C47 20 49 21 52 24 M46 20 L52 24 L47 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
