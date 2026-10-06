@@ -53,7 +53,7 @@ function App() {
         <GithubSection />
         <Skills />
       </main>
-      <FinalCta />
+      <FinalCta onOpenContact={() => setContactOpen(true)} />
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </div>
   )

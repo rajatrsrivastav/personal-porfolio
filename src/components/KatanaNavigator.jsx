@@ -28,7 +28,7 @@ export default function KatanaNavigator() {
 
   return (
     <div className="katana-seam">
-      <button type="button" className={`katana-navigator ${slashing ? 'is-slashing' : ''}`} onClick={slice} aria-label="Slice to About Me">
+      <button type="button" className={`katana-navigator ${slashing ? 'is-slashing' : ''}`} onClick={slice} aria-label="Need some convincing first? Slice to explore About Me">
         <svg className="katana-navigator-art" viewBox="0 0 260 100" aria-hidden="true">
           <defs>
             <linearGradient id={steelId} x1="0" y1="0" x2="0" y2="1">
@@ -50,9 +50,9 @@ export default function KatanaNavigator() {
           <g className="navigator-spark"><path d="M130 32 L130 68 M112 50 L148 50 M118 38 L142 62 M118 62 L142 38" stroke="#dc2626" strokeWidth="2" /><circle cx="130" cy="50" r="5" fill="#fff" /></g>
         </svg>
         <span className="katana-navigator-prompt" aria-hidden="true">
-          <span>Click to slice</span>
-          <svg viewBox="0 0 110 60" fill="none">
-            <path d="M12 5 C10 30 45 5 55 29 C61 43 80 38 93 49 M84 38 L93 49 L78 50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <span>Need some convincing first? Slice to explore</span>
+          <svg viewBox="0 0 70 28" fill="none">
+            <path d="M18 2 C16 17 39 3 44 14 C47 20 49 21 52 24 M46 20 L52 24 L47 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
       </button>

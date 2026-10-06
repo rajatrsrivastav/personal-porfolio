@@ -3,10 +3,15 @@
 .katana-navigator:hover, .katana-navigator:focus-visible { scale: 1.025; }
 .katana-navigator-art { display: block; width: 100%; height: 100%; overflow: visible; }
 .katana-navigator:hover .navigator-blade, .katana-navigator:focus-visible .navigator-blade { filter: drop-shadow(0 0 3px #dc262645); }
-.katana-navigator-prompt { position: absolute; top: 0; left: calc(50% - 160px); width: 110px; text-align: left; font: 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .025em; color: #737373; white-space: nowrap; pointer-events: none; }
-.katana-navigator-prompt > span { display: block; transform: rotate(-6deg); }
-.katana-navigator-prompt svg { display: block; width: 110px; height: 60px; }
-@media (max-width: 600px) { .katana-navigator-prompt { top: -20px; left: calc(50% - 130px); } }
+/* One centered annotation with a short pointer ending above the blades. */
+.katana-navigator-prompt { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: calc(100% - 16px); text-align: center; font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: -.025em; color: #737373; pointer-events: none; }
+.katana-navigator-prompt > span { display: block; text-wrap: balance; }
+.katana-navigator-prompt svg { display: block; width: 70px; height: 28px; margin: 8px auto 0; }
+@media (max-width: 600px) {
+  .katana-navigator-prompt { top: -20px; font-size: 11px; }
+  .katana-navigator-prompt svg { height: 22px; margin-top: 6px; }
+}
+[data-theme="dark"] .katana-navigator-prompt { color: #737373; }
 .navigator-blade { transform-origin: 130px 50px; transition: transform 220ms cubic-bezier(.2,.8,.2,1), filter 200ms ease; }
 .navigator-blade-0 { transform: translateY(-10px) rotate(-4deg); }
 .navigator-blade-1 { transform: translateY(10px) rotate(176deg); }
