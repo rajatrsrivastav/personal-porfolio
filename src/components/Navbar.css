@@ -1,7 +1,7 @@
-/* Floating glass dock: one surface definition, shared by both layouts. */
+/* Exactly one backdrop surface: the outer pill. */
 .nb-wrap {
   position: fixed;
-  top: 20px;
+  top: 16px;
   left: 50%;
   transform: translateX(-50%);
   width: max-content;
@@ -11,96 +11,72 @@
 }
 .nb-nav { display: flex; justify-content: center; pointer-events: auto; }
 .nb-pill {
-  position: relative;
+  width: auto;
+  max-width: fit-content;
+  margin-inline: auto;
+  padding: 6px 12px;
   border-radius: 9999px;
-  padding: 8px 12px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(229,229,229,.7);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 2px 6px rgba(23,23,23,.05);
+}
+.nb-nav, .nb-pill-inner {
   background: transparent;
-  border: 1px solid rgba(255,255,255,.76);
-  box-shadow: 0 12px 32px -12px rgba(27,43,73,.25),
-    0 3px 10px -4px rgba(27,43,73,.12),
-    inset 0 1px 1px rgba(255,255,255,.95),
-    inset 0 -1px 1px rgba(67,97,145,.16);
-  transition: box-shadow .35s ease;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
-/* Tint adds restrained colour; blur and displacement belong to the optical
-   backdrop layers so the specular rim and refraction remain visible. */
-.nb-pill .liqui-glass__tint {
-  background:
-    radial-gradient(ellipse at 5% 100%, rgba(239,74,93,.22), transparent 52%),
-    radial-gradient(ellipse at 95% 0%, rgba(55,125,235,.25), transparent 52%),
-    linear-gradient(155deg, rgba(255,255,255,.65), rgba(255,255,255,.12) 48%, rgba(233,241,255,.28));
-}
-.nb-pill .liqui-glass__shine {
-  box-shadow: inset 0 2px 2px rgba(255,255,255,.9),
-    inset 1px 0 1px rgba(255,255,255,.7),
-    inset 0 -1px 1px rgba(101,139,198,.2);
-}
-.nb-pill.is-collapsed { box-shadow: 0 16px 36px -14px rgba(27,43,73,.28), inset 0 1px 1px rgba(255,255,255,.95); }
-.nb-pill-inner { display: flex; align-items: center; gap: 6px; }
+.nb-pill-inner { display: flex; align-items: center; gap: 4px; }
 .nb-link {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  padding: 8px 11px;
-  border: 1px solid transparent;
+  padding: 4px 10px;
+  border: 0;
   border-radius: 9999px;
-  color: #334155;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #525252;
   text-decoration: none;
-  font: 500 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+  font: 400 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: -.025em;
   white-space: nowrap;
-  transition: background .22s ease, box-shadow .22s ease, color .22s ease, transform .22s ease;
+  transition: background-color .2s ease, color .2s ease;
 }
-.nb-link:hover { background: rgba(255,255,255,.35); color: #172a46; transform: translateY(-1px); }
-.nb-link.active {
-  color: #133d79;
-  font-weight: 600;
-  background: linear-gradient(145deg, rgba(255,255,255,.8), rgba(207,226,255,.45));
-  border-color: rgba(255,255,255,.85);
-  box-shadow: 0 3px 10px -4px rgba(43,85,150,.24), inset 0 1px 1px rgba(255,255,255,.95), inset 0 -1px 1px rgba(72,124,205,.14);
-}
-.nb-link:focus-visible { outline: 2px solid #2563a6; outline-offset: 3px; }
+.nb-link:hover { color: #171717; }
+.nb-link.active { color: #171717; font-weight: 500; background: rgba(245,245,245,.9); }
+.nb-link:focus-visible { outline: 2px solid #737373; outline-offset: 2px; }
 .nb-icon-wrap { display: inline-flex; flex-shrink: 0; }
-.nb-icon { width: 15px; height: 15px; stroke-width: 1.8; }
+.nb-icon { width: 14px; height: 14px; stroke-width: 1.8; }
 .nb-label { overflow: hidden; transition: max-width .28s ease, opacity .2s ease, margin-left .28s ease; }
-.nb-label.is-visible { max-width: 95px; opacity: 1; margin-left: 6px; }
+.nb-label.is-visible { max-width: 95px; opacity: 1; margin-left: 4px; }
 .nb-label.is-hidden { max-width: 0; opacity: 0; margin-left: 0; }
-
+@media (min-width: 640px) {
+  .nb-wrap { top: 20px; }
+  .nb-pill { padding-inline: 16px; }
+  .nb-pill-inner { gap: 6px; }
+  .nb-link { font-size: 12px; }
+  .nb-label.is-visible { margin-left: 6px; }
+}
 @media (max-width: 767px) {
-  .nb-wrap { top: auto; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
-  .nb-pill { padding: 8px; }
-  .nb-pill-inner { gap: 4px; }
-  .nb-link, .nb-link.dock-mode, .nb-link.dock-mode.active {
-    width: 44px; height: 44px; padding: 0; border-radius: 50%;
-    background: rgba(255,255,255,.2);
-    border-color: rgba(255,255,255,.4);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,.7);
-  }
-  .nb-link.active, .nb-link.dock-mode.active {
-    background: linear-gradient(145deg, rgba(255,255,255,.86), rgba(186,213,255,.58));
-    border-color: rgba(255,255,255,.9);
-    box-shadow: 0 3px 10px -3px rgba(54,98,166,.24), inset 0 1px 1px white;
-  }
-  .nb-link:hover { transform: none; }
-  .nb-icon { width: 19px; height: 19px; }
-  .nb-label.is-visible, .nb-label.is-hidden { max-width: 0; opacity: 0; margin: 0; }
-  body { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
+  .nb-link { width: 36px; height: 28px; padding: 4px 0; }
+  .nb-pill-inner { gap: 2px; }
+  .nb-label.is-visible, .nb-label.is-hidden { max-width: 0; opacity: 0; margin-left: 0; }
 }
-@media (max-width: 374px) {
-  .nb-pill-inner { gap: 0; }
-}
-[data-theme="dark"] .nb-link { color: #e2e8f0; }
-[data-theme="dark"] .nb-link.active { color: #fff; background: rgba(82,134,210,.4); }
-[data-theme="dark"] .nb-pill .liqui-glass__tint {
-  background: radial-gradient(ellipse at 5% 100%, rgba(239,74,93,.2), transparent 52%),
-    radial-gradient(ellipse at 95% 0%, rgba(55,125,235,.3), transparent 52%), rgba(23,35,56,.45);
-}
+[data-theme="dark"] .nb-pill { background: rgba(28,28,28,.8); border-color: rgba(255,255,255,.16); }
+[data-theme="dark"] .nb-link { color: #d4d4d4; }
+[data-theme="dark"] .nb-link:hover { color: #fff; }
+[data-theme="dark"] .nb-link.active { color: #fff; background: rgba(64,64,64,.9); }
 @media (prefers-reduced-motion: reduce) {
-  .nb-link, .nb-label, .nb-pill { transition: none; }
-  .nb-link:hover { transform: none; }
+  .nb-link, .nb-label { transition: none; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .nb-pill { background: #f5f7fb; }
-  [data-theme="dark"] .nb-pill { background: #172338; }
+  .nb-pill { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  [data-theme="dark"] .nb-pill { background: #1c1c1c; }
 }

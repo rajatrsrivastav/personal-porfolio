@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useLenis } from 'lenis/react';
-import { LiquiGlass } from "@liqui-design/glass";
 import { Home, User, Briefcase, Layers, Activity, Cpu, BookOpen } from "lucide-react";
 import { getAboutScrollTop } from '../utils/aboutScroll';
 
@@ -138,19 +137,8 @@ export default function Navbar() {
         aria-label="Main navigation"
         onMouseLeave={() => setHoveredItem(null)}
       >
-        {/* Floating Apple Liquid Glass dock */}
-        <LiquiGlass
-          radius={9999}
-          frost={0.18}
-          refraction={110}
-          bezel={16}
-          blur={3}
-          specular={0.85}
-          saturation={1.6}
-          elevated={false}
-          className={`nb-pill ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
-          contentClassName={`nb-pill-inner ${isCollapsed ? "is-collapsed" : "is-expanded"}`}
-        >
+        <div className={`nb-pill ${isCollapsed ? "is-collapsed" : "is-expanded"}`}>
+          <div className="nb-pill-inner">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = active === item.id;
@@ -170,7 +158,7 @@ export default function Navbar() {
                 title={item.label}
               >
                 <span className="nb-icon-wrap" aria-hidden="true">
-                  <Icon size={isCollapsed ? 15 : 14} className="nb-icon" />
+                  <Icon size={14} className="nb-icon" />
                 </span>
                 <span
                   className={`nb-label ${showLabel ? "is-visible" : "is-hidden"}`}
@@ -180,7 +168,8 @@ export default function Navbar() {
               </a>
             );
           })}
-        </LiquiGlass>
+          </div>
+        </div>
       </nav>
     </header>
   );
