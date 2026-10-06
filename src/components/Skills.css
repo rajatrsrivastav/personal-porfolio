@@ -1,5 +1,5 @@
 .sk-section.sk-dark {
-  background: #ffffff;
+  background: var(--portfolio-canvas);
   color: #0b0d12;
   padding: 120px 24px 110px;
   position: relative;

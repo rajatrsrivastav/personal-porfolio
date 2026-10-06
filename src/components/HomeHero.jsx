@@ -6,7 +6,6 @@ export default function HomeHero({ onOpenContact }) {
   const email = "rajatrsrivastav810@gmail.com";
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
-  const [scrollHidden, setScrollHidden] = useState(false);
 
   const copyTimer = useRef(null);
 
@@ -24,21 +23,6 @@ export default function HomeHero({ onOpenContact }) {
     }
   }, [email]);
 
-  // Hide scroll indicator once user scrolls past hero
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollHidden(window.scrollY > 80);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleScrollClick = () => {
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <section className="home-hero relative" id="home">
@@ -145,20 +129,6 @@ export default function HomeHero({ onOpenContact }) {
         )}
       </div>
 
-      {/* Bottom Scroll Indicator */}
-      <button
-        type="button"
-        className={`scroll-indicator ${scrollHidden ? 'is-hidden' : ''}`}
-        onClick={handleScrollClick}
-        aria-label="Scroll to know more"
-      >
-        <span className="scroll-indicator-text">Scroll to know more</span>
-        <span className="scroll-indicator-arrow">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 10l5 5 5-5" />
-          </svg>
-        </span>
-      </button>
     </section>
   );
 }

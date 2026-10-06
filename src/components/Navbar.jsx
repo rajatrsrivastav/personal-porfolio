@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { LiquiGlass } from "@liqui-design/glass";
 import "@liqui-design/glass/tokens.css";
-import { Home, User, Briefcase, Layers, Activity, Cpu } from "lucide-react";
+import { Home, User, Briefcase, Layers, Activity, Cpu, BookOpen } from "lucide-react";
 import "./Navbar.css";
+import { getAboutScrollTop } from '../utils/aboutScroll';
 
 const NAV_ITEMS = [
   { id: "home", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
   { id: "experience", label: "Experience", icon: Briefcase },
   { id: "work", label: "Work", icon: Layers },
+  { id: "blog", label: "Blog", icon: BookOpen },
   { id: "activity", label: "Activity", icon: Activity },
   { id: "skills", label: "Skills", icon: Cpu },
 ];
@@ -89,12 +91,23 @@ export default function Navbar() {
       if (targetEl) {
         const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
         // Dynamically account for collapsed vs expanded navbar height
-        const targetNavHeight = isCollapsed || sectionId !== "home" ? 64 : 80;
-        const offsetPosition = Math.max(0, elementTop - targetNavHeight);
+        const targetNavHeight = sectionId === "about" || sectionId === "experience" || sectionId === "work" || sectionId === "blog"
+          ? parseFloat(window.getComputedStyle(targetEl).scrollMarginTop) || 96
+          : isCollapsed || sectionId !== "home" ? 64 : 80;
+        // Center the complete content block for viewport-framed sections.
+        const centeredContent = ["experience", "blog"].includes(sectionId)
+          ? targetEl.firstElementChild
+          : null;
+        const contentRect = centeredContent?.getBoundingClientRect();
+        const offsetPosition = contentRect && contentRect.height <= window.innerHeight - targetNavHeight
+          ? Math.max(0, window.scrollY + contentRect.top + contentRect.height / 2 - window.innerHeight / 2)
+          : sectionId === "about"
+          ? getAboutScrollTop(targetEl)
+          : Math.max(0, elementTop - targetNavHeight);
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth",
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? "instant" : "smooth",
         });
       }
 

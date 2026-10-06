@@ -5,7 +5,8 @@ export default function AboutMe() {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <section className="ab-section" id="about">
+    <section className="ab-viewport w-full relative min-h-screen flex flex-col justify-center scroll-mt-24" id="about">
+      <div className="ab-section">
       <div className="ab-text">
         <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center sm:text-left">
           KNOW ABOUT ME
@@ -132,6 +133,7 @@ export default function AboutMe() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

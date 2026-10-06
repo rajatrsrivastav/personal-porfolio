@@ -11,12 +11,18 @@ import Navbar from './components/Navbar'
 import ContactModal from './components/ContactModal'
 import ContributionsPage from './pages/ContributionsPage'
 import FixedHangingDeadpool from './components/FixedHangingDeadpool'
-import KatanaSliceCursor from './components/KatanaSliceCursor'
+import BlogSection from './components/BlogSection.tsx'
+import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
+import KatanaNavigator from './components/KatanaNavigator'
 
 function App() {
   const [contactOpen, setContactOpen] = useState(false)
   const lenisRef = useRef(null)
   const isContributionsPage = window.location.pathname.replace(/\/+$/, '') === '/contributions'
+  const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/'
+  const isBlogPage = normalizedPath === '/blog'
+  const blogPostMatch = normalizedPath.match(/^\/blog\/([^/]+)$/)
 
   useEffect(() => {
     if (isContributionsPage) return
@@ -60,22 +66,30 @@ function App() {
   if (isContributionsPage) {
     return (
       <>
-        <KatanaSliceCursor />
         <ContributionsPage />
+      </>
+    )
+  }
+
+  if (isBlogPage || blogPostMatch) {
+    return (
+      <>
+        {isBlogPage ? <BlogPage /> : <BlogPostPage slug={decodeURIComponent(blogPostMatch[1])} />}
       </>
     )
   }
 
   return (
     <div>
-      <KatanaSliceCursor />
       <FixedHangingDeadpool />
       <Navbar onOpenContact={() => setContactOpen(true)} />
       <main>
         <HomeHero onOpenContact={() => setContactOpen(true)} />
+        <KatanaNavigator />
         <AboutMe />
         <CareerSection />
         <CuratedWork />
+        <BlogSection />
         <GithubSection />
         <Skills />
       </main>

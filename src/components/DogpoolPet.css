@@ -1,0 +1,38 @@
+.dogpool-shell { position: fixed; top: 0; left: 0; width: 40px; height: 40px; z-index: 9000; pointer-events: none; will-change: transform; }
+.dogpool-button { display: block; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; pointer-events: auto; touch-action: manipulation; }
+.dogpool-button:focus-visible { outline: 2px solid #9f1239; outline-offset: 3px; background: #fff9; }
+.dogpool-sprite { display: block; width: 40px; height: 40px; transform-origin: center; }
+.dogpool-art { display: block; width: 40px; height: 40px; overflow: visible; filter: drop-shadow(0 1px 1px #17171726); }
+.dogpool-asleep { display: none; }
+.dogpool-shell[data-state="sleeping"] .dogpool-awake { display: none; }
+.dogpool-shell[data-state="sleeping"] .dogpool-asleep { display: block; }
+.dogpool-tail { transform-origin: 10px 24px; animation: dogpool-wag 650ms ease-in-out infinite alternate; }
+.dogpool-torso { transform: translateY(var(--dogpool-bounce, 0px)); }
+.dogpool-head { transform: translateY(var(--dogpool-head-bob, 0px)); }
+.dogpool-leg-a { transform-origin: 21px 27px; transform: rotate(var(--dogpool-paw-a, 0deg)); }
+.dogpool-leg-b { transform-origin: 24px 27px; transform: rotate(var(--dogpool-paw-b, 0deg)); }
+.dogpool-shell[data-state="idle"] .dogpool-torso { transform-origin: 21px 30px; animation: dogpool-breathe 1800ms ease-in-out infinite; }
+.dogpool-shell[data-state="idle"] .dogpool-head { animation: dogpool-pant 650ms ease-in-out infinite alternate; }
+.dogpool-tongue { transform-origin: 30px 23px; animation: dogpool-tongue 650ms ease-in-out infinite alternate; }
+.dogpool-shell[data-state="clicked"] .dogpool-art { animation: dogpool-hop 650ms ease-out; }
+.dogpool-bubble { position: absolute; bottom: 48px; left: 4px; width: max-content; max-width: min(190px, calc(100vw - 48px)); padding: 8px 10px; border: 1px solid #e5e5e5cc; border-radius: 12px; background: #fffffff2; backdrop-filter: blur(4px); box-shadow: 0 5px 18px #17171715; color: #262626; font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; opacity: 0; visibility: hidden; pointer-events: none; }
+.dogpool-bubble::after { content: ""; position: absolute; bottom: -5px; left: 13px; width: 8px; height: 8px; border-right: 1px solid #e5e5e5cc; border-bottom: 1px solid #e5e5e5cc; background: #fff; transform: rotate(45deg); }
+.dogpool-shell[data-speaking="true"] .dogpool-bubble { opacity: 1; visibility: visible; }
+.dogpool-shell[data-bubble-side="left"] .dogpool-bubble { left: auto; right: 4px; }
+.dogpool-shell[data-bubble-side="left"] .dogpool-bubble::after { left: auto; right: 13px; }
+.dogpool-shell[data-bubble-vertical="below"] .dogpool-bubble { bottom: auto; top: 48px; }
+.dogpool-shell[data-bubble-vertical="below"] .dogpool-bubble::after { bottom: auto; top: -5px; transform: rotate(225deg); }
+.dogpool-zzz { display: none; position: absolute; left: 8px; top: -8px; width: 26px; height: 24px; color: #881337; font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dogpool-shell[data-state="sleeping"] .dogpool-zzz { display: block; }
+.dogpool-zzz span { position: absolute; animation: dogpool-snooze 2400ms ease-out infinite; opacity: 0; }
+.dogpool-zzz span:nth-child(2) { left: 8px; color: #737373; animation-delay: 800ms; }
+.dogpool-zzz span:nth-child(3) { left: 14px; animation-delay: 1600ms; }
+@keyframes dogpool-wag { to { transform: rotate(22deg); } }
+@keyframes dogpool-breathe { 50% { transform: scaleY(1.035) translateY(-.3px); } }
+@keyframes dogpool-pant { to { transform: translateY(.5px) rotate(1deg); } }
+@keyframes dogpool-tongue { to { transform: rotate(8deg); } }
+@keyframes dogpool-hop { 35% { transform: translateY(-12px) rotate(120deg); } 70% { transform: translateY(-6px) rotate(300deg); } to { transform: rotate(360deg); } }
+@keyframes dogpool-snooze { 15% { opacity: .8; } to { opacity: 0; transform: translate(4px, -18px); } }
+.dogpool-shell[data-reduced="true"] .dogpool-zzz { display: none; }
+.dogpool-shell[data-reduced="true"] *, .dogpool-shell[data-reduced="true"] *::after { animation: none; transition: none; }
+@media (max-width: 767px), (pointer: coarse) { .dogpool-shell { display: none; } }

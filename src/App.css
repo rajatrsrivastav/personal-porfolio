@@ -17,13 +17,15 @@
 
 /* Shared accessibility and sizing only; section styling stays in its original component. */
 :root {
+  --portfolio-canvas: #fafafa;
   --ink: #0b0d12;
   --muted: #4b5563;
   --line: #e5e7eb;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scrollbar-gutter: stable; }
-body { margin: 0; background: #fff; color: #0b0d12; }
+html, body, #root { background: var(--portfolio-canvas); }
+body { margin: 0; color: #0b0d12; }
 
 /* Custom Deadpool Text Selection Highlight (Replaces default blue) */
 ::selection {
@@ -46,10 +48,11 @@ body { margin: 0; background: #fff; color: #0b0d12; }
   color: #ffffff;
 }
 button, input, textarea { font: inherit; }
-button, summary { cursor: pointer; }
+button, summary, a[href], [role="button"] { cursor: pointer; }
 img { max-width: 100%; }
 :focus-visible { outline: 2px solid #4b5563; outline-offset: 4px; }
 section[id], main[id] { scroll-margin-top: 90px; }
+#about, #experience, #work { scroll-margin-top: 96px; }
 .skip-link { position: fixed; top: 12px; left: 16px; z-index: 400; padding: 12px 16px; background: white; color: #0b0d12; border: 1px solid #e5e7eb; border-radius: 8px; transform: translateY(-160%); }
 .skip-link:focus { transform: translateY(0); }
 .modal { max-height: calc(100dvh - 48px); display: flex; flex-direction: column; overflow: hidden; overscroll-behavior: contain; }
@@ -67,10 +70,4 @@ section[id], main[id] { scroll-margin-top: 90px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
-
-/* Katana Cursor Mode: Hides native cursor on desktop */
-body.katana-cursor-active,
-body.katana-cursor-active * {
-  cursor: none !important;
 }

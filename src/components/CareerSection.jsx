@@ -1,6 +1,3 @@
-import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 const experiences = [
   {
@@ -29,8 +26,6 @@ const experiences = [
 ];
 
 function ExperienceItem({ exp, isFirst }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div>
       {!isFirst && <div className="my-8 border-t border-neutral-200/70" />}
@@ -57,7 +52,7 @@ function ExperienceItem({ exp, isFirst }) {
           </time>
         </div>
 
-        {/* Sub-row: Role · Work Mode (Location) + Dropdown toggle beside it */}
+        {/* Role and work location */}
         <div className="mt-1.5 flex items-center flex-wrap gap-x-2.5 gap-y-1.5 text-xs sm:text-sm text-neutral-500 font-medium">
           <span>{exp.role}</span>
           <span className="text-neutral-300">·</span>
@@ -68,32 +63,8 @@ function ExperienceItem({ exp, isFirst }) {
             <span className="text-neutral-400">({exp.location})</span>
           )}
 
-          {/* Dropdown toggle button directly beside the role info */}
-          <button
-            type="button"
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-0.5 text-[11px] font-mono font-medium text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-900 transition-all cursor-pointer ml-1 select-none"
-            aria-expanded={isOpen}
-            aria-label={isOpen ? "Hide impact details" : "View impact details"}
-          >
-            <span>{isOpen ? "Hide impact" : "View impact"}</span>
-            <ChevronDown
-              size={12}
-              className={`transition-transform duration-200 ${isOpen ? "rotate-180 text-neutral-900" : "text-neutral-400"}`}
-            />
-          </button>
         </div>
 
-        {/* Expandable below content only: Description & Tech Stack */}
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="overflow-hidden"
-            >
               {/* Description */}
               <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-neutral-600">
                 {exp.description}
@@ -112,9 +83,6 @@ function ExperienceItem({ exp, isFirst }) {
                   ))}
                 </div>
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
       </article>
     </div>
   );
@@ -124,9 +92,10 @@ export default function CareerSection() {
   return (
     <section
       id="experience"
-      className="mx-auto max-w-[1200px] px-6 py-16 sm:py-20 lg:py-24"
+      className="w-full relative overflow-hidden min-h-screen flex flex-col justify-center items-center scroll-mt-24 py-12"
       aria-labelledby="career-title"
     >
+      <div className="w-full max-w-5xl mx-auto px-6">
       <div className="text-center mb-12 sm:mb-14">
         <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
           EXPERIENCE
@@ -146,6 +115,7 @@ export default function CareerSection() {
         {experiences.map((exp, index) => (
           <ExperienceItem key={exp.id} exp={exp} isFirst={index === 0} />
         ))}
+      </div>
       </div>
     </section>
   );

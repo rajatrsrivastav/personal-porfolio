@@ -8,7 +8,7 @@
   min-height: calc(100svh - 64px);
   padding: 40px 24px 80px;
   color: #0b0d12;
-  background: #ffffff;
+  background: var(--portfolio-canvas);
   overflow-x: clip;
   overflow-y: visible;
   display: flex;

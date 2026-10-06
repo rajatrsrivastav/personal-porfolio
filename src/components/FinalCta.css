@@ -2,7 +2,7 @@
 .footer {
   margin-top: 110px;
   padding: 0;
-  background: #ffffff;
+  background: var(--portfolio-canvas);
   border-top: 1px solid #e5e7eb;
   position: relative;
   z-index: 10;
@@ -249,7 +249,7 @@
 .footer-bottom {
   border-top: 1px solid #f1f5f9;
   padding: 22px 24px;
-  background: #ffffff;
+  background: var(--portfolio-canvas);
 }
 
 .footer-bottom-inner {

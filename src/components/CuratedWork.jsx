@@ -1,9 +1,7 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useMotionValueEvent,
-  useScroll,
 } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
@@ -105,39 +103,20 @@ const slideVariants = {
 };
 
 export default function CuratedWork() {
-  const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const index = Math.min(projects.length - 1, Math.floor(progress * projects.length));
-    setActiveIndex(index);
-  });
 
   const scrollToProject = useCallback((index) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const scrollableDistance = container.offsetHeight - window.innerHeight;
     const boundedIndex = Math.max(0, Math.min(index, projects.length - 1));
-    const progress = (boundedIndex + 0.5) / projects.length;
-    const top =
-      container.getBoundingClientRect().top +
-      window.scrollY +
-      scrollableDistance * progress;
-    window.scrollTo({ top, behavior: "smooth" });
+    setActiveIndex(boundedIndex);
   }, []);
 
   const activeProject = projects[activeIndex];
   const totalProjects = projects.length;
 
   return (
-    <section id="work" aria-labelledby="work-title">
-      <div ref={containerRef} className="relative h-[250vh]">
-        <div className="sticky top-0 min-h-screen flex flex-col justify-center py-12 max-w-5xl mx-auto px-4">
+    <section id="work" aria-labelledby="work-title" className="w-full relative overflow-hidden min-h-screen flex flex-col justify-center scroll-mt-24 py-16 sm:py-20">
+      <div className="relative">
+        <div className="w-full flex flex-col max-w-5xl mx-auto px-6">
           <header className="mb-8 text-center">
             <h2
               id="work-title"
