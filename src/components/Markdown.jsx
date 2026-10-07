@@ -3,6 +3,11 @@
 import { cloneElement } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkStandaloneLinks from '../utils/remarkStandaloneLinks.js';
+import LinkPreview from './LinkPreview';
+
+const previewPlugins = [remarkGfm, remarkStandaloneLinks];
+const plainPlugins = [remarkGfm];
 
 // Keep the existing code colors without interpreting code as HTML.
 function highlightCode(text) {
@@ -15,6 +20,10 @@ function highlightCode(text) {
 }
 
 const components = {
+  p({ node, children }) {
+    const url = node.properties.dataPreviewUrl;
+    return url ? <LinkPreview url={url}>{children}</LinkPreview> : <p>{children}</p>;
+  },
   pre({ children }) {
     return <pre>{cloneElement(children, {}, highlightCode(String(children.props.children)))}</pre>;
   },
@@ -29,11 +38,11 @@ const components = {
   },
 };
 
-export default function Markdown({ content = '' }) {
+export default function Markdown({ content = '', linkPreviews = true }) {
   return (
     <div className="blog-prose">
       {/* No raw HTML plugin; retain react-markdown's default safe URL transform. */}
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components} skipHtml>
+      <ReactMarkdown remarkPlugins={linkPreviews ? previewPlugins : plainPlugins} components={components} skipHtml>
         {content}
       </ReactMarkdown>
     </div>

@@ -3,17 +3,12 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import ts from 'typescript';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkStandaloneLinks from '../src/utils/remarkStandaloneLinks.js';
+import { loadJsx } from './helpers/load-jsx.js';
 
-// Compile the actual shared JSX component for Node's built-in test runner.
-const source = await readFile(new URL('../src/components/Markdown.jsx', import.meta.url), 'utf8');
-const { outputText } = ts.transpileModule(source, {
-  compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext },
-  fileName: 'Markdown.jsx',
-});
-const moduleSource = outputText.replace(/from (["'])([^"']+)\1/g, (_, quote, specifier) =>
-  `from ${quote}${import.meta.resolve(specifier)}${quote}`);
-const { default: Markdown } = await import(`data:text/javascript;base64,${Buffer.from(moduleSource).toString('base64')}`);
+const { default: Markdown } = await loadJsx(new URL('../src/components/Markdown.jsx', import.meta.url));
 const render = content => renderToStaticMarkup(createElement(Markdown, { content }));
 
 const quote = '> That repeated process is called **reconciliation**: observe, compare, act, and check again.';
@@ -75,6 +70,24 @@ test('raw HTML and unsafe URL schemes cannot create executable markup', () => {
 
 test('empty content renders safely', () => {
   assert.equal(renderToStaticMarkup(createElement(Markdown)), '<div class="blog-prose"></div>');
+});
+
+test('only paragraphs containing a bare HTTP(S) URL qualify for cards', () => {
+  const candidates = [];
+  renderToStaticMarkup(createElement(ReactMarkdown, {
+    remarkPlugins: [remarkGfm, remarkStandaloneLinks],
+    components: { p({ node, children }) {
+      if (node.properties.dataPreviewUrl) candidates.push(node.properties.dataPreviewUrl);
+      return createElement('p', {}, children);
+    } },
+  }, 'https://openkruise.io/\n\n[OpenKruise](https://openkruise.io/)\n\n[https://openkruise.io/](https://openkruise.io/)\n\nSee https://openkruise.io/ for details.\n\n<https://openkruise.io/>\n\n`https://openkruise.io/`\n\nhttps://one.example/ https://two.example/\n\nhttp://example.com/'));
+  assert.deepEqual(candidates, ['https://openkruise.io/', 'http://example.com/']);
+});
+
+test('standalone URLs fall back to normal links and cards can be disabled', () => {
+  const html = render('https://openkruise.io/');
+  assert.equal(html, '<div class="blog-prose"><p><a href="https://openkruise.io/">https://openkruise.io/</a></p></div>');
+  assert.equal(renderToStaticMarkup(createElement(Markdown, { content: 'https://openkruise.io/', linkPreviews: false })), html);
 });
 
 test('editor preview and published post use the same renderer', async () => {
