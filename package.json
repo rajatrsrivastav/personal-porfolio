@@ -7,6 +7,7 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
+    "test:markdown": "node --test tests/markdown.test.js",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
@@ -22,6 +23,8 @@
     "react": "^19.1.1",
     "react-activity-calendar": "^3.2.1",
     "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.7.0"
   },
