@@ -4,10 +4,12 @@ import { ArrowLeft } from "lucide-react";
 import Link from 'next/link';
 import usePosts from "../hooks/usePosts";
 import Markdown from "../components/Markdown";
+import BlogPostSkeleton from "../components/BlogSkeleton";
 export default function BlogPostPage({ slug }) {
   const {posts, loading, error} = usePosts();
   const dispatch = posts.find(post => post.slug === slug);
-  if (loading || error) return <main className="blog-page"><p role="status">{error || "Loading article…"}</p></main>;
+  if (loading) return <BlogPostSkeleton />;
+  if (error) return <main className="blog-page"><div className="blog-article"><p role="status">{error}</p></div></main>;
 
   if (!dispatch) {
     return (

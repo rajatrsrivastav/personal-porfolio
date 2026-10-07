@@ -114,13 +114,6 @@ export default function AboutMe() {
                   </div>
                 </div>
 
-                {/* In-Frame Clean Action Hint */}
-                <div className="w-full text-center pb-1">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100/90 border border-neutral-200/80 text-[11px] font-mono font-medium text-neutral-600 transition-colors group-hover:bg-neutral-200/80 group-hover:text-neutral-900 shadow-2xs">
-                    <span>Flip to see real person</span>
-                    <span className="text-xs transition-transform duration-300 group-hover:-rotate-180">↺</span>
-                  </span>
-                </div>
               </div>
 
               {/* 2. BACK FACE (FLIPPED): Real Photo Full Frame */}
@@ -131,17 +124,22 @@ export default function AboutMe() {
                     alt="Rajat Srivastav (Real)"
                     className="w-full h-full object-cover object-center"
                   />
-                  {/* In-Frame Clean Action Hint */}
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/70 text-white/95 text-[11px] font-mono font-medium backdrop-blur-sm border border-white/20 shadow-xs">
-                      {/* <span>Flip back to avatar</span> */}
-                      <span className="text-xs">↺</span>
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <button
+            type="button"
+            className="ab-flip-hint"
+            onClick={() => setIsFlipped((flipped) => !flipped)}
+          >
+            <svg className="ab-flip-hint-arrow" viewBox="0 0 64 48" fill="none" aria-hidden="true">
+              <path d="M54 42C29 44 12 31 17 8M7 17L17 7L26 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="ab-flip-hint-text">
+              {isFlipped ? "Flip back to the flyer" : "Flip to see the real person"}
+            </span>
+          </button>
         </div>
       </div>
       </div>

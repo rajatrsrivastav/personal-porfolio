@@ -55,6 +55,24 @@
 .blog-article-footer p { margin: 0 0 16px; font-size: 24px; }
 .blog-pill-link { display: inline-flex; gap: 8px; align-items: center; min-height: 42px; padding: 9px 15px; border: 1px solid rgba(185,28,28,.22); border-radius: 999px; background: rgba(225,29,72,.045); color: #9f1239; font-size: 13px; font-weight: 600; text-decoration: none; }
 .blog-not-found { padding-top: 25vh; }
+.blog-skeleton-block, .blog-skeleton-lines span, .blog-skeleton-title span { display: block; border-radius: 6px; background: #e4e4e7; animation: blog-skeleton-pulse 1.6s ease-in-out infinite; }
+.blog-skeleton-topic { width: 110px; height: 14px; }
+.blog-skeleton-meta { width: 80px; height: 12px; margin-top: 18px; }
+.blog-skeleton-title { display: grid; gap: 12px; margin: 20px 0 24px; }
+.blog-skeleton-title span { height: clamp(42px, 6vw, 68px); }
+.blog-skeleton-title span:last-child { width: 72%; }
+.blog-skeleton-lines { display: grid; gap: 12px; }
+.blog-skeleton-lines span { height: 16px; }
+.blog-skeleton-lines span:last-child { width: 65%; }
+.blog-skeleton-tags { width: 160px; height: 24px; margin-top: 24px; }
+.blog-skeleton-body { display: grid; max-width: 700px; gap: 32px; }
+.blog-skeleton-card { justify-content: space-between; gap: 48px; }
+.blog-skeleton-card-title { width: 80%; height: 40px; margin-bottom: 20px; }
+.blog-skeleton-card:hover { transform: none; border-color: rgba(212,212,216,.8); box-shadow: 0 18px 45px -30px rgba(15,23,42,.28); }
+@keyframes blog-skeleton-pulse { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) {
+  .blog-skeleton-block, .blog-skeleton-lines span, .blog-skeleton-title span { animation: none; }
+}
 @media (max-width: 700px) {
   .blog-shell, .blog-article { width: min(100% - 32px,1160px); padding-top: 28px; }
   .blog-archive-header { padding: 72px 0 44px; }
