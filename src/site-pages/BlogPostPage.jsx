@@ -1,11 +1,14 @@
 'use client';
 
 import { ArrowLeft } from "lucide-react";
+import { useRef } from 'react';
 import Link from 'next/link';
 import usePosts from "../hooks/usePosts";
 import Markdown from "../components/Markdown";
 import BlogPostSkeleton from "../components/BlogSkeleton";
+import ArticleProgress from '../components/ArticleProgress';
 export default function BlogPostPage({ slug }) {
+  const articleRef = useRef(null);
   const {posts, loading, error} = usePosts();
   const dispatch = posts.find(post => post.slug === slug);
   if (loading) return <BlogPostSkeleton />;
@@ -25,7 +28,7 @@ export default function BlogPostPage({ slug }) {
 
   return (
     <main className="blog-page">
-      <article className="blog-article">
+      <article className="blog-article" ref={articleRef}>
         <Link className="blog-back" href="/blog"><ArrowLeft size={15} /> All posts</Link>
         <header className="blog-article-header">
           <span className="blog-kicker font-mono">{dispatch.topic}</span>
@@ -42,6 +45,7 @@ export default function BlogPostPage({ slug }) {
           <Link className="blog-pill-link" href="/blog">View all posts <span aria-hidden="true">→</span></Link>
         </footer>
       </article>
+      <ArticleProgress articleRef={articleRef} content={dispatch.content} />
     </main>
   );
 }

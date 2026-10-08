@@ -4,10 +4,11 @@ import { cloneElement } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkStandaloneLinks from '../utils/remarkStandaloneLinks.js';
+import remarkEditorialLists from '../utils/remarkEditorialLists.js';
 import LinkPreview from './LinkPreview';
 
-const previewPlugins = [remarkGfm, remarkStandaloneLinks];
-const plainPlugins = [remarkGfm];
+const previewPlugins = [remarkGfm, remarkEditorialLists, remarkStandaloneLinks];
+const plainPlugins = [remarkGfm, remarkEditorialLists];
 
 // Keep the existing code colors without interpreting code as HTML.
 function highlightCode(text) {

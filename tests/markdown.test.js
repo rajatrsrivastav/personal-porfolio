@@ -52,6 +52,17 @@ test('inline, fenced and indented code remain escaped and preserve whitespace', 
   assert.doesNotMatch(html, /<script>/);
 });
 
+test('bold list terms use one em dash without changing other prose or nested structure', () => {
+  const html = render('- **Controller**: reconciles state\n- **Worker** — runs tasks\n- **Queue** buffers work\n  - **Nested** - handles retries\n- **Standalone**\n\n**Outside**: stays unchanged.');
+  assert.match(html, /<strong>Controller<\/strong> — reconciles state/);
+  assert.match(html, /<strong>Worker<\/strong> — runs tasks/);
+  assert.match(html, /<strong>Queue<\/strong> — buffers work/);
+  assert.match(html, /<strong>Nested<\/strong> — handles retries/);
+  assert.match(html, /<li><strong>Standalone<\/strong><\/li>/);
+  assert.match(html, /<strong>Outside<\/strong>: stays unchanged/);
+  assert.equal((html.match(/<ul>/g) || []).length, 2);
+});
+
 test('GFM tables, strikethrough, autolinks and task lists', () => {
   const html = render('| Feature | Status |\n| :--- | ---: |\n| **Tables** | ~~pending~~ done |\n\nhttps://example.com\n\n- [x] Finished');
   assert.match(html, /class="blog-table-scroll"><table>/);
