@@ -73,7 +73,8 @@
   .nb-label.is-visible { margin-left: 6px; }
 }
 @media (max-width: 767px) {
-  .nb-link { width: 36px; height: 28px; padding: 4px 0; }
+  .nb-wrap { top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  .nb-link { width: 36px; height: 44px; padding: 4px 0; }
   .nb-pill-inner { gap: 2px; }
   .nb-label.is-visible, .nb-label.is-hidden { max-width: 0; opacity: 0; margin-left: 0; }
 }
