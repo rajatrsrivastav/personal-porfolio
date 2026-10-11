@@ -8,7 +8,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "test:markdown": "node --test tests/markdown.test.js",
-    "test:blog": "node --test tests/markdown.test.js tests/editor.test.js tests/link-metadata.test.js",
+    "test:blog": "node --test tests/markdown.test.js tests/editor.test.js tests/link-metadata.test.js tests/draft-saver.test.js tests/cms.test.js",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },

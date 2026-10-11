@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { isPublic, normalize, readPosts, sortPosts, verifySession, writePosts, validatePost, storageErrorResponse } from '../../../lib/posts.js';
+import { isPublic, normalize, publicPost, readPosts, sortPosts, verifySession, writePosts, validatePost, storageErrorResponse } from '../../../lib/posts.js';
 import { cookies } from 'next/headers';
 
 export const runtime = 'nodejs';
@@ -23,7 +23,10 @@ export async function GET(request) {
   const url = new URL(request.url);
   const admin = await isAdmin();
   if (url.searchParams.get('all') === 'true' && !admin) return json({ error: 'Authentication required.' }, 401);
-  try { return json(sortPosts((await readPosts()).filter(post => url.searchParams.get('all') === 'true' && admin || isPublic(post)))); }
+  try {
+    const all = url.searchParams.get('all') === 'true' && admin;
+    return json(sortPosts((await readPosts()).filter(post => all || isPublic(post)).map(post => all ? post : publicPost(post))));
+  }
   catch (error) { return storageErrorResponse(error); }
 }
 
@@ -38,6 +41,7 @@ export async function POST(request) {
   try { previous = await readPosts(); } catch (error) { return storageErrorResponse(error); }
   const record = normalize({
     ...payload,
+    status: payload.status || 'draft',
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -45,7 +49,8 @@ export async function POST(request) {
   });
   const error = validatePost(record);
   if (error) return json({ error }, 400);
-  if (previous.some(post => post.slug === record.slug)) return json({ error: 'Slug already exists.' }, 409);
+  delete record.draft;
+  if (record.slug && previous.some(post => post.slug === record.slug)) return json({ error: 'Slug already exists.' }, 409);
   previous.unshift(record);
   try { await writePosts(previous); } catch (error) { return storageErrorResponse(error); }
   return json(record, 201);

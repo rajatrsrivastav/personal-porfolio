@@ -1,3 +1,4 @@
+import { applyPostChanges, publicPost, validatePost } from '../lib/posts.js';
 import http from 'node:http';
 import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
@@ -59,7 +60,8 @@ http.createServer(async (req, res) => {
       const admin=authorized(req), id=postMatch ? decodeURIComponent(postMatch[1]) : null;
       if(req.method === 'GET') {
         if(url.searchParams.get('all') === 'true' && !admin) return send(res,401,{error:'Authentication required'});
-        const all=sortPosts((await posts()).filter(p=>url.searchParams.get('all') === 'true' && admin || visible(p)));
+        const full = url.searchParams.get('all') === 'true' && admin;
+        const all=sortPosts((await posts()).filter(p=>full || visible(p)).map(p=>full ? p : publicPost(p)));
         if(!id) return send(res,200,all);
         const record=all.find(p=>p.id===id || p.slug===id);
         return send(res,record?200:404,record || {error:'Post not found'});
@@ -79,9 +81,11 @@ http.createServer(async (req, res) => {
           for(const key of ['title','slug','category','readTime','excerpt','content','status','publishedAt']) if(Object.hasOwn(payload,key)) fields[key]=payload[key];
           if(Object.hasOwn(payload,'topic') && !Object.hasOwn(payload,'category')) fields.category=payload.topic;
           if(Object.hasOwn(payload,'description') && !Object.hasOwn(payload,'excerpt')) fields.excerpt=payload.description;
-          record={...previous,...fields};
-          if(!['title','slug','category','readTime','excerpt','content'].every(k=>typeof record[k]==='string' && record[k].trim()) || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(record.slug) || !['draft','published'].includes(record.status) || record.title.length>200 || record.excerpt.length>1000 || ['slug','category','readTime'].some(k=>record[k].length>200) || (record.publishedAt!=null && (typeof record.publishedAt!=='string' || !Number.isFinite(Date.parse(record.publishedAt))))) return send(res,400,{error:'Complete all fields and use a valid slug and publication date.'});
-          if(all.some((p,i)=>i!==index && p.slug===record.slug)) return send(res,409,{error:'Slug already exists'});
+          try { record=applyPostChanges(previous.id ? previous : {...fields,status:fields.status || 'draft'},payload); }
+          catch(error) { return send(res,400,{error:error.message}); }
+          const invalid=validatePost(record);
+          if(invalid) return send(res,400,{error:invalid});
+          if(record.slug && all.some((p,i)=>i!==index && p.slug===record.slug)) return send(res,409,{error:'Slug already exists'});
           const now=new Date().toISOString();
           record=normalize({...record,id:previous.id || randomUUID(),createdAt:previous.createdAt || now,updatedAt:now,publishedAt:record.status==='published' ? (Object.hasOwn(fields,'publishedAt') ? fields.publishedAt || now : previous.status==='published' ? previous.publishedAt || now : now) : record.publishedAt || null});
           if(index>=0) all[index]=record;else all.unshift(record);

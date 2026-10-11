@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { isPublic, normalize, readPosts, validatePost, verifySession, writePosts, storageErrorResponse } from '../../../../lib/posts.js';
+import { applyPostChanges, isPublic, normalize, publicPost, readPosts, validatePost, verifySession, writePosts, storageErrorResponse } from '../../../../lib/posts.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -20,7 +20,7 @@ export async function GET(request, { params }) {
   if (url.searchParams.get('all') === 'true' && !admin) return json({ error: 'Authentication required.' }, 401);
   try {
     const post = (await readPosts()).map(normalize).find(item => (item.id === id || item.slug === id) && (admin && url.searchParams.get('all') === 'true' || isPublic(item)));
-    return post ? json(post) : json({ error: 'Post not found.' }, 404);
+    return post ? json(admin && url.searchParams.get('all') === 'true' ? post : publicPost(post)) : json({ error: 'Post not found.' }, 404);
   } catch (error) { return storageErrorResponse(error); }
 }
 export async function PATCH(request, context) { return update(request, context); }
@@ -38,16 +38,12 @@ async function update(request, { params }) {
   const index = posts.findIndex(post => post.id === id || post.slug === id);
   if (index < 0) return json({ error: 'Post not found.' }, 404);
   const previous = posts[index];
-  const changed = { ...previous };
-  for (const key of ['title', 'slug', 'category', 'readTime', 'excerpt', 'content', 'status', 'publishedAt']) if (Object.hasOwn(payload, key)) changed[key] = payload[key];
-  if (Object.hasOwn(payload, 'topic') && !Object.hasOwn(payload, 'category')) changed.category = payload.topic;
-  if (Object.hasOwn(payload, 'description') && !Object.hasOwn(payload, 'excerpt')) changed.excerpt = payload.description;
-  changed.updatedAt = new Date().toISOString();
-  if (changed.status === 'published' && !changed.publishedAt) changed.publishedAt = new Date().toISOString();
-  const record = normalize(changed);
+  let record;
+  try { record = applyPostChanges(previous, payload); }
+  catch (error) { return json({ error: error.message }, 400); }
   const error = validatePost(record);
   if (error) return json({ error }, 400);
-  if (posts.some((post, position) => position !== index && post.slug === record.slug)) return json({ error: 'Slug already exists.' }, 409);
+  if (record.slug && posts.some((post, position) => position !== index && post.slug === record.slug)) return json({ error: 'Slug already exists.' }, 409);
   posts[index] = record;
   try { await writePosts(posts); } catch (error) { return storageErrorResponse(error); }
   return json(record);

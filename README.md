@@ -14,6 +14,10 @@ Use Node.js 20.9 or newer. Set `ADMIN_PASSKEY` to a long random secret and `SITE
 
 The CMS is at `/admin`. Sessions use a signed, HttpOnly, SameSite=Strict cookie with a seven-day lifetime. CRUD routes live under `/api/posts`; public responses contain published posts only. Local and standalone Node runs use the JSON file in `data/posts.json` by default. Set `POSTS_FILE` to a persistent path when the host has a durable filesystem.
 
+## Draft autosave
+
+The editor saves writing after an 800 ms pause, including incomplete drafts. It keeps pending changes in this browser for recovery after refresh and saves before returning to the list or logging out. Publish Post validates the required fields and makes the post public. Editing a published post saves a private revision; Publish Changes replaces the public version. Public API responses exclude these revisions.
+
 ## Vercel CMS storage
 
 Vercel's function filesystem is ephemeral. For durable CMS data, configure an Upstash Redis database and set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` as server-only environment variables. The adapter stores the post collection under `portfolio:posts`; set `POSTS_REDIS_KEY` to customize it. A Vercel deployment without Redis remains buildable, but CMS reads are empty and writes return a setup error instead of silently storing data that may disappear.

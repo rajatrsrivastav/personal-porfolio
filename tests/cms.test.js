@@ -29,11 +29,24 @@ test('CMS sessions, lifecycle, validation and public isolation',async()=>{
   assert.equal((await request('/api/posts/'+record.id,'PATCH',{status:'published'},cookie)).status,200);
   assert.equal((await (await request('/api/posts')).json()).length,1);
   const updated=await (await request('/api/posts/'+record.id,'PATCH',{title:'Edited',slug:'edited',excerpt:'New summary'},cookie)).json();assert.equal(updated.content,'# Hello');assert.equal(updated.description,'New summary');assert.equal(updated.id,record.id);
+  const revision={...post,title:'Private revision',slug:'private-revision',content:'Unpublished writing'};
+  assert.equal((await request('/api/posts/'+record.id,'PATCH',{draft:revision},cookie)).status,200);
+  const publicRecord=await (await request('/api/posts/'+record.id)).json();
+  assert.equal(publicRecord.title,'Edited');assert.equal(publicRecord.content,'# Hello');assert.equal(publicRecord.draft,undefined);
+  const adminRecord=await (await request('/api/posts/'+record.id+'?all=true','GET',null,cookie)).json();assert.equal(adminRecord.draft.title,'Private revision');
+  assert.equal((await request('/api/posts/'+record.id,'PATCH',{...revision,status:'published'},cookie)).status,200);
+  const publishedRevision=await (await request('/api/posts/'+record.id)).json();assert.equal(publishedRevision.title,'Private revision');assert.equal(publishedRevision.draft,undefined);
   assert.equal((await request('/api/posts/'+record.id,'PATCH',{publishedAt:'invalid'},cookie)).status,400);
   await request('/api/posts/'+record.id,'PATCH',{publishedAt:'2099-01-01T00:00:00Z'},cookie);assert.deepEqual(await (await request('/api/posts')).json(),[]);
   await request('/api/posts/'+record.id,'PATCH',{status:'draft'},cookie);assert.deepEqual(await (await request('/api/posts')).json(),[]);
   assert.equal((await request('/api/posts/'+record.id,'DELETE',null,cookie)).status,200);
   assert.deepEqual(await (await request('/api/posts?all=true','GET',null,cookie)).json(),[]);
+  const incomplete={title:'Work in progress',slug:'',category:'',readTime:'5 min read',excerpt:'',content:'',status:'draft'};
+  const partial=await request('/api/posts','POST',incomplete,cookie);assert.equal(partial.status,201);
+  const partialRecord=await partial.json();
+  assert.equal((await request('/api/posts','POST',incomplete,cookie)).status,201);
+  assert.equal((await request('/api/posts/'+partialRecord.id,'PATCH',{status:'published'},cookie)).status,400);
+  assert.deepEqual(await (await request('/api/posts')).json(),[]);
   const logout=await request('/api/admin/logout','POST',null,cookie);assert.match(logout.headers.get('set-cookie'),/Max-Age=0/);
  } finally {server.kill();await rm(dir,{recursive:true,force:true});}
 });
