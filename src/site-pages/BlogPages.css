@@ -45,7 +45,8 @@
 .blog-prose li > p { margin-bottom: 8px; }
 .blog-prose .contains-task-list { list-style: none; padding-left: 0; }
 .blog-prose .task-list-item input { width: auto; margin: 0 .5em 0 0; padding: 0; vertical-align: middle; }
-.blog-prose hr { width: 84px; height: 8px; margin: 56px auto; border: 0; background: radial-gradient(circle, #737373 2px, transparent 2.5px) center / 28px 8px repeat-x; }
+.blog-prose hr { height: 0; margin: 48px 0; border: 0; background: none; }
+.blog-prose hr + :is(h1,h2,h3,h4,h5,h6) { margin-top: 0; }
 .blog-prose :not(pre) > code { padding: .125em .375em; border-radius: 4px; background: rgba(245,245,245,.8); color: #262626; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
 .blog-prose .blog-table-scroll { margin: 28px 0; overflow-x: auto; }
 .blog-prose table { width: 100%; border-collapse: collapse; font-size: .94em; }
