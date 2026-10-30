@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
+import { Mona_Sans } from 'next/font/google';
 import SmoothScroll from './SmoothScroll';
 import './globals.css';
+
+// The same typeface as the Tapfolio card (card.rajatsrivastav.dev).
+const mona = Mona_Sans({ variable: '--font-mona', subsets: ['latin'], axes: ['wdth'], display: 'swap' });
 
 const siteUrl = process.env.SITE_URL || 'https://rajatsrivastav.dev';
 const description = 'Cloud-native systems, scalable microservices, and full-stack architecture.';
@@ -27,5 +31,5 @@ const structuredData = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/devicon.min.css" /></head><body><SmoothScroll>{children}</SmoothScroll><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} /></body></html>;
+  return <html lang="en" className={mona.variable}><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/devicon.min.css" /></head><body><SmoothScroll>{children}</SmoothScroll><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} /></body></html>;
 }

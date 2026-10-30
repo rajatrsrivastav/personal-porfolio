@@ -72,11 +72,20 @@
   .nb-link { font-size: 12px; }
   .nb-label.is-visible { margin-left: 6px; }
 }
+.nb-short { display: none; }
 @media (max-width: 767px) {
   .nb-wrap { top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
-  .nb-link { width: 36px; height: 44px; padding: 4px 0; }
-  .nb-pill-inner { gap: 2px; }
-  .nb-label.is-visible, .nb-label.is-hidden { max-width: 0; opacity: 0; margin-left: 0; }
+  .nb-pill.glass-surface { padding: 4px 6px; }
+  .nb-pill-inner { gap: 0; }
+  /* Icon over a short caption, so every button says where it goes. */
+  .nb-link { width: 46px; height: 48px; padding: 0; flex-direction: column; gap: 3px; border-radius: 16px; }
+  .nb-label.is-visible, .nb-label.is-hidden { display: none; }
+  .nb-short { display: block; font-size: 9.5px; line-height: 1; letter-spacing: -.02em; }
+  .nb-icon { width: 16px; height: 16px; }
+}
+@media (max-width: 359px) {
+  .nb-link { width: 40px; }
+  .nb-short { font-size: 8.5px; }
 }
 [data-theme="dark"] .nb-pill.glass-surface { color-scheme: dark; border-color: rgba(255,255,255,.16); }
 [data-theme="dark"] .nb-link { color: #d4d4d4; }

@@ -133,15 +133,12 @@
 }
 
 .ab-flip-hint-text {
-  font-family: 'Caveat', 'Comic Sans MS', cursive, sans-serif;
-  font-size: 23px;
-  font-weight: 700;
-  color: #374151;
-  letter-spacing: 0.01em;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  letter-spacing: 0.02em;
   white-space: nowrap;
   line-height: 1;
-  transform: rotate(-3deg);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: color 0.2s ease;
 }
 
@@ -294,7 +291,7 @@
     width: min(100%, 280px);
   }
   .ab-flip-hint-text {
-    font-size: 21px;
+    font-size: 13px;
   }
   .ab-flip-hint-arrow {
     width: 44px;
@@ -304,11 +301,43 @@
 }
 
 .ab-flip-hint:focus-visible, .ab-flip-wrapper:focus-visible {
-  outline: 2px solid #9f1239;
+  outline: 2px solid #4338a8;
   outline-offset: 6px;
   border-radius: 12px;
 }
 @media (prefers-reduced-motion: reduce) {
   .ab-flip-hint { animation: none; }
   .ab-flip-card-3d, .ab-flip-hint, .ab-flip-hint-arrow { transition: none; }
+}
+
+/* "Read more" exists for phones only; desktop always shows every paragraph. */
+.ab-more-toggle { display: none; }
+
+/* Phones: heading, then the flip card, then a short intro with the rest one
+   tap away. `display: contents` lets the text column's pieces be reordered
+   around the card without changing the desktop layout. */
+@media (max-width: 680px) {
+  .ab-section { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .ab-text { display: contents; }
+  .ab-text > :first-child { order: 1; }
+  .ab-text > h2 { order: 2; }
+  .ab-art { order: 3; padding-top: 8px; margin: 0 0 28px; }
+  .ab-text > p { order: 4; }
+  .ab-more { order: 5; }
+  .ab-more:not(.is-open) { display: none; }
+  .ab-more-toggle {
+    order: 6;
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #4338a8;
+    font: 600 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .ab-cta { order: 7; align-self: flex-start; }
 }

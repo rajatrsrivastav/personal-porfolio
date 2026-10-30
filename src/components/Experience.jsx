@@ -28,12 +28,12 @@ export default function Experience() {
   return (
     <section className="ex-section" id="experience">
       <div className="ex-header">
-        <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
+        <p className="text-xs uppercase tracking-widest text-neutral-500 font-mono mb-2 text-center">
           PROFESSIONAL
         </p>
         <h2 className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center">
           Career{" "}
-          <em className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
+          <em className="font-serif font-normal not-italic bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">
             Evolution
           </em>
         </h2>

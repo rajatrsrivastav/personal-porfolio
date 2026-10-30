@@ -12,10 +12,9 @@ import Navbar from '../src/components/Navbar';
 import ContactModal from '../src/components/ContactModal';
 import FixedHangingDeadpool from '../src/components/FixedHangingDeadpool';
 import BlogSection from '../src/components/BlogSection';
-import DogpoolPet from '../src/components/DogpoolPet';
 
 export default function HomePage() {
   const [contactOpen, setContactOpen] = useState(false);
   const openContact = () => setContactOpen(true);
-  return <><a className="skip-link" href="#main-content">Skip to content</a><FixedHangingDeadpool /><Navbar /><main id="main-content"><HomeHero onOpenContact={openContact} /><AboutMe /><CareerSection /><CuratedWork /><BlogSection /><GithubSection /><Skills /></main><FinalCta onOpenContact={openContact} /><ContactModal open={contactOpen} onClose={() => setContactOpen(false)} /><DogpoolPet /></>;
+  return <><a className="skip-link" href="#main-content">Skip to content</a><FixedHangingDeadpool /><Navbar /><main id="main-content"><HomeHero onOpenContact={openContact} /><AboutMe /><CareerSection /><CuratedWork /><BlogSection /><GithubSection /><Skills /></main><FinalCta onOpenContact={openContact} /><ContactModal open={contactOpen} onClose={() => setContactOpen(false)} /></>;
 }

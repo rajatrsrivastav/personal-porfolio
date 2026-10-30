@@ -6,7 +6,7 @@
   background: #fafafa;
   border-top: 1px solid rgba(229,229,229,.8);
   color: #171717;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
 }
 .footer-container { max-width: 1024px; margin-inline: auto; padding: 48px 16px; }
 @media (max-width: 767px) {
@@ -51,7 +51,7 @@
 .footer-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 20px; }
 .footer-nav-link { display: inline-flex; align-items: center; min-height: 32px; text-decoration: none; color: #737373; font: 400 12px Arial, Helvetica, sans-serif; transition: color .2s ease; }
 .footer-nav-link:hover { color: #171717; }
-.footer-email:focus-visible, .footer-nav-link:focus-visible { outline: 2px solid #991b1b; outline-offset: 4px; }
+.footer-email:focus-visible, .footer-nav-link:focus-visible { outline: 2px solid #4338a8; outline-offset: 4px; }
 @media (min-width: 640px) {
   .footer-container { padding: 64px 24px; }
   .footer-heading { font-size: 24px; }

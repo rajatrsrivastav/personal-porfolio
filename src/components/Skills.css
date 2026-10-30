@@ -46,7 +46,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 28px;
+}
+
+/* Each row of the pyramid gets a small mono label, like the section kickers. */
+.sk-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.sk-group-label {
+  margin: 0;
+  color: #737373;
+  font: 500 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
 
 .sk-row {

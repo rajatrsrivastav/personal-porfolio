@@ -60,7 +60,7 @@ function ExperienceItem({ exp, isFirst }) {
         <div className="mt-1.5 flex items-center flex-wrap gap-x-2.5 gap-y-1.5 text-xs sm:text-sm text-neutral-500 font-medium">
           <span>{exp.role}</span>
           <span className="text-neutral-300">·</span>
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-red-500/10 text-red-700 border border-red-500/20">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#5b4fc7]/10 text-[#4338a8] border border-[#5b4fc7]/25">
             {exp.type}
           </span>
           {exp.location && (
@@ -101,7 +101,7 @@ export default function CareerSection() {
     >
       <div className="w-full max-w-5xl mx-auto px-6">
       <div className="text-center mb-12 sm:mb-14">
-        <p className="text-xs uppercase tracking-widest text-neutral-400 font-mono mb-2 text-center">
+        <p className="text-xs uppercase tracking-widest text-neutral-500 font-mono mb-2 text-center">
           EXPERIENCE
         </p>
         <h2
@@ -109,7 +109,7 @@ export default function CareerSection() {
           className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
         >
           Career{" "}
-          <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
+          <span className="font-serif font-normal bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">
             Evolution
           </span>
         </h2>

@@ -67,9 +67,29 @@ export default function FixedHangingDeadpool() {
     };
   }, []);
 
+  // Past the hero he tucks up into the corner (phones only, see CSS) so he
+  // stops covering headings while you read.
+  const [isTucked, setIsTucked] = useState(false);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setIsTucked(window.scrollY > window.innerHeight * 0.5);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+    };
+  }, []);
+
   return (
     <div
-      className={`fixed-hanging-deadpool-container hanging-deadpool-container ${isBouncing ? "is-bouncing" : ""}`}
+      className={`fixed-hanging-deadpool-container hanging-deadpool-container ${isBouncing ? "is-bouncing" : ""} ${isTucked && !isSpeechOpen ? "is-tucked" : ""}`}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

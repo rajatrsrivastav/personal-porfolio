@@ -18,7 +18,16 @@
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @media (max-width: 768px) {
-  .fixed-hanging-deadpool-container, .hanging-deadpool-container { transform: scale(.75); transform-origin: top right; }
+  .fixed-hanging-deadpool-container, .hanging-deadpool-container {
+    right: 6px;
+    transform: scale(.62);
+    transform-origin: top right;
+    transition: transform .45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Tucked: hauled up the rope so only his head peeks into the corner. */
+  .fixed-hanging-deadpool-container.is-tucked, .hanging-deadpool-container.is-tucked {
+    transform: translateY(-32%) scale(.5);
+  }
 }
 
 .fixed-hanging-deadpool-container:focus-visible,

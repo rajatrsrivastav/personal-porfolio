@@ -40,11 +40,10 @@
   letter-spacing: -0.025em;
 }
 .dispatches-heading h2 span {
-  background: linear-gradient(90deg, #dc2626, #e11d48, #991b1b);
+  background: linear-gradient(90deg, #5b4fc7, #5b4fc7, #4338a8);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  font-style: italic;
   font-weight: 400;
 }
 .dispatches-archive-link {
@@ -127,7 +126,7 @@
   gap: 20px;
 }
 .dispatch-topic {
-  color: #dc2626;
+  color: #5b4fc7;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -141,7 +140,7 @@
 }
 .dispatch-card:hover .dispatch-arrow,
 .dispatch-card:focus-visible .dispatch-arrow {
-  color: #dc2626;
+  color: #5b4fc7;
   transform: translate(2px, -2px);
 }
 .dispatch-card-copy {
@@ -169,7 +168,7 @@
 }
 .dispatch-card:hover h3,
 .dispatch-card:focus-visible h3 {
-  color: #dc2626;
+  color: #5b4fc7;
 }
 .dispatch-description {
   margin: 10px 0 0;

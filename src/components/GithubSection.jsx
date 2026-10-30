@@ -143,22 +143,10 @@ function formatRelativeTime(value) {
   return formatter.format(Math.round(seconds / match[1]), match[0]);
 }
 
-/* ── Deadpool calendar theme ── */
+/* ── Calendar theme: the violet scale shared with the Tapfolio card ── */
 const calendarTheme = {
-  light: [
-    "#f1f3f5", // Level 0: 0 commits (subtle light gray)
-    "#fecdd3", // Level 1: 1-3 commits (soft rose-200)
-    "#fb7185", // Level 2: 4-6 commits (vibrant rose-400)
-    "#e11d48", // Level 3: 7-9 commits (crimson ruby rose-600)
-    "#9f1239", // Level 4: 10+ commits (deep oxblood rose-800)
-  ],
-  dark: [
-    "#1e1e20", // Level 0 dark
-    "#4c0519", // Level 1
-    "#881337", // Level 2
-    "#be123c", // Level 3
-    "#e11d48", // Level 4
-  ],
+  light: ["#f1f3f5", "#d9d3ff", "#a99cf7", "#5b4fc7", "#4338a8"],
+  dark: ["#1e1e20", "#2a2470", "#4338a8", "#5b4fc7", "#a99cf7"],
 };
 
 function getContributionLevel(count) {
@@ -173,11 +161,11 @@ function getContributionLevel(count) {
 const STATUS_CONFIG = {
   [PR_STATUS.MERGED]: {
     Icon: GitMerge,
-    color: "text-rose-600",
+    color: "text-[#5b4fc7]",
   },
   [PR_STATUS.OPEN]: {
     Icon: GitPullRequest,
-    color: "text-red-600",
+    color: "text-[#5b4fc7]",
   },
   [PR_STATUS.CLOSED]: {
     Icon: GitPullRequestClosed,
@@ -411,7 +399,7 @@ export default function GithubSection({ fullPage = false }) {
           className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
         >
           {fullPage ? "All Public " : "GitHub "}
-          <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
+          <span className="font-serif font-normal bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">
             {fullPage ? "Contributions" : "Activity"}
           </span>
         </h2>
@@ -422,7 +410,7 @@ export default function GithubSection({ fullPage = false }) {
           <>
             {/* ── Activity summary ──────────────────── */}
             {/* <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-              <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20">
+              <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3 py-1 rounded-full bg-[#5b4fc7]/10 border border-[#5b4fc7]/25">
                 10+ merged PRs across CNCF ecosystem
               </span>
               <span className="text-xs font-mono text-neutral-500 bg-neutral-100/80 border border-neutral-200/60 px-3 py-1 rounded-full">
@@ -435,9 +423,11 @@ export default function GithubSection({ fullPage = false }) {
             </div> */}
 
             {/* ── Contribution Graph (on canvas, no card) ── */}
+            {/* Phones: the calendar opens on the latest months; the faded
+                left edge and the hint show that earlier months scroll in. */}
             <div
               ref={calendarContainerRef}
-              className="overflow-x-auto pb-2 [&_.react-activity-calendar]:mx-auto"
+              className="overflow-x-auto pb-2 [&_.react-activity-calendar]:mx-auto max-md:[-webkit-mask-image:linear-gradient(to_right,transparent,#000_14%)] max-md:[mask-image:linear-gradient(to_right,transparent,#000_14%)]"
             >
               {!calendar.loading && !calendar.error && (
                 <ActivityCalendar
@@ -473,6 +463,11 @@ export default function GithubSection({ fullPage = false }) {
                 </p>
               )}
             </div>
+            {!calendar.loading && !calendar.error && (
+              <p className="md:hidden mt-1 text-center font-mono text-[11px] text-neutral-500">
+                ← Swipe for earlier months
+              </p>
+            )}
 
             {/* ── Divider ──────────────────────────────── */}
             <div className="my-10 border-t border-neutral-200/70" />

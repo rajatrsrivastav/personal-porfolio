@@ -6,14 +6,15 @@ import GlassSurface from './GlassSurface';
 import { Home, User, Briefcase, Layers, Activity, Cpu, BookOpen } from "lucide-react";
 import { getAboutScrollTop } from '../utils/aboutScroll';
 
+// `short` is the caption under each icon in the phone dock.
 const NAV_ITEMS = [
-  { id: "home", label: "Home", icon: Home },
-  { id: "about", label: "About", icon: User },
-  { id: "experience", label: "Experience", icon: Briefcase },
-  { id: "work", label: "Work", icon: Layers },
-  { id: "blog", label: "Blog", icon: BookOpen },
-  { id: "activity", label: "Activity", icon: Activity },
-  { id: "skills", label: "Skills", icon: Cpu },
+  { id: "home", label: "Home", short: "Home", icon: Home },
+  { id: "about", label: "About", short: "About", icon: User },
+  { id: "experience", label: "Experience", short: "Career", icon: Briefcase },
+  { id: "work", label: "Work", short: "Work", icon: Layers },
+  { id: "blog", label: "Blog", short: "Blog", icon: BookOpen },
+  { id: "activity", label: "Activity", short: "GitHub", icon: Activity },
+  { id: "skills", label: "Skills", short: "Skills", icon: Cpu },
 ];
 
 const SCROLL_LOCK_MS = 1200;
@@ -179,6 +180,9 @@ export default function Navbar() {
                   className={`nb-label ${showLabel ? "is-visible" : "is-hidden"}`}
                 >
                   {item.label}
+                </span>
+                <span className="nb-short" aria-hidden="true">
+                  {item.short}
                 </span>
               </a>
             );

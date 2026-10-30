@@ -139,7 +139,7 @@ export default function ContactModal({ open, onClose }) {
           <div className="modal-header">
             <h2 id="contact-title" className="modal-title font-serif">
               Let's{" "}
-              <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
+              <span className="font-serif font-normal bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">
                 connect
               </span>
             </h2>

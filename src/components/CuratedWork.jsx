@@ -1,360 +1,139 @@
-'use client';
-
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useLenis } from 'lenis/react';
 import Image from 'next/image';
-import {
-  AnimatePresence,
-  motion,
-} from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
+/**
+ * Projects, laid out like the Tapfolio card site (card.rajatsrivastav.dev):
+ * a screenshot, then what it is, the problem, my part and the stack.
+ */
 const projects = [
   {
     title: "Apna Hostel",
-    category: "Hostel Management Platform",
+    category: "Hostel fee portal",
     image: "/apna-hostel.png",
-    url: "apna-hostel-zeta.vercel.app",
+    url: "https://apna-hostel-zeta.vercel.app",
     githubUrl: "https://github.com/rajatrsrivastav/apna-hostel",
-    description:
-      "A hostel lifecycle and accommodation management platform built to bring student onboarding, room allocation, and resident support into one place.",
-    highlights: [
-      "Supports hostel room allocation and resident onboarding workflows.",
-      "Brings hostel administration and resident services together in a single platform.",
-      "Designed to make accommodation operations easier to manage for students and hostel teams.",
-    ],
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Prisma",
-      "Tailwind CSS",
-      "Node.js",
-    ],
+    summary: "A mobile-first hostel fee portal for ITI and Diploma students.",
+    problem:
+      "Hostel residents need to see dues, pay monthly rent in parts and get receipts, while the office needs collections it can trust.",
+    contribution:
+      "Built it end to end: Google sign-in with admin approval, automated monthly rent, partial payments, printable receipts, and Cashfree payments verified through signed, idempotent webhooks.",
+    technologies: ["Next.js 16", "TypeScript", "Better Auth", "Drizzle ORM", "Neon PostgreSQL", "Cashfree"],
   },
   {
     title: "Smart Parking System",
-    category: "Full-Stack Application",
-    date: "December 2025",
+    category: "Parking operations",
     image: "/smartParking.png",
-    url: "https://smart-parking-system-sigma.vercel.app/",
-    description:
-      "Developed a full-stack smart parking web application enabling users to park and retrieve vehicles using slot-based entry with real-time session tracking.",
-    highlights: [
-      "Engineered slot-based parking flows with real-time session tracking to streamline parking and retrieval.",
-      "Designed a scalable PostgreSQL schema with Supabase to manage parking slots, sessions, and payments while preventing double occupancy.",
-    ],
-    technologies: [
-      "Next.js",
-      "PostgreSQL",
-      "Supabase",
-      "Express.js",
-      "TanStack Query",
-      "Tailwind CSS",
-      "TypeScript",
-    ],
+    url: "https://smart-parking-system-sigma.vercel.app",
+    githubUrl: "https://github.com/rajatrsrivastav/smart-parking-system",
+    summary: "Park and retrieve vehicles through slot-based entry with real-time session tracking.",
+    problem: "A parking lot has to track slots, sessions and payments without ever booking the same space twice.",
+    contribution:
+      "Built the slot-based parking and retrieval flows with real-time session tracking, and a PostgreSQL schema on Supabase for slots, sessions and payments that prevents double occupancy.",
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Supabase", "Express.js", "TanStack Query"],
   },
   {
     title: "PeerBot",
-    category: "AI Chatbot Platform",
-    date: "April 2025",
+    category: "AI chatbot builder",
     image: "/chatBot.png",
-    url: "https://peerbot-ai.vercel.app/",
-    description:
-      "Developed a full-stack chatbot platform using a single Next.js repository with MongoDB, enabling seamless frontend-backend integration.",
-    highlights: [
-      "Implemented RAG using document uploads, vector embeddings, and LangChain for accurate responses strictly grounded in company context and documents.",
-      "Delivered dynamic, context-aware AI chat flows that improve onboarding efficiency and reduce repetitive inquiry overhead.",
-      "Engineered with Google Auth, bcrypt password hashing, and Zod validation for secure chatbot configuration.",
-    ],
-    technologies: [
-      "Next.js",
-      "MongoDB",
-      "LangChain",
-      "LangGraph",
-      "Python",
-      "Google Auth",
-      "Tailwind CSS",
-    ],
+    url: "https://peerbot-ai.vercel.app",
+    githubUrl: "https://github.com/rajatrsrivastav/Peer_Bot",
+    summary: "Create focused AI chatbots from your own instructions and context.",
+    problem: "Teams want an assistant that answers only from their own material, without building a chatbot each time.",
+    contribution:
+      "Built the full-stack app: email and Google sign-in, chatbot create, update and delete flows, a public gallery, and Gemini-powered conversations.",
+    technologies: ["Next.js", "MongoDB", "NextAuth", "Gemini API"],
   },
   {
     title: "OSSGrid",
-    category: "Open-Source Mentorship Explorer",
+    category: "Open-source mentorship index",
     image: "/ossgrid.png",
-    url: "https://ossgrid.tech/",
+    url: "https://www.ossgrid.tech",
     githubUrl: "https://github.com/rajatrsrivastav/ossgrid",
-    description:
-      "A fast, public dashboard for exploring organizations, projects, and technology stacks across open-source mentorship programs such as LFX Mentorship and Google Summer of Code.",
-    highlights: [
-      "Searches across organizations, projects, technologies, and mentor names with multi-facet filters.",
-      "Uses shareable URL filters and a responsive interface to make project discovery easier.",
-      "Serves prebuilt project data client-side and refreshes datasets daily through GitHub Actions.",
-    ],
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Fuse.js",
-      "GitHub Actions",
-    ],
+    summary:
+      "A free, no-login index of Google Summer of Code and LFX Mentorship organizations, past projects and mentors.",
+    problem:
+      "Students preparing for mentorship programs piece together past projects and mentors from dozens of repos, spreadsheets and blog posts.",
+    contribution:
+      "Author and maintainer. Built a static-first pipeline: scheduled GitHub Actions fetch official program data, audit it, and open a pull request when it changes, so every data update is reviewed like code.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Fuse.js", "GitHub Actions"],
   },
 ];
 
-const slideVariants = {
-  enter: { x: 30, opacity: 0 },
-  center: { x: 0, opacity: 1 },
-  exit: { x: -30, opacity: 0 },
-};
+function ProjectLink({ href, children }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="cw-link">
+      {children}
+      <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+    </a>
+  );
+}
+
+function ProjectPanel({ project, index }) {
+  const host = project.url.replace(/^https?:\/\/(www\.)?/, "");
+  return (
+    <article className={`cw-panel ${index % 2 === 1 ? "is-flipped" : ""}`}>
+      <figure className="cw-window">
+        <div className="cw-window-bar" aria-hidden="true">
+          <span className="cw-dot" />
+          <span className="cw-dot" />
+          <span className="cw-dot" />
+          <span className="cw-host">{host}</span>
+        </div>
+        <div className="cw-shot">
+          <Image
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            fill
+            sizes="(min-width: 1024px) 600px, 100vw"
+            className="object-cover object-top"
+          />
+        </div>
+      </figure>
+
+      <div className="cw-copy">
+        <p className="cw-kicker font-mono">{project.category}</p>
+        <h3 className="cw-name">{project.title}</h3>
+        <p className="cw-summary">{project.summary}</p>
+        <dl className="cw-facts">
+          <div>
+            <dt className="font-mono">Problem</dt>
+            <dd>{project.problem}</dd>
+          </div>
+          <div>
+            <dt className="font-mono">My part</dt>
+            <dd>{project.contribution}</dd>
+          </div>
+        </dl>
+        <ul className="cw-chips" aria-label={`${project.title} technology`}>
+          {project.technologies.map((tech) => (
+            <li key={tech}>{tech}</li>
+          ))}
+        </ul>
+        <div className="cw-links">
+          <ProjectLink href={project.url}>Live site</ProjectLink>
+          <ProjectLink href={project.githubUrl}>Source on GitHub</ProjectLink>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export default function CuratedWork() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const lenis = useLenis();
-
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 768px)");
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const track = containerRef.current;
-      if (!desktop.matches || !track) return;
-      const distance = track.offsetHeight - window.innerHeight;
-      const progress = distance > 0
-        ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / distance))
-        : 0;
-      setActiveIndex(Math.min(projects.length - 1, Math.floor(progress * projects.length)));
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    desktop.addEventListener("change", schedule);
-    update();
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      desktop.removeEventListener("change", schedule);
-    };
-  }, []);
-
-  const scrollToProject = useCallback((index) => {
-    const boundedIndex = Math.max(0, Math.min(index, projects.length - 1));
-    const track = containerRef.current;
-    if (window.matchMedia("(min-width: 768px)").matches && track) {
-      const distance = track.offsetHeight - window.innerHeight;
-      // Land within each interval so rounding cannot select the previous tab.
-      const progress = (boundedIndex + 0.1) / projects.length;
-      const top = window.scrollY + track.getBoundingClientRect().top + distance * progress;
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (lenis && !reducedMotion) lenis.scrollTo(top, { duration: 0.8, easing: t => 1 - Math.pow(1 - t, 4), lock: true });
-      else window.scrollTo({ top, behavior: reducedMotion ? "instant" : "smooth" });
-    } else {
-      setActiveIndex(boundedIndex);
-    }
-  }, [lenis]);
-
-  const activeProject = projects[activeIndex];
-  const totalProjects = projects.length;
-
   return (
-    <section ref={containerRef} id="work" aria-labelledby="work-title" className="work-scroll-track w-full relative scroll-mt-24">
-      <div className="work-sticky-frame">
-        <div className="w-full flex flex-col max-w-5xl mx-auto px-6">
-          <header className="mb-8 text-center">
-            <h2
-              id="work-title"
-              className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center"
-            >
-              From Challenge to{" "}
-              <span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
-                Solution
-              </span>
-            </h2>
-          </header>
-
-          {/* Minimalist tab switcher */}
-          <div
-            className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-200/80 mb-10 pb-2 sm:pb-0 gap-4 sm:gap-0"
-            role="tablist"
-            aria-label="Project navigation"
-          >
-            <div className="flex min-w-0 w-full sm:w-auto flex-1 items-center gap-4 overflow-x-auto hide-scrollbar pb-2 pr-4 sm:gap-6">
-              {projects.map((project, index) => (
-                <button
-                  key={project.title}
-                  id={`project-tab-${index}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={index === activeIndex}
-                  aria-controls="project-panel"
-                  onClick={() => scrollToProject(index)}
-                  className={`relative shrink-0 whitespace-nowrap pb-3.5 text-sm bg-transparent border-0 transition-colors ${
-                    index === activeIndex
-                      ? "font-semibold text-neutral-900"
-                      : "font-medium text-neutral-400 hover:text-neutral-700"
-                  }`}
-                >
-                  <span className="font-mono text-xs mr-2 text-neutral-400">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  {project.title}
-                  {index === activeIndex && (
-                    <motion.div
-                      layoutId="activeWorkUnderline"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-red-600 to-rose-600"
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {/* Discrete controls + counter */}
-            <div className="flex shrink-0 items-center justify-between w-full sm:w-auto sm:justify-end gap-3 pb-3 sm:pb-3">
-              <span className="text-xs font-mono text-neutral-400">
-                {String(activeIndex + 1).padStart(2, "0")}
-                {" / "}
-                {String(totalProjects).padStart(2, "0")}
-              </span>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => scrollToProject(activeIndex - 1)}
-                  disabled={activeIndex === 0}
-                  aria-label="Previous project"
-                  className="p-1.5 rounded-md text-neutral-400 hover:text-neutral-800 disabled:opacity-30 disabled:hover:text-neutral-400 transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToProject(activeIndex + 1)}
-                  disabled={activeIndex === totalProjects - 1}
-                  aria-label="Next project"
-                  className="p-1.5 rounded-md text-neutral-400 hover:text-neutral-800 disabled:opacity-30 disabled:hover:text-neutral-400 transition-colors"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Project detail panel */}
-          <div
-            id="project-panel"
-            role="tabpanel"
-            aria-labelledby={`project-tab-${activeIndex}`}
-            className="min-h-0"
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={activeProject.title}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.28, ease: "easeOut" }}
-                className="flex flex-col items-start gap-8 md:flex-row lg:gap-12"
-              >
-                {/* Browser preview */}
-                <a
-                  href={activeProject.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${activeProject.title} website`}
-                  className="group block w-full min-w-0 overflow-hidden rounded-xl border border-neutral-200/80 bg-neutral-50 transition-shadow hover:shadow-lg no-underline md:flex-[1.15]"
-                >
-                  <div className="flex items-center gap-1.5 border-b border-neutral-200/60 bg-neutral-100/60 px-4 py-2.5">
-                    <span className="size-[9px] rounded-full bg-[#ff5f56]" />
-                    <span className="size-[9px] rounded-full bg-[#ffbd2e]" />
-                    <span className="size-[9px] rounded-full bg-[#27ca3f]" />
-                    <span className="ml-3 min-w-0 flex-1 truncate rounded-md bg-white border border-neutral-200/50 px-3 py-1 text-center font-mono text-[10px] text-neutral-400">
-                      {activeProject.url.replace(/^https?:\/\//, "")}
-                    </span>
-                  </div>
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={activeProject.image} fill sizes="(max-width: 768px) 100vw, 600px"
-                      alt={`${activeProject.title} preview`}
-                      className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                    />
-                  </div>
-                </a>
-
-                {/* Project details */}
-                <div className="w-full min-w-0 py-1 md:flex-[0.85]">
-                  {/* Title + visit link */}
-                  <div className="mb-4">
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight mb-2">
-                      {activeProject.title}
-                    </h3>
-                    <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-neutral-400">
-                      {activeProject.category}
-                    </p>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                      <a
-                        href={activeProject.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3 py-1 rounded-full bg-red-500/10 text-red-700 border border-red-500/20 hover:bg-red-500/20 transition-colors no-underline"
-                      >
-                        <span>Visit Project</span>
-                        <ExternalLink className="h-3 w-3 transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                      </a>
-                      {activeProject.githubUrl && (
-                        <a
-                          href={activeProject.githubUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="group/link inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-400 transition-colors hover:text-neutral-900 no-underline"
-                        >
-                          <span>View Source</span>
-                          <ExternalLink className="h-3 w-3 transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-sm leading-relaxed text-neutral-500 mb-6">
-                    {activeProject.description}
-                  </p>
-
-                  {/* Highlights plain list, no numbers */}
-                  <ul className="space-y-3 mb-6 list-none p-0 m-0">
-                    {activeProject.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="text-sm leading-relaxed text-neutral-600 pl-3 border-l-2 border-neutral-200"
-                      >
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Tech stack */}
-                  <div className="border-t border-neutral-100 pt-4">
-                    <span className="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-2.5">
-                      Built With
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {activeProject.technologies.map((technology) => (
-                        <span
-                          key={technology}
-                          className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium bg-neutral-100 text-neutral-600 border border-neutral-200/60 transition-colors hover:bg-neutral-200/70 hover:border-neutral-300"
-                        >
-                          {technology}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
+    <section id="work" aria-labelledby="work-title" className="cw-section scroll-mt-24">
+      <header className="cw-header">
+        <p className="text-xs uppercase tracking-widest text-neutral-500 font-mono mb-2 text-center">Selected work</p>
+        <h2 id="work-title" className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-neutral-900 text-center">
+          From Challenge to{" "}
+          <span className="font-serif font-normal bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">
+            Solution
+          </span>
+        </h2>
+      </header>
+      <div className="cw-list">
+        {projects.map((project, index) => (
+          <ProjectPanel key={project.title} project={project} index={index} />
+        ))}
       </div>
     </section>
   );

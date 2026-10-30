@@ -3,7 +3,6 @@
 @import '../src/darkModeOverrides.css';
 @import '../src/components/HomeHero.css';
 @import '../src/components/Navbar.css';
-@import '../src/components/KatanaNavigator.css';
 @import '../src/components/AboutMe.css';
 @import '../src/components/CareerSection.css';
 @import '../src/components/CuratedWork.css';
@@ -13,7 +12,6 @@
 @import '../src/components/FinalCta.css';
 @import '../src/components/ContactModal.css';
 @import '../src/components/FixedHangingDeadpool.css';
-@import '../src/components/DogpoolPet.css';
 @import '../src/site-pages/BlogPages.css';
 @import '../src/site-pages/AdminPage.css';
 @import '@liqui-design/glass/tokens.css';
@@ -21,6 +19,10 @@
 
 html, body { min-height: 100%; }
 #root { background: var(--portfolio-canvas); }
-.font-sans { font-family: Arial, Helvetica, sans-serif; }
-.font-serif { font-family: ui-serif, Georgia, 'Times New Roman', serif; }
-.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+/* One typeface across the site, shared with the Tapfolio card. Headings use a
+   slightly wider cut; small labels a tracked one, in place of monospace. */
+html, body, .font-sans { font-family: var(--font-mona), ui-sans-serif, system-ui, sans-serif; }
+.font-serif { font-family: var(--font-mona), ui-sans-serif, system-ui, sans-serif; font-variation-settings: "wdth" 108; letter-spacing: -0.02em; }
+.font-mono { font-family: var(--font-mona), ui-sans-serif, system-ui, sans-serif; font-variation-settings: "wdth" 112; letter-spacing: 0.02em; }
+body { -webkit-font-smoothing: antialiased; }

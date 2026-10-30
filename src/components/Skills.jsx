@@ -82,12 +82,18 @@ function SkillPill({ skill }) {
   );
 }
 
-function BadgeRow({ skills }) {
+// Group names, in the same order as `skillRows`.
+const rowLabels = ["Languages", "Cloud & DevOps", "Databases & Observability", "Frameworks & AI/ML"];
+
+function BadgeRow({ label, skills }) {
   return (
-    <div className="sk-row">
-      {skills.map((skill) => (
-        <SkillPill key={skill.name} skill={skill} />
-      ))}
+    <div className="sk-group">
+      <h3 className="sk-group-label">{label}</h3>
+      <div className="sk-row">
+        {skills.map((skill) => (
+          <SkillPill key={skill.name} skill={skill} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -99,7 +105,7 @@ export default function Skills() {
         <div className="text-center mb-10">
           <h2 className="text-4xl sm:text-5xl font-serif font-medium tracking-tight text-neutral-900">
             Skills &{" "}
-            <span className="italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">
+            <span className="font-normal bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">
               Technologies
             </span>
           </h2>
@@ -109,7 +115,7 @@ export default function Skills() {
         </div>
         <div className="sk-pyramid">
           {skillRows.map((row, index) => (
-            <BadgeRow key={`skill-row-${index + 1}`} skills={row} />
+            <BadgeRow key={`skill-row-${index + 1}`} label={rowLabels[index]} skills={row} />
           ))}
         </div>
       </div>

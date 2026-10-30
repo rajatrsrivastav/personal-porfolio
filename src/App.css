@@ -27,24 +27,24 @@ html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 html, body, #root { background: var(--portfolio-canvas); }
 body { margin: 0; color: #0b0d12; }
 
-/* Custom Deadpool Text Selection Highlight (Replaces default blue) */
+/* Text selection in the accent violet, as on the Tapfolio card. */
 ::selection {
-  background-color: #e11d48;
+  background-color: #5b4fc7;
   color: #ffffff;
 }
 
 ::-moz-selection {
-  background-color: #e11d48;
+  background-color: #5b4fc7;
   color: #ffffff;
 }
 
 *::selection {
-  background-color: #e11d48;
+  background-color: #5b4fc7;
   color: #ffffff;
 }
 
 *::-moz-selection {
-  background-color: #e11d48;
+  background-color: #5b4fc7;
   color: #ffffff;
 }
 button, input, textarea { font: inherit; }
@@ -66,6 +66,10 @@ section[id], main[id] { scroll-margin-top: 80px; }
 .footer-email svg { flex-shrink: 0; }
 @media (max-width: 760px) {
   .modal { max-height: calc(100dvh - 24px); }
+}
+/* Phones: room for the fixed bottom nav so it never sits over the last lines. */
+@media (max-width: 767px) {
+  body { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

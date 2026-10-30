@@ -13,7 +13,7 @@ export default function BlogPage() {
         <Link className="blog-back" href="/"><ArrowLeft size={15} /> Back to portfolio</Link>
         <header className="blog-archive-header">
           <span className="blog-kicker font-mono">WRITING</span>
-          <h1 className="font-serif"><span className="font-serif italic font-normal bg-gradient-to-r from-red-600 via-rose-600 to-red-800 bg-clip-text text-transparent">Blog</span></h1>
+          <h1 className="font-serif"><span className="font-serif font-normal bg-gradient-to-r from-[#7c6cf0] via-[#5b4fc7] to-[#4338a8] bg-clip-text text-transparent">Blog</span></h1>
           <p>Things I've learned building, debugging, and shipping.</p>
         </header>
         {loading ? <BlogArchiveSkeleton /> : error ? <p role="status">{error}</p> : !dispatches.length ? <ComingSoon /> : <section className="blog-archive-grid" aria-label="All posts">
